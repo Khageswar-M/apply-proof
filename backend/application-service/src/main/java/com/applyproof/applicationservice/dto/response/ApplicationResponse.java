@@ -8,6 +8,8 @@ public record ApplicationResponse(
 
         String companyName,
 
+        String resource,
+
         String status,
 
         String resumeName,

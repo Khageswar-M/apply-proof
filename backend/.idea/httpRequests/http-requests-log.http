@@ -1,3 +1,43 @@
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T192214.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T192156.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T191943.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T191939.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T191931.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T191441.500.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34
+
+<> 2026-10-30T191425.500.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T181556.200.json
+
+###
 GET http://localhost:4000/applications
 
 <> 2026-10-30T175901.200.json

@@ -1,4 +1,4 @@
-package com.applyproof.applicationservice.entity;
+package com.applyproof.applicationservice.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class JobApplication {
+public class JobApplications {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +31,9 @@ public class JobApplication {
 
     @Column(name = "company_name", nullable = false)
     private String companyName;
+
+    @Column(name = "application_resource", nullable = false)
+    private String applicationResource;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)

@@ -5,6 +5,7 @@ import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.service.ApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,20 @@ public class ApplicationController {
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Applications retrieved successfully",
+                        applications
+                )
+        );
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> getApplicationsByUserId(
+            @PathVariable String userId
+    ){
+        List<ApplicationResponse> applications = service.getAllApplicationsByUserId(userId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Applications retrieved successfully by user id",
                         applications
                 )
         );

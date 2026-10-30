@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ApplicationService {
     List<ApplicationResponse> getAllApplications();
+
+    List<ApplicationResponse> getAllApplicationsByUserId(String UUID);
 }

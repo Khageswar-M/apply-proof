@@ -1,0 +1,1 @@
+CREATE INDEX idx_job_applications_user_id ON job_applications (user_id);

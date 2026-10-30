@@ -1,4 +1,4 @@
-package com.applyproof.applicationservice.entity;
+package com.applyproof.applicationservice.model;
 
 public enum ApplicationStatus {
     APPLIED,

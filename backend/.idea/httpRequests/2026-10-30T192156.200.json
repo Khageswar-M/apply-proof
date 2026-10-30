@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "message": "Applications retrieved successfully by user id",
+  "data": [
+    {
+      "id": "631f1eaf-0fb2-41de-be36-eea9c0b1275d",
+      "companyName": "IBM",
+      "resource": "Naukri.com",
+      "status": "ASSESSMENT",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-29T13:45"
+    },
+    {
+      "id": "5df9b4a9-76ff-45f1-ba11-d54c4d4d3384",
+      "companyName": "Adobe",
+      "resource": "Naukri.com",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-30T09:15"
+    }
+  ],
+  "timeStamp": "2026-10-30T19:21:56.3975967"
+}
