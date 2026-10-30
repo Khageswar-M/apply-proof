@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-request/update-application.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/request/ApplicationUpdateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/ApplicationNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/mapper/ApplicationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApiResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/controller/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/controller/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/request/ApplicationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/model/JobApplications.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/model/JobApplications.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +29,9 @@
         <option value="Interface" />
         <option value="Record" />
         <option value="Enum" />
-        <option value="HTTP Request" />
-        <option value="Class" />
         <option value="Exception" />
+        <option value="Class" />
+        <option value="HTTP Request" />
       </list>
     </option>
   </component>
@@ -46,61 +54,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0000002555143415" />
-      <entry key="S10" value="1.0010026683628" />
-      <entry key="S30" value="1.2716453232974638" />
-      <entry key="S60" value="2.545831404731908" />
-      <entry key="M2" value="6.759736407233017" />
-      <entry key="M5" value="22.48340234499874" />
-      <entry key="M10" value="44.316596425308056" />
-      <entry key="M15" value="60.15870589163292" />
-      <entry key="M30" value="94.89050622389216" />
-      <entry key="H1" value="149.28185199528463" />
-      <entry key="H2" value="216.32563931303912" />
-      <entry key="H4" value="273.9630525361604" />
-      <entry key="D1" value="343.0923469287056" />
-      <entry key="W1" value="357.511990813976" />
+      <entry key="MS100" value="1.0064268184706813" />
+      <entry key="MS500" value="1.5254453547919105" />
+      <entry key="S2" value="3.125557116510923" />
+      <entry key="S5" value="6.195825015890237" />
+      <entry key="S10" value="10.564956165557456" />
+      <entry key="S30" value="19.34647286224579" />
+      <entry key="S60" value="24.344973010788355" />
+      <entry key="M2" value="29.478909075725053" />
+      <entry key="M5" value="41.404749166129136" />
+      <entry key="M10" value="59.01421819315902" />
+      <entry key="M15" value="75.18561282398582" />
+      <entry key="M30" value="118.57276381732228" />
+      <entry key="H1" value="187.87281832766274" />
+      <entry key="H2" value="276.8218031089202" />
+      <entry key="H4" value="358.8711392030823" />
+      <entry key="D1" value="464.1636021721448" />
+      <entry key="W1" value="487.02518329132937" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="6.388038986456099E-122" />
-      <entry key="S2" value="7.2490103407151986E-31" />
-      <entry key="S5" value="1.769548738027808E-12" />
-      <entry key="S10" value="3.2594188470691864E-6" />
-      <entry key="S30" value="0.06785380470732276" />
-      <entry key="S60" value="0.9756108669071156" />
-      <entry key="M2" value="4.551645612100102" />
-      <entry key="M5" value="16.520357577714663" />
-      <entry key="M10" value="33.658349520503066" />
-      <entry key="M15" value="47.32602444066617" />
-      <entry key="M30" value="76.8861696693568" />
-      <entry key="H1" value="121.05281877887512" />
-      <entry key="H2" value="176.38876348644996" />
-      <entry key="H4" value="225.02867128401775" />
-      <entry key="D1" value="284.3565657716298" />
-      <entry key="W1" value="296.8422559316256" />
+      <entry key="MS100" value="7.063540039263714E-78" />
+      <entry key="MS500" value="3.7137093214387184E-16" />
+      <entry key="S2" value="1.4619854137294625E-4" />
+      <entry key="S5" value="0.03843004493497026" />
+      <entry key="S10" value="0.30251282200259866" />
+      <entry key="S30" value="1.7221896463018298" />
+      <entry key="S60" value="3.636100722771377" />
+      <entry key="M2" value="8.141455962530427" />
+      <entry key="M5" value="24.328592812698624" />
+      <entry key="M10" value="48.80681873057645" />
+      <entry key="M15" value="68.6449917472822" />
+      <entry key="M30" value="113.99586132852967" />
+      <entry key="H1" value="176.94974879232015" />
+      <entry key="H2" value="253.68210941176335" />
+      <entry key="H4" value="324.0517185623093" />
+      <entry key="D1" value="414.7765685807026" />
+      <entry key="W1" value="434.55770872403644" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.027584468634082968" />
-      <entry key="MS500" value="0.4876777307638209" />
-      <entry key="S2" value="0.8356669589218535" />
-      <entry key="S5" value="0.9307079006903579" />
-      <entry key="S10" value="0.9656922920254385" />
-      <entry key="S30" value="1.3206713389276594" />
-      <entry key="S60" value="3.4808915251846493" />
-      <entry key="M2" value="11.230129062561183" />
-      <entry key="M5" value="38.88703284530954" />
-      <entry key="M10" value="77.85551423039907" />
-      <entry key="M15" value="107.37313492115312" />
-      <entry key="M30" value="171.68687832292593" />
-      <entry key="H1" value="270.2651901195224" />
-      <entry key="H2" value="392.664799922364" />
-      <entry key="H4" value="498.96053390794344" />
-      <entry key="D1" value="627.4424348190604" />
-      <entry key="W1" value="654.3532831573856" />
+      <entry key="MS100" value="0.6282883760990091" />
+      <entry key="MS500" value="1.3902374085504055" />
+      <entry key="S2" value="3.0529902819914594" />
+      <entry key="S5" value="6.16170244685115" />
+      <entry key="S10" value="10.75529897415957" />
+      <entry key="S30" value="20.91448301510461" />
+      <entry key="S60" value="27.84127199498004" />
+      <entry key="M2" value="37.477046340110974" />
+      <entry key="M5" value="65.56877171310235" />
+      <entry key="M10" value="107.65686644731167" />
+      <entry key="M15" value="143.6763323707289" />
+      <entry key="M30" value="232.4396910305342" />
+      <entry key="H1" value="364.7223510921285" />
+      <entry key="H2" value="530.4325692820122" />
+      <entry key="H4" value="682.8776667557488" />
+      <entry key="D1" value="878.9306279032596" />
+      <entry key="W1" value="921.5814666725837" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -120,6 +128,7 @@
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "HTTP Request.get-applications | GET request to example server.executor": "Run",
     "HTTP Request.get-applications-by-userId | GET request to example server.executor": "Run",
+    "HTTP Request.update-application | GET request to example server.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -159,6 +168,7 @@
             <map>
               <entry key="get-applications | GET request to example server" value="STOPPED" />
               <entry key="get-applications-by-userId | GET request to example server" value="STOPPED" />
+              <entry key="update-application | GET request to example server" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -170,6 +180,12 @@
       <method v="2" />
     </configuration>
     <configuration name="get-applications-by-userId | GET request to example server" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/get-applications-by-userId.http" executionIdentifier="GET request to example server" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="update-application | GET request to example server" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/update-application.http" executionIdentifier="GET request to example server" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="update-application | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/update-application.http" executionIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="ApplicationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -191,11 +207,15 @@
     <list>
       <item itemvalue="HTTP Request.get-applications | GET request to example server" />
       <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
+      <item itemvalue="HTTP Request.update-application | #1" />
+      <item itemvalue="HTTP Request.update-application | GET request to example server" />
       <item itemvalue="Spring Boot.ApplicationServiceApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="HTTP Request.get-applications | GET request to example server" />
+        <item itemvalue="HTTP Request.update-application | #1" />
+        <item itemvalue="HTTP Request.update-application | GET request to example server" />
         <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
       </list>
     </recent_temporary>

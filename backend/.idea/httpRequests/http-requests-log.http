@@ -1,5 +1,72 @@
 GET http://localhost:4000/applications
 
+<> 2026-10-30T204141.200.json
+
+###
+PUT http://localhost:4000/applications/2a62d64c-0867-496e-83b1-554cf761da6c
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5"
+}
+
+<> 2026-10-30T204117.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T204058.200.json
+
+###
+PUT http://localhost:4000/applications/7f74aaf3-9d70-40f9-9a09-72980507edd6
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5"
+}
+
+<> 2026-10-30T204040.404.json
+
+###
+PUT http://localhost:4000/applications/7f74aaf3-9d70-40f9-9a09-72980507edd6
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5",
+}
+
+<> 2026-10-30T203903.400.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T203610.200.json
+
+###
+PUT http://localhost:4000/applications/7f74aaf3-9d70-40f9-9a09-72980507edd6
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5",
+}
+
+<> 2026-10-30T203553.400.json
+
+###
+GET http://localhost:4000/applications
+
 <> 2026-10-30T194602.200.json
 
 ###

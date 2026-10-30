@@ -1,12 +1,15 @@
 package com.applyproof.applicationservice.service;
 
+import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
+import com.applyproof.applicationservice.exception.ApplicationNotFoundException;
+import com.applyproof.applicationservice.mapper.ApplicationMapper;
+import com.applyproof.applicationservice.model.ApplicationStatus;
 import com.applyproof.applicationservice.model.JobApplications;
 import com.applyproof.applicationservice.repository.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,5 +57,25 @@ public class ApplicationServiceImpl implements ApplicationService{
                         .appliedDateTime(application.getAppliedDateTime().toString())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public ApplicationResponse updateApplication(
+            String applicationId,
+            ApplicationUpdateRequest request) {
+
+        JobApplications existingApplication =
+                repository.findById(UUID.fromString(applicationId))
+                        .orElseThrow(() ->
+                                new ApplicationNotFoundException("Job application not found!"));
+
+        existingApplication.setCompanyName(request.companyName());
+        existingApplication.setApplicationResource(request.applicationResource());
+        existingApplication.setStatus(ApplicationStatus.valueOf(request.status()));
+        existingApplication.setResumeName(request.resumeName());
+
+        JobApplications updatedApplication = repository.save(existingApplication);
+
+        return ApplicationMapper.toDto(updatedApplication);
     }
 }

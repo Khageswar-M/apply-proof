@@ -1,0 +1,9 @@
+PUT http://localhost:4000/applications/2a62d64c-0867-496e-83b1-554cf761da6c
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5"
+}

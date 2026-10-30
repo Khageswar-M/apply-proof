@@ -1,13 +1,12 @@
 package com.applyproof.applicationservice.controller;
 
+import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.service.ApplicationService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,6 +48,21 @@ public class ApplicationController {
                                 "No application found for this user id" :
                                 "Applications retrieved successfully by user id",
                         applications
+                )
+        );
+    }
+
+    @PutMapping("/{applicationId}")
+    public ResponseEntity<ApiResponse<ApplicationResponse>> updateApplication(
+            @PathVariable String applicationId,
+            @Valid @RequestBody ApplicationUpdateRequest request
+            ){
+        ApplicationResponse response = service.updateApplication(applicationId, request);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Application updated successfully",
+                        response
                 )
         );
     }

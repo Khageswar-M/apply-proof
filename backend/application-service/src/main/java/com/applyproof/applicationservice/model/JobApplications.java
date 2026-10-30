@@ -42,6 +42,6 @@ public class JobApplications {
     @Column(name = "resume_name", nullable = false, length = 100)
     private String resumeName;
 
-    @Column(name = "applied_date_time", nullable = false)
+    @Column(name = "applied_date_time", nullable = false, updatable = false)
     private LocalDateTime appliedDateTime;
 }

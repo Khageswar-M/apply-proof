@@ -53,4 +53,20 @@ public class GlobalExceptionHandler {
                 )
         );
     }
+
+    @ExceptionHandler(ApplicationNotFoundException.class)
+    public ResponseEntity<ApiResponse<Map<String, String>>> handleApplicationNotFoundException(
+            ApplicationNotFoundException ex
+    ){
+        var error = new HashMap<String, String>();
+
+        error.put("error", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                ApiResponse.failure(
+                        "Application not found error",
+                        error
+                )
+        );
+    }
 }
