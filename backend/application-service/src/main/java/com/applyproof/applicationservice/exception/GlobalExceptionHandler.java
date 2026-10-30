@@ -1,6 +1,7 @@
 package com.applyproof.applicationservice.exception;
 
 import com.applyproof.applicationservice.dto.response.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -17,7 +19,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<Map<String, String>>> handleValidationException(
             MethodArgumentNotValidException ex
     ){
-        var errors = new HashMap<String, String>();
+        HashMap<String, String> errors = new HashMap<>();
 
         ex.getBindingResult()
                 .getFieldErrors()
@@ -34,6 +36,8 @@ public class GlobalExceptionHandler {
                         errors
                 );
 
+        log.warn("Validation failed for {}", ex.getMessage());
+
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -44,11 +48,13 @@ public class GlobalExceptionHandler {
     ){
         var errors = new HashMap<String, String>();
 
-        errors.put("message", "User not found");
+        errors.put("message", ex.getMessage());
+
+        log.info("Validation failed for {}", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 ApiResponse.failure(
-                        "User Id not found, please login again.",
+                        "error",
                         errors
                 )
         );
@@ -62,9 +68,11 @@ public class GlobalExceptionHandler {
 
         error.put("error", ex.getMessage());
 
+        log.warn("Application not found error {}", ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 ApiResponse.failure(
-                        "Application not found error",
+                        "error",
                         error
                 )
         );

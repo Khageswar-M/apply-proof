@@ -8,12 +8,14 @@ import com.applyproof.applicationservice.mapper.ApplicationMapper;
 import com.applyproof.applicationservice.model.ApplicationStatus;
 import com.applyproof.applicationservice.model.JobApplications;
 import com.applyproof.applicationservice.repository.ApplicationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class ApplicationServiceImpl implements ApplicationService{
 
@@ -29,6 +31,8 @@ public class ApplicationServiceImpl implements ApplicationService{
     public List<ApplicationResponse> getAllApplications() {
 
         List<JobApplications> applications = repository.findAll();
+
+        log.info("All applications fetched successfully.");
 
         return applications.stream()
                 .map(application -> ApplicationResponse.builder()
@@ -48,6 +52,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 
         List<JobApplications> jobApplicationsByUserId =
                 repository.findByUserId(UUID.fromString(userId));
+
+        log.info("All applications are fetched successfully by userId: {}", userId);
 
         return jobApplicationsByUserId.stream()
                 .map(application -> ApplicationResponse.builder()
@@ -78,6 +84,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 
         JobApplications updatedApplication = repository.save(existingApplication);
 
+        log.info("Application updated successfully for application id {}", applicationId);
+
         return ApplicationMapper.toDto(updatedApplication);
     }
 
@@ -104,5 +112,7 @@ public class ApplicationServiceImpl implements ApplicationService{
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found"));
 
         repository.deleteById(UUID.fromString(applicationId));
+
+        log.info("Application deleted successfully {}", applicationId);
     }
 }

@@ -2,4 +2,28 @@ spring:
   application:
     name: analytic-service
 
+  datasource:
+    #  FOR MYSQL CONFIGURATION
+    url: jdbc:mysql://localhost:3001/${DATABASE_NAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 4001
+
+logging:
+  level:
+    root: INFO

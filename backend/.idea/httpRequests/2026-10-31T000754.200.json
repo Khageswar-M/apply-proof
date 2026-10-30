@@ -1,0 +1,87 @@
+{
+  "success": true,
+  "message": "Applications retrieved successfully",
+  "data": [
+    {
+      "id": "e6bb7902-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Google",
+      "resource": "LinkedIn",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-21T10:30"
+    },
+    {
+      "id": "e6bc16d2-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Amazon",
+      "resource": "LinkedIn",
+      "status": "RECRUITER_CALL",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-22T14:15"
+    },
+    {
+      "id": "e6bc1f21-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Microsoft",
+      "resource": "Naukri.com",
+      "status": "ASSESSMENT",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-23T09:45"
+    },
+    {
+      "id": "e6bc20b2-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Infosys",
+      "resource": "Naukri.com",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-24T11:20"
+    },
+    {
+      "id": "e6bc2167-d490-11f1-b1d8-22472fce340f",
+      "companyName": "TCS",
+      "resource": "Naukri.com",
+      "status": "FINAL_DISCUSSION",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-25T15:00"
+    },
+    {
+      "id": "e6bc21dd-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Accenture",
+      "resource": "Naukri.com",
+      "status": "OFFER",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-26T12:30"
+    },
+    {
+      "id": "e6bc2424-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Wipro",
+      "resource": "Naukri.com",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-27T16:10"
+    },
+    {
+      "id": "e6bc24d6-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Oracle",
+      "resource": "Naukri.com",
+      "status": "RECRUITER_CALL",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-28T10:00"
+    },
+    {
+      "id": "e6bc2567-d490-11f1-b1d8-22472fce340f",
+      "companyName": "IBM",
+      "resource": "Naukri.com",
+      "status": "ASSESSMENT",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-29T13:45"
+    },
+    {
+      "id": "e6bc2729-d490-11f1-b1d8-22472fce340f",
+      "companyName": "Adobe",
+      "resource": "Naukri.com",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-30T09:15"
+    }
+  ],
+  "timeStamp": "2026-10-30T18:37:53.956568079"
+}

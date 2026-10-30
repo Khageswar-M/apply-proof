@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application-service/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/modal/DailyApplicationStats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/resources/data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0da0ee30-6814-4f4e-9725-de7020c5204f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0da0ee30-6814-4f4e-9725-de7020c5204f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-request/delete-application.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-request/delete-application.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-request/get-applications-by-userId.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-request/get-applications-by-userId.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-request/update-application.http" beforeDir="false" afterPath="$PROJECT_DIR$/api-request/update-application.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytic-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +31,7 @@
   <component name="DatabaseLocalColorSettings">
     <colors>
       <entry key="0da0ee30-6814-4f4e-9725-de7020c5204f" value="" />
+      <entry key="26c25040-cad3-4e8f-b6cf-fc0076320b53" value="" />
     </colors>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -35,10 +40,10 @@
         <option value="Interface" />
         <option value="Enum" />
         <option value="Exception" />
-        <option value="Class" />
         <option value="Record" />
         <option value="HTTP Request" />
         <option value="Dockerfile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -61,61 +66,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0004394540679429" />
-      <entry key="S2" value="1.1461676483196408" />
-      <entry key="S5" value="1.5694439689343354" />
-      <entry key="S10" value="2.143068323836434" />
-      <entry key="S30" value="3.1093614744825944" />
-      <entry key="S60" value="3.5729548955246027" />
-      <entry key="M2" value="4.206125165332903" />
-      <entry key="M5" value="5.6945104145463095" />
-      <entry key="M10" value="6.9415459102670125" />
-      <entry key="M15" value="7.93388612232669" />
-      <entry key="M30" value="17.970818174501403" />
-      <entry key="H1" value="68.91638078403403" />
-      <entry key="H2" value="186.4061574899349" />
-      <entry key="H4" value="338.2667364786394" />
-      <entry key="D1" value="589.9538443858107" />
-      <entry key="W1" value="652.7829070778503" />
+      <entry key="MS100" value="1.000000000000001" />
+      <entry key="MS500" value="1.0010222756659908" />
+      <entry key="S2" value="1.178810083410307" />
+      <entry key="S5" value="1.5022926258169074" />
+      <entry key="S10" value="1.7087260612719921" />
+      <entry key="S30" value="1.8930362543051795" />
+      <entry key="S60" value="1.9944101289524143" />
+      <entry key="M2" value="2.484431442189143" />
+      <entry key="M5" value="5.477527001559409" />
+      <entry key="M10" value="11.833518414605177" />
+      <entry key="M15" value="18.60517033141904" />
+      <entry key="M30" value="36.26050444140971" />
+      <entry key="H1" value="70.44138093102886" />
+      <entry key="H2" value="160.6961446004462" />
+      <entry key="H4" value="315.64642155061574" />
+      <entry key="D1" value="641.3080862051844" />
+      <entry key="W1" value="733.2033847535989" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="2.211552583036679E-202" />
-      <entry key="S30" value="1.760128270085147E-67" />
-      <entry key="S60" value="1.0518173523368153E-33" />
-      <entry key="M2" value="8.4268143172047E-17" />
-      <entry key="M5" value="1.341620906881545E-6" />
-      <entry key="M10" value="0.006661671816207052" />
-      <entry key="M15" value="0.16541118814931605" />
-      <entry key="M30" value="5.772061445361647" />
-      <entry key="H1" value="43.415471451609534" />
-      <entry key="H2" value="138.19934759987018" />
-      <entry key="H4" value="264.46534519824195" />
-      <entry key="D1" value="477.0156849411243" />
-      <entry key="W1" value="530.4484088697733" />
+      <entry key="S5" value="4.173107520340535E-195" />
+      <entry key="S10" value="8.96317492443083E-98" />
+      <entry key="S30" value="7.072928473990942E-33" />
+      <entry key="S60" value="1.1887141818434264E-16" />
+      <entry key="M2" value="1.5532299006533816E-8" />
+      <entry key="M5" value="0.0018180903256074222" />
+      <entry key="M10" value="0.18287755425292931" />
+      <entry key="M15" value="0.9678648190960961" />
+      <entry key="M30" value="5.743013066324781" />
+      <entry key="H1" value="23.852885849067178" />
+      <entry key="H2" value="89.50739656887889" />
+      <entry key="H4" value="212.49307483698163" />
+      <entry key="D1" value="480.37435703502325" />
+      <entry key="W1" value="556.9687275836519" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="5.685758638748001E-9" />
-      <entry key="MS500" value="0.022866446950594543" />
-      <entry key="S2" value="0.5323596956985367" />
-      <entry key="S5" value="1.2512603767687482" />
-      <entry key="S10" value="1.9666119495520489" />
-      <entry key="S30" value="3.0451594120830543" />
-      <entry key="S60" value="3.53989941898774" />
-      <entry key="M2" value="4.188700416463271" />
-      <entry key="M5" value="5.685963958132051" />
-      <entry key="M10" value="6.943080821662174" />
-      <entry key="M15" value="8.095179953337121" />
-      <entry key="M30" value="23.733806943915415" />
-      <entry key="H1" value="112.30493086912155" />
-      <entry key="H2" value="324.5645571674375" />
-      <entry key="H4" value="602.6936780009568" />
-      <entry key="D1" value="1066.958190295064" />
-      <entry key="W1" value="1183.2295205241307" />
+      <entry key="MS100" value="0.8950250709279725" />
+      <entry key="MS500" value="0.9786345611739272" />
+      <entry key="S2" value="1.1490581431146898" />
+      <entry key="S5" value="1.4716664634622296" />
+      <entry key="S10" value="1.687282514923028" />
+      <entry key="S30" value="1.8840527635342261" />
+      <entry key="S60" value="1.9895998999133033" />
+      <entry key="M2" value="2.481695732654865" />
+      <entry key="M5" value="5.477166259987183" />
+      <entry key="M10" value="12.012831300695519" />
+      <entry key="M15" value="19.56701064464882" />
+      <entry key="M30" value="41.992277510838036" />
+      <entry key="H1" value="94.27637449986892" />
+      <entry key="H2" value="250.17480106278035" />
+      <entry key="H4" value="528.1073051566214" />
+      <entry key="D1" value="1121.6707625149188" />
+      <entry key="W1" value="1290.1701886406581" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -133,6 +138,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Docker.analytic-service-db.executor": "Run",
     "Docker.application-service-db.executor": "Run",
     "Docker.application-service.executor": "Run",
     "HTTP Request.create-application | GET request to example server.executor": "Run",
@@ -150,6 +156,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.AnalyticServiceApplication.executor": "Run",
     "Spring Boot.ApplicationServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -165,7 +172,16 @@
     "node.js.selected.package.jshint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -190,7 +206,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.application-service">
+  <component name="RunManager" selected="Spring Boot.AnalyticServiceApplication">
     <configuration name="create-application | GET request to example server" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/create-application.http" executionIdentifier="GET request to example server" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -205,6 +221,19 @@
     </configuration>
     <configuration name="update-application | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/update-application.http" executionIdentifier="#1" runType="Run single request">
       <method v="2" />
+    </configuration>
+    <configuration name="AnalyticServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <module name="analytic-service" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.applyproof.analyticservice.AnalyticServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="ApplicationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
@@ -221,6 +250,52 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="analytic-service-db" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+      <deployment type="docker-image">
+        <settings>
+          <option name="imageTag" value="mysql:latest" />
+          <option name="containerName" value="analytic-service-db" />
+          <option name="envVars">
+            <list>
+              <DockerEnvVarImpl>
+                <option name="name" value="MYSQL_DATABASE" />
+                <option name="value" value="db" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="MYSQL_PASSWORD" />
+                <option name="value" value="password" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="MYSQL_ROOT_PASSWORD" />
+                <option name="value" value="password" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="MYSQL_USER" />
+                <option name="value" value="user" />
+              </DockerEnvVarImpl>
+            </list>
+          </option>
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="3306" />
+                <option name="hostPort" value="3001" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
+          <option name="commandLineOptions" value="--network internal" />
+          <option name="volumeBindings">
+            <list>
+              <DockerVolumeBindingImpl>
+                <option name="containerPath" value="/var/lib/MySQL" />
+                <option name="hostPath" value="C:\Users\khage\db_volumes\analytic-service-db\" />
+              </DockerVolumeBindingImpl>
+            </list>
+          </option>
+        </settings>
+      </deployment>
+      <method v="2" />
     </configuration>
     <configuration name="application-service-db" type="docker-deploy" factoryName="docker-image" server-name="Docker">
       <deployment type="docker-image">
@@ -312,6 +387,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.analytic-service-db" />
       <item itemvalue="Docker.application-service" />
       <item itemvalue="Docker.application-service-db" />
       <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
@@ -319,13 +395,14 @@
       <item itemvalue="HTTP Request.delete-application | GET request to example server" />
       <item itemvalue="HTTP Request.get-applications | GET request to example server" />
       <item itemvalue="HTTP Request.update-application | #1" />
+      <item itemvalue="Spring Boot.AnalyticServiceApplication" />
       <item itemvalue="Spring Boot.ApplicationServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.get-applications | GET request to example server" />
         <item itemvalue="HTTP Request.update-application | #1" />
         <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
+        <item itemvalue="HTTP Request.get-applications | GET request to example server" />
         <item itemvalue="HTTP Request.delete-application | GET request to example server" />
         <item itemvalue="HTTP Request.create-application | GET request to example server" />
       </list>
@@ -351,5 +428,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
