@@ -1,5 +1,6 @@
 package com.applyproof.applicationservice.controller;
 
+import com.applyproof.applicationservice.dto.request.ApplicationCreateRequest;
 import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
@@ -62,6 +63,20 @@ public class ApplicationController {
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Application updated successfully",
+                        response
+                )
+        );
+    }
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<ApplicationResponse>> createApplication(
+            @Valid @RequestBody ApplicationCreateRequest request
+            ){
+        ApplicationResponse response = service.createApplication(request);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Application created successfully",
                         response
                 )
         );

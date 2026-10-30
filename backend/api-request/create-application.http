@@ -1,0 +1,13 @@
+### GET request to example server
+POST http://localhost:4000/applications
+Content-Type: application/json
+
+{
+  "userId": "a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d38",
+  "companyName": "Microsoft",
+  "resourceName": "LinkedIn",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-Dev-CV-2-0-6"
+}
+
+###
