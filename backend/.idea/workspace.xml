@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="" />
+    <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +29,65 @@
     <commands />
     <urls />
   </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="3.0299226181626605E-10" />
+      <entry key="MS500" value="0.012482070392913805" />
+      <entry key="S2" value="0.34493923141778726" />
+      <entry key="S5" value="0.9396160880744748" />
+      <entry key="S10" value="2.218911359733595" />
+      <entry key="S30" value="7.744585334908696" />
+      <entry key="S60" value="13.490503270852367" />
+      <entry key="M2" value="19.171589312866406" />
+      <entry key="M5" value="24.378310761753788" />
+      <entry key="M10" value="26.552181899232792" />
+      <entry key="M15" value="27.335782929870724" />
+      <entry key="M30" value="28.151216656330256" />
+      <entry key="H1" value="28.571341766828123" />
+      <entry key="H2" value="28.784591735635278" />
+      <entry key="H4" value="28.89202449990035" />
+      <entry key="D1" value="28.981966258316685" />
+      <entry key="W1" value="28.997422823095455" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.0002096107071918" />
+      <entry key="MS500" value="1.1902965324294816" />
+      <entry key="S2" value="2.176807038458401" />
+      <entry key="S5" value="3.5874831668615905" />
+      <entry key="S10" value="4.905903931644577" />
+      <entry key="S30" value="8.451234598298996" />
+      <entry key="S60" value="12.490650913731987" />
+      <entry key="M2" value="16.86170523830416" />
+      <entry key="M5" value="21.099261676398868" />
+      <entry key="M10" value="22.919629440471308" />
+      <entry key="M15" value="23.58223464761231" />
+      <entry key="M30" value="24.275167259802682" />
+      <entry key="H1" value="24.63349446806345" />
+      <entry key="H2" value="24.81571193551764" />
+      <entry key="H4" value="24.907595497827696" />
+      <entry key="D1" value="24.984562932704247" />
+      <entry key="W1" value="24.997793813438776" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="2.452135710317354E-4" />
+      <entry key="MS500" value="0.2606067616509927" />
+      <entry key="S2" value="1.8028820996816093" />
+      <entry key="S5" value="3.9775337419910963" />
+      <entry key="S10" value="6.716817687636427" />
+      <entry key="S30" value="15.902663040508239" />
+      <entry key="S60" value="25.732615775982154" />
+      <entry key="M2" value="35.85225886466561" />
+      <entry key="M5" value="45.38291755802517" />
+      <entry key="M10" value="49.41968821771445" />
+      <entry key="M15" value="50.882103742754175" />
+      <entry key="M30" value="52.407817453303636" />
+      <entry key="H1" value="53.19539533658717" />
+      <entry key="H2" value="53.595543125452146" />
+      <entry key="H4" value="53.79722961449569" />
+      <entry key="D1" value="53.966129382215975" />
+      <entry key="W1" value="53.99515948632426" />
+    </decayedShown>
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 0,
   "fromUser": false
@@ -41,19 +105,44 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "develop",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/projects/ApplyProof/backend",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\ApplyProof\backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ApplicationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="application-service" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.applyproof.applicationservice.ApplicationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
