@@ -1,0 +1,30 @@
+GET http://localhost:4000/applications
+
+<> 2026-10-30T175901.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T175732.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T175729.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T175723.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T175200.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T174926.404.json
+
+###

@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "job_application")
+@Table(name = "job_applications")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,10 +20,13 @@ import java.util.UUID;
 public class JobApplication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length = 36)
     private UUID id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, length = 36)
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID userId;
 
     @Column(name = "company_name", nullable = false)

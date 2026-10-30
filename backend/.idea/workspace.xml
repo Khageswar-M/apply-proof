@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-request/get-applications.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/controller/ApplicationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/request/ApplicationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApiResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApplicationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/entity/JobApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/entity/JobApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,12 +29,17 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
+        <option value="HTTP Request" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HttpClientOnboardingState"><![CDATA[{
+  "isOnboardingCommentShown": true
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -38,61 +53,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="2.9903684585986955E-8" />
-      <entry key="MS500" value="0.04372342515723942" />
-      <entry key="S2" value="0.7566631979805807" />
-      <entry key="S5" value="1.5050906691479624" />
-      <entry key="S10" value="2.395648213090157" />
-      <entry key="S30" value="4.148245860844769" />
-      <entry key="S60" value="5.099275279336369" />
-      <entry key="M2" value="6.488213132343687" />
-      <entry key="M5" value="11.13395986984627" />
-      <entry key="M10" value="19.510111346061045" />
-      <entry key="M15" value="26.59754529253614" />
-      <entry key="M30" value="39.618627607464425" />
-      <entry key="H1" value="50.13600838841194" />
-      <entry key="H2" value="56.91622903614739" />
-      <entry key="H4" value="60.779125702869294" />
-      <entry key="D1" value="64.27016443834277" />
-      <entry key="W1" value="64.89507180700159" />
+      <entry key="MS100" value="1.002820174210005" />
+      <entry key="MS500" value="1.3092552879318906" />
+      <entry key="S2" value="1.9915428930530035" />
+      <entry key="S5" value="2.9840933411040638" />
+      <entry key="S10" value="3.7541079697666926" />
+      <entry key="S30" value="4.939774708588709" />
+      <entry key="S60" value="7.258024319608274" />
+      <entry key="M2" value="11.46758536019546" />
+      <entry key="M5" value="18.963914638924088" />
+      <entry key="M10" value="29.317869250598253" />
+      <entry key="M15" value="41.045164753427436" />
+      <entry key="M30" value="73.55550186734625" />
+      <entry key="H1" value="112.49231330199014" />
+      <entry key="H2" value="144.62313761334804" />
+      <entry key="H4" value="165.6408544271145" />
+      <entry key="D1" value="186.43112323507304" />
+      <entry key="W1" value="190.33832346925442" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0003047682004154" />
-      <entry key="MS500" value="1.1981101484859153" />
-      <entry key="S2" value="1.8061521561427514" />
-      <entry key="S5" value="2.7502057260591606" />
-      <entry key="S10" value="3.979345487427313" />
-      <entry key="S30" value="6.689762913472439" />
-      <entry key="S60" value="8.942463267518374" />
-      <entry key="M2" value="11.958226061964098" />
-      <entry key="M5" value="19.830660446715" />
-      <entry key="M10" value="31.61136506254769" />
-      <entry key="M15" value="40.293468306641444" />
-      <entry key="M30" value="54.868900218868625" />
-      <entry key="H1" value="65.94478345266027" />
-      <entry key="H2" value="72.88168962585492" />
-      <entry key="H4" value="76.77942267164963" />
-      <entry key="D1" value="80.2728708303731" />
-      <entry key="W1" value="80.89552649269149" />
+      <entry key="MS100" value="4.5111543976096874E-7" />
+      <entry key="MS500" value="0.053809324271181506" />
+      <entry key="S2" value="0.48163094701988257" />
+      <entry key="S5" value="0.7466406160478362" />
+      <entry key="S10" value="0.875276082184363" />
+      <entry key="S30" value="1.780563726801412" />
+      <entry key="S60" value="3.845421072336646" />
+      <entry key="M2" value="6.6257680415548394" />
+      <entry key="M5" value="10.051876888519518" />
+      <entry key="M10" value="15.85790541290967" />
+      <entry key="M15" value="25.01567537975556" />
+      <entry key="M30" value="54.50577505628619" />
+      <entry key="H1" value="92.15194313650359" />
+      <entry key="H2" value="123.84851159294338" />
+      <entry key="H4" value="144.7253757743021" />
+      <entry key="D1" value="165.44126186930657" />
+      <entry key="W1" value="169.33967607863158" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.16608581513573256" />
-      <entry key="MS500" value="0.7602194183148174" />
-      <entry key="S2" value="2.0688424467068653" />
-      <entry key="S5" value="3.7672652287517483" />
-      <entry key="S10" value="5.9025494776467315" />
-      <entry key="S30" value="10.509399474414662" />
-      <entry key="S60" value="13.82100967684615" />
-      <entry key="M2" value="18.305789074793186" />
-      <entry key="M5" value="30.87621869152363" />
-      <entry key="M10" value="51.05096150700006" />
-      <entry key="M15" value="66.83069697557214" />
-      <entry key="M30" value="94.4460695461015" />
-      <entry key="H1" value="116.0557426279115" />
-      <entry key="H2" value="129.78403785675965" />
-      <entry key="H4" value="137.5512265420096" />
-      <entry key="D1" value="144.54175794983246" />
-      <entry key="W1" value="145.79041437341837" />
+      <entry key="MS100" value="0.8586295060595736" />
+      <entry key="MS500" value="1.1168536999132788" />
+      <entry key="S2" value="2.0317449730401473" />
+      <entry key="S5" value="3.3883450199301075" />
+      <entry key="S10" value="4.405711943276553" />
+      <entry key="S30" value="6.594836132523756" />
+      <entry key="S60" value="10.983643027559433" />
+      <entry key="M2" value="17.98790176080367" />
+      <entry key="M5" value="28.943825301637844" />
+      <entry key="M10" value="45.11514974346053" />
+      <entry key="M15" value="65.99833472433285" />
+      <entry key="M30" value="127.99785629155289" />
+      <entry key="H1" value="204.59334853778884" />
+      <entry key="H2" value="268.4383913011574" />
+      <entry key="H4" value="310.34707632233926" />
+      <entry key="D1" value="351.8687797532748" />
+      <entry key="W1" value="359.6774734565333" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -110,10 +125,16 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "HTTP Request.get-applications | GET request to example server.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.ApplicationServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "develop",
@@ -136,7 +157,23 @@
       <recent name="D:\projects\ApplyProof\backend" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="configurationStatuses">
+      <map>
+        <entry key="HttpClient.HttpRequestRunConfigurationType">
+          <value>
+            <map>
+              <entry key="get-applications | GET request to example server" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApplicationServiceApplication">
+    <configuration name="get-applications | GET request to example server" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/get-applications.http" executionIdentifier="GET request to example server" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="ApplicationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -153,6 +190,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="HTTP Request.get-applications | GET request to example server" />
+      <item itemvalue="Spring Boot.ApplicationServiceApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.get-applications | GET request to example server" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

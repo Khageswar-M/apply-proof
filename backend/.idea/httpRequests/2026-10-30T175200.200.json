@@ -1,0 +1,67 @@
+{
+  "success": true,
+  "message": "Application retrieved successful",
+  "data": [
+    {
+      "companyName": "Google",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-21T10:30"
+    },
+    {
+      "companyName": "Amazon",
+      "status": "RECRUITER_CALL",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-22T14:15"
+    },
+    {
+      "companyName": "Microsoft",
+      "status": "ASSESSMENT",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-23T09:45"
+    },
+    {
+      "companyName": "Infosys",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-24T11:20"
+    },
+    {
+      "companyName": "TCS",
+      "status": "FINAL_DISCUSSION",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-25T15:00"
+    },
+    {
+      "companyName": "Accenture",
+      "status": "OFFER",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-26T12:30"
+    },
+    {
+      "companyName": "Wipro",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-27T16:10"
+    },
+    {
+      "companyName": "Oracle",
+      "status": "RECRUITER_CALL",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-28T10:00"
+    },
+    {
+      "companyName": "IBM",
+      "status": "ASSESSMENT",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-29T13:45"
+    },
+    {
+      "companyName": "Adobe",
+      "status": "APPLIED",
+      "resumeName": "Khageswar-Java-Fullstack-CV",
+      "appliedDateTime": "2026-10-30T09:15"
+    }
+  ],
+  "timeStamp": "2026-10-30T17:52:00.3191767"
+}
