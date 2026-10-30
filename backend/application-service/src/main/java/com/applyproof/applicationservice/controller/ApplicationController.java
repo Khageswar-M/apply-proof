@@ -45,7 +45,9 @@ public class ApplicationController {
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Applications retrieved successfully by user id",
+                        applications.isEmpty() ?
+                                "No application found for this user id" :
+                                "Applications retrieved successfully by user id",
                         applications
                 )
         );

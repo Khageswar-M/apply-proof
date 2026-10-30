@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-request/get-applications-by-userId.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application-service/src/main/resources/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/exception/UserNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/controller/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/controller/ApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApplicationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApplicationResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/entity/ApplicationStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/model/ApplicationStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/entity/JobApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/model/JobApplications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/repository/ApplicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/repository/ApplicationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/service/ApplicationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/application-service/src/main/java/com/applyproof/applicationservice/dto/response/ApiResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,10 +19,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
         <option value="Enum" />
         <option value="HTTP Request" />
+        <option value="Class" />
+        <option value="Exception" />
       </list>
     </option>
   </component>
@@ -53,61 +46,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="6.899558809039292E-189" />
-      <entry key="S2" value="1.0441783582918623E-47" />
-      <entry key="S5" value="2.5949998574891324E-19" />
-      <entry key="S10" value="8.529276225618692E-10" />
-      <entry key="S30" value="0.0022238724148281454" />
-      <entry key="S60" value="0.13370087275665668" />
-      <entry key="M2" value="1.4962962774536392" />
-      <entry key="M5" value="9.051941523587065" />
-      <entry key="M10" value="19.15886702429776" />
-      <entry key="M15" value="26.811150357472275" />
-      <entry key="M30" value="50.79002527008648" />
-      <entry key="H1" value="98.29359877441951" />
-      <entry key="H2" value="156.99233012195435" />
-      <entry key="H4" value="205.7609243025969" />
-      <entry key="D1" value="262.4084838972274" />
-      <entry key="W1" value="274.0059149607425" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0000002555143415" />
+      <entry key="S10" value="1.0010026683628" />
+      <entry key="S30" value="1.2716453232974638" />
+      <entry key="S60" value="2.545831404731908" />
+      <entry key="M2" value="6.759736407233017" />
+      <entry key="M5" value="22.48340234499874" />
+      <entry key="M10" value="44.316596425308056" />
+      <entry key="M15" value="60.15870589163292" />
+      <entry key="M30" value="94.89050622389216" />
+      <entry key="H1" value="149.28185199528463" />
+      <entry key="H2" value="216.32563931303912" />
+      <entry key="H4" value="273.9630525361604" />
+      <entry key="D1" value="343.0923469287056" />
+      <entry key="W1" value="357.511990813976" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000000000003175" />
-      <entry key="S2" value="1.0007506874579821" />
-      <entry key="S5" value="1.056257919075132" />
-      <entry key="S10" value="1.23718751880259" />
-      <entry key="S30" value="1.6194840646681905" />
-      <entry key="S60" value="1.8822961457885778" />
-      <entry key="M2" value="3.7401355632183533" />
-      <entry key="M5" value="15.80723517937098" />
-      <entry key="M10" value="30.992451986238844" />
-      <entry key="M15" value="40.21955990610051" />
-      <entry key="M30" value="60.68970730874583" />
-      <entry key="H1" value="98.01053705405315" />
-      <entry key="H2" value="146.1079795871954" />
-      <entry key="H4" value="187.32112678001084" />
-      <entry key="D1" value="236.1605767975274" />
-      <entry key="W1" value="246.26038430457984" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="6.388038986456099E-122" />
+      <entry key="S2" value="7.2490103407151986E-31" />
+      <entry key="S5" value="1.769548738027808E-12" />
+      <entry key="S10" value="3.2594188470691864E-6" />
+      <entry key="S30" value="0.06785380470732276" />
+      <entry key="S60" value="0.9756108669071156" />
+      <entry key="M2" value="4.551645612100102" />
+      <entry key="M5" value="16.520357577714663" />
+      <entry key="M10" value="33.658349520503066" />
+      <entry key="M15" value="47.32602444066617" />
+      <entry key="M30" value="76.8861696693568" />
+      <entry key="H1" value="121.05281877887512" />
+      <entry key="H2" value="176.38876348644996" />
+      <entry key="H4" value="225.02867128401775" />
+      <entry key="D1" value="284.3565657716298" />
+      <entry key="W1" value="296.8422559316256" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="6.248442668239411E-7" />
-      <entry key="MS500" value="0.05743205521744061" />
-      <entry key="S2" value="0.4895745781358272" />
-      <entry key="S5" value="0.7678148359114976" />
-      <entry key="S10" value="0.9946987596881595" />
-      <entry key="S30" value="1.459813781179446" />
-      <entry key="S60" value="1.9108390387294127" />
-      <entry key="M2" value="5.145976746868621" />
-      <entry key="M5" value="24.74198445303537" />
-      <entry key="M10" value="50.043721529528" />
-      <entry key="M15" value="66.93917468727332" />
-      <entry key="M30" value="111.41146393869748" />
-      <entry key="H1" value="196.24975001921112" />
-      <entry key="H2" value="303.06044419396" />
-      <entry key="H4" value="393.05679148532755" />
-      <entry key="D1" value="498.56381216650016" />
-      <entry key="W1" value="520.2655189989097" />
+      <entry key="MS100" value="0.027584468634082968" />
+      <entry key="MS500" value="0.4876777307638209" />
+      <entry key="S2" value="0.8356669589218535" />
+      <entry key="S5" value="0.9307079006903579" />
+      <entry key="S10" value="0.9656922920254385" />
+      <entry key="S30" value="1.3206713389276594" />
+      <entry key="S60" value="3.4808915251846493" />
+      <entry key="M2" value="11.230129062561183" />
+      <entry key="M5" value="38.88703284530954" />
+      <entry key="M10" value="77.85551423039907" />
+      <entry key="M15" value="107.37313492115312" />
+      <entry key="M30" value="171.68687832292593" />
+      <entry key="H1" value="270.2651901195224" />
+      <entry key="H2" value="392.664799922364" />
+      <entry key="H4" value="498.96053390794344" />
+      <entry key="D1" value="627.4424348190604" />
+      <entry key="W1" value="654.3532831573856" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -202,8 +195,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
         <item itemvalue="HTTP Request.get-applications | GET request to example server" />
+        <item itemvalue="HTTP Request.get-applications-by-userId | GET request to example server" />
       </list>
     </recent_temporary>
   </component>

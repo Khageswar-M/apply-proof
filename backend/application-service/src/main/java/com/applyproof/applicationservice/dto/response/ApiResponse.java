@@ -3,6 +3,7 @@ package com.applyproof.applicationservice.dto.response;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 @Builder
 public record ApiResponse<T>(
@@ -21,7 +22,7 @@ public record ApiResponse<T>(
         );
     }
 
-    public static <T> ApiResponse<T> failure(String message){
+    public static <T> ApiResponse<T> failure(String message, HashMap<String, String> errors){
         return new ApiResponse<>(
                 false,
                 message,
