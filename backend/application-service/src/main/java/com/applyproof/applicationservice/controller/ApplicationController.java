@@ -81,4 +81,18 @@ public class ApplicationController {
                 )
         );
     }
+
+    @DeleteMapping("/{applicationId}")
+    public ResponseEntity<ApiResponse<Void>> deleteApplication(
+            @PathVariable String applicationId
+    ){
+        service.deleteApplication(applicationId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Application deleted successfully",
+                        null
+                )
+        );
+    }
 }

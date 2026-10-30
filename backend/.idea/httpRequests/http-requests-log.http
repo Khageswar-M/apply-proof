@@ -1,3 +1,23 @@
+DELETE http://localhost:4000/applications/b7cc54eb-97a4-4555-a17a-201f68e0a548
+
+<> 2026-10-30T211040.404.json
+
+###
+DELETE http://localhost:4000/applications/b7cc54eb-97a4-4555-a17a-201f68e0a54
+
+<> 2026-10-30T211031.404.json
+
+###
+DELETE http://localhost:4000/applications/b7cc54eb-97a4-4555-a17a-201f68e0a548
+
+<> 2026-10-30T211021.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T210958.200.json
+
+###
 GET http://localhost:4000/applications
 
 <> 2026-10-30T210154.200.json

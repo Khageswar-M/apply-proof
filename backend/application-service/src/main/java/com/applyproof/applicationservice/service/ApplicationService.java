@@ -14,4 +14,6 @@ public interface ApplicationService {
     ApplicationResponse updateApplication(String applicationId, ApplicationUpdateRequest request);
 
     ApplicationResponse createApplication(ApplicationCreateRequest request);
+
+    void deleteApplication(String applicationId);
 }

@@ -97,4 +97,12 @@ public class ApplicationServiceImpl implements ApplicationService{
 
         return ApplicationMapper.toDto(newJobApplication);
     }
+
+    @Override
+    public void deleteApplication(String applicationId) {
+        JobApplications jobApplication = repository.findById(UUID.fromString(applicationId))
+                .orElseThrow(() -> new ApplicationNotFoundException("Application not found"));
+
+        repository.deleteById(UUID.fromString(applicationId));
+    }
 }
