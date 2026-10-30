@@ -1,3 +1,65 @@
+GET http://localhost:4000/applications
+
+<> 2026-10-30T232656.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T232613.200.json
+
+###
+PUT http://localhost:4000/applications/26056563-d482-11f1-b1d8-22472fce340f
+Content-Type: application/json
+
+{
+  "companyName": "Seamen",
+  "applicationResource": "Indeed",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5"
+}
+
+<> 2026-10-30T222756.200.json
+
+###
+GET http://localhost:4000/applications/26056563-d482-11f1-b1d8-22472fce340f
+
+<> 2026-10-30T222744.200.json
+
+###
+GET http://localhost:4000/applications/a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d38
+
+<> 2026-10-30T222721.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T222711.200.json
+
+###
+GET http://localhost:4000/applications
+
+<> 2026-10-30T222703.200.json
+
+###
+DELETE http://localhost:4000/applications/8931a805-37bd-42c1-bf7d-2fc399ede5f2
+
+<> 2026-10-30T222646.200.json
+
+###
+POST http://localhost:4000/applications
+Content-Type: application/json
+
+{
+  "userId": "a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d38",
+  "companyName": "Microsoft",
+  "resourceName": "LinkedIn",
+  "status": "OFFER",
+  "resumeName": "Khageswar-Java-Fullstack-Dev-CV-2-0-6"
+}
+
+<> 2026-10-30T222545.200.json
+
+###
 DELETE http://localhost:4000/applications/b7cc54eb-97a4-4555-a17a-201f68e0a548
 
 <> 2026-10-30T211040.404.json

@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Application created successfully",
+  "data": {
+    "id": "8931a805-37bd-42c1-bf7d-2fc399ede5f2",
+    "companyName": "Microsoft",
+    "resource": "Khageswar-Java-Fullstack-Dev-CV-2-0-6",
+    "status": "OFFER",
+    "resumeName": "Khageswar-Java-Fullstack-Dev-CV-2-0-6",
+    "appliedDateTime": "2026-10-30T22:25:45.719591800"
+  },
+  "timeStamp": "2026-10-30T22:25:45.8766638"
+}

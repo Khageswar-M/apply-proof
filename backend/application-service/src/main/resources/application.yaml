@@ -3,25 +3,47 @@ spring:
     name: application-service
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: admin
-    password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    #  FOR MYSQL CONFIGURATION
+    url: jdbc:mysql://localhost:${DATABASE_PORT}/${DATABASE_NAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
 
   sql:
     init:
       mode: always
+
+
+  #    FOR H2 INMEMORY DY CONFIGURATION
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: admin
+#    password:
+
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: update
+#    defer-datasource-initialization: true
+
+
+
+#  sql:
+#    init:
+#      mode: always
 
 server:
   port: 4000

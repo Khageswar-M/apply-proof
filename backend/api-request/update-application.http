@@ -1,4 +1,4 @@
-PUT http://localhost:4000/applications/2a62d64c-0867-496e-83b1-554cf761da6c
+PUT http://localhost:4000/applications/26056563-d482-11f1-b1d8-22472fce340f
 Content-Type: application/json
 
 {

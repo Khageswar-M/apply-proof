@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Application updated successfully",
+  "data": {
+    "id": "26056563-d482-11f1-b1d8-22472fce340f",
+    "companyName": "Seamen",
+    "resource": "Khageswar-Java-Fullstack-CV-2-0-5",
+    "status": "OFFER",
+    "resumeName": "Khageswar-Java-Fullstack-CV-2-0-5",
+    "appliedDateTime": "2026-10-21T10:30"
+  },
+  "timeStamp": "2026-10-30T22:27:56.805944"
+}
