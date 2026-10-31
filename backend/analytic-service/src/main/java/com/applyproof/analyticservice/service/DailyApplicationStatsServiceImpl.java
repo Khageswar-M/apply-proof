@@ -1,11 +1,13 @@
 package com.applyproof.analyticservice.service;
 
+import com.applyproof.analyticservice.dto.response.StatsResponse;
 import com.applyproof.analyticservice.modal.DailyApplicationStats;
 import com.applyproof.analyticservice.repository.DailyApplicationStatsRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,6 +19,20 @@ public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsSe
             DailyApplicationStatsRepository repository
     ){
         this.repository = repository;
+    }
+
+    @Override
+    public List<StatsResponse> getAllStats() {
+        List<DailyApplicationStats> allStats = repository.findAll();
+
+        return allStats.stream()
+                .map(stat -> StatsResponse.builder()
+                        .id(stat.getId())
+                        .userId(stat.getUserId().toString())
+                        .applyDate(stat.getApplyDate().toString())
+                        .applyCount(stat.getApplyCount())
+                        .build())
+                .toList();
     }
 
     @Override

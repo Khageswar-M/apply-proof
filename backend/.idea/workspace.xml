@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/controller/ApplicationStatsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/dto/response/StatsResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/repository/DailyApplicationStatsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/repository/DailyApplicationStatsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/controller/ApplicationStatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/controller/ApplicationStatsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,10 +27,10 @@
       <list>
         <option value="Enum" />
         <option value="Exception" />
-        <option value="Record" />
         <option value="HTTP Request" />
         <option value="Dockerfile" />
         <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
@@ -55,61 +54,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.000007629434106" />
-      <entry key="S2" value="1.0560509658343389" />
-      <entry key="S5" value="1.4618681852256938" />
-      <entry key="S10" value="2.108236045838434" />
-      <entry key="S30" value="3.3115711527716454" />
-      <entry key="S60" value="4.875771296678429" />
-      <entry key="M2" value="8.601303950395536" />
-      <entry key="M5" value="19.714909695118592" />
-      <entry key="M10" value="35.986930922066406" />
-      <entry key="M15" value="48.76347767335043" />
-      <entry key="M30" value="76.37827408679897" />
-      <entry key="H1" value="117.51506602703806" />
-      <entry key="H2" value="205.90306047188045" />
-      <entry key="H4" value="363.0604660941284" />
-      <entry key="D1" value="722.0088210136515" />
-      <entry key="W1" value="828.3652087691595" />
+      <entry key="MS100" value="2.561157802637549E-128" />
+      <entry key="MS500" value="3.0317072866538264E-26" />
+      <entry key="S2" value="4.172744757724443E-7" />
+      <entry key="S5" value="0.0028092578394524207" />
+      <entry key="S10" value="0.056366738016239794" />
+      <entry key="S30" value="0.9719422679112545" />
+      <entry key="S60" value="3.4111751273210897" />
+      <entry key="M2" value="8.61020977655921" />
+      <entry key="M5" value="21.61685860363512" />
+      <entry key="M10" value="39.85854443617817" />
+      <entry key="M15" value="55.17265763430529" />
+      <entry key="M30" value="89.01898168929232" />
+      <entry key="H1" value="136.10775553303478" />
+      <entry key="H2" value="227.32946029909905" />
+      <entry key="H4" value="386.7717768024296" />
+      <entry key="D1" value="755.9677116407336" />
+      <entry key="W1" value="866.5389457384415" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.9888851523599856E-84" />
-      <entry key="MS500" value="1.8185390489020382E-17" />
-      <entry key="S2" value="6.762090394851041E-5" />
-      <entry key="S5" value="0.02675498629197752" />
-      <entry key="S10" value="0.22023972478157802" />
-      <entry key="S30" value="1.0550848200671874" />
-      <entry key="S60" value="2.352210206433567" />
-      <entry key="M2" value="5.3388646638145545" />
-      <entry key="M5" value="15.118960133857488" />
-      <entry key="M10" value="28.614697273670064" />
-      <entry key="M15" value="37.933726182723994" />
-      <entry key="M30" value="54.26179510260002" />
-      <entry key="H1" value="76.26231968960634" />
-      <entry key="H2" value="135.74170915698622" />
-      <entry key="H4" value="255.79745912367474" />
-      <entry key="D1" value="545.3710056786604" />
-      <entry key="W1" value="632.8075345480679" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000000000002" />
+      <entry key="S2" value="1.0001625870349344" />
+      <entry key="S5" value="1.0585863019483015" />
+      <entry key="S10" value="1.5087941610800861" />
+      <entry key="S30" value="4.015081314203568" />
+      <entry key="S60" value="8.599163327768231" />
+      <entry key="M2" value="17.299783901800268" />
+      <entry key="M5" value="33.098659224721004" />
+      <entry key="M10" value="50.098271968536025" />
+      <entry key="M15" value="62.69225541007208" />
+      <entry key="M30" value="86.24798897014821" />
+      <entry key="H1" value="114.20643229963349" />
+      <entry key="H2" value="175.7595609738995" />
+      <entry key="H4" value="296.85675473097666" />
+      <entry key="D1" value="593.5406927144209" />
+      <entry key="W1" value="684.1732565829676" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.3344768490084232E-24" />
-      <entry key="MS500" value="1.6801631626720667E-5" />
-      <entry key="S2" value="0.07571965900613664" />
-      <entry key="S5" value="0.6078555365142302" />
-      <entry key="S10" value="1.5822002423591015" />
-      <entry key="S30" value="3.9068825149436446" />
-      <entry key="S60" value="6.882434232600716" />
-      <entry key="M2" value="13.654953268439877" />
-      <entry key="M5" value="34.61881192898912" />
-      <entry key="M10" value="64.43801301995" />
-      <entry key="M15" value="86.56315510988603" />
-      <entry key="M30" value="130.55072999191253" />
-      <entry key="H1" value="193.71768197406334" />
-      <entry key="H2" value="341.5964953307797" />
-      <entry key="H4" value="618.8161575036158" />
-      <entry key="D1" value="1267.3659854330565" />
-      <entry key="W1" value="1461.1704730581723" />
+      <entry key="MS100" value="5.687175715178005E-4" />
+      <entry key="MS500" value="0.22437751266681538" />
+      <entry key="S2" value="0.6883213761613292" />
+      <entry key="S5" value="0.9085598855919714" />
+      <entry key="S10" value="1.4319002203129934" />
+      <entry key="S30" value="4.822456089094817" />
+      <entry key="S60" value="11.804160143578354" />
+      <entry key="M2" value="25.689200359253828" />
+      <entry key="M5" value="54.52130738362709" />
+      <entry key="M10" value="89.78809071001317" />
+      <entry key="M15" value="117.71602444935402" />
+      <entry key="M30" value="175.15844167159736" />
+      <entry key="H1" value="250.24014172676056" />
+      <entry key="H2" value="403.03251720607" />
+      <entry key="H4" value="683.5823374730825" />
+      <entry key="D1" value="1349.4936270100359" />
+      <entry key="W1" value="1550.7097867484736" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
