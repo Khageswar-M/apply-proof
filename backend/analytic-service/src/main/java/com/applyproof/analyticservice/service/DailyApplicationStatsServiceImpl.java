@@ -63,6 +63,19 @@ public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsSe
     }
 
     @Override
+    public List<StatsResponse> getAllStatsFrom(UUID userId) {
+        List<DailyApplicationStats> applications = repository.findByUserIdOrderByApplyDateAsc(userId);
+
+        log.info("Fetched all stats from user id {}", userId);
+        return applications.stream()
+                .map( application -> StatsResponse.builder()
+                        .date(application.getApplyDate())
+                        .count(application.getApplyCount())
+                        .build())
+                .toList();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public int getCountForDate(UUID userId, LocalDate date) {
         return repository.findByUserIdAndApplyDate(userId, date)

@@ -2,6 +2,7 @@ package com.applyproof.analyticservice.service;
 
 
 import com.applyproof.analyticservice.dto.response.StatsResponse;
+import com.applyproof.analyticservice.modal.DailyApplicationStats;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,10 @@ public interface DailyApplicationStatsService {
 
     // call this everytime the user applies to a job
     void recordApplication(UUID userId, LocalDate date);
+
+
+    // get all stats by userId
+    List<StatsResponse> getAllStatsFrom(UUID userId);
 
     // Count for one specific day (0 if no row exists)
     int getCountForDate(UUID userId, LocalDate date);

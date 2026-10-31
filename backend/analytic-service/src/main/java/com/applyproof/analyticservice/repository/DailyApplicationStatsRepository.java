@@ -1,5 +1,6 @@
 package com.applyproof.analyticservice.repository;
 
+import com.applyproof.analyticservice.dto.response.StatsResponse;
 import com.applyproof.analyticservice.modal.DailyApplicationStats;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

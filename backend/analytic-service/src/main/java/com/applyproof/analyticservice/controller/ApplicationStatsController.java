@@ -51,4 +51,20 @@ public class ApplicationStatsController {
                 )
         );
     }
+
+
+    // GET /analytics -> full daily history for the user
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<StatsResponse>>> getAllStats(
+            @PathVariable UUID userId
+    ){
+        List<StatsResponse> userStats = statsService.getAllStatsFrom(userId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Fetched all stats successfully for user",
+                        userStats
+                )
+        );
+    }
 }
