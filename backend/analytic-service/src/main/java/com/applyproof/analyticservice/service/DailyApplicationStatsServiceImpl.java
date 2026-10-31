@@ -3,13 +3,16 @@ package com.applyproof.analyticservice.service;
 import com.applyproof.analyticservice.dto.response.StatsResponse;
 import com.applyproof.analyticservice.modal.DailyApplicationStats;
 import com.applyproof.analyticservice.repository.DailyApplicationStatsRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsService{
 
@@ -25,12 +28,12 @@ public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsSe
     public List<StatsResponse> getAllStats() {
         List<DailyApplicationStats> allStats = repository.findAll();
 
+        log.info("All application stats fetched successfully");
+
         return allStats.stream()
                 .map(stat -> StatsResponse.builder()
-                        .id(stat.getId())
-                        .userId(stat.getUserId().toString())
-                        .applyDate(stat.getApplyDate().toString())
-                        .applyCount(stat.getApplyCount())
+                        .date(stat.getApplyDate())
+                        .count(stat.getApplyCount())
                         .build())
                 .toList();
     }
@@ -48,10 +51,30 @@ public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsSe
                     .applyDate(date)
                     .applyCount(1)
                     .build());
+
+            log.info("New application recorded by user id {}", userId);
         }catch (DataIntegrityViolationException ex){
             // Another request inserted the same (user, date) row first
             // The unique constraint rejected ours, so just increment theirs.
             repository.increment(userId, date);
+
+            log.info("Existing record count updated by user id {}", userId);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountForDate(UUID userId, LocalDate date) {
+        return repository.findByUserIdAndApplyDate(userId, date)
+                .map(DailyApplicationStats::getApplyCount)
+                .orElse(0);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getTotalApplications(UUID userId) {
+        return repository.findByUserIdOrderByApplyDateAsc(userId).stream()
+                .mapToInt(DailyApplicationStats::getApplyCount)
+                .sum();
     }
 }

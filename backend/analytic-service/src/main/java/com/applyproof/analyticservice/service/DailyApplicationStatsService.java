@@ -14,4 +14,10 @@ public interface DailyApplicationStatsService {
 
     // call this everytime the user applies to a job
     void recordApplication(UUID userId, LocalDate date);
+
+    // Count for one specific day (0 if no row exists)
+    int getCountForDate(UUID userId, LocalDate date);
+
+    // Total applications across all days
+    int getTotalApplications(UUID userId);
 }
