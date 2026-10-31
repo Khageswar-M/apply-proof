@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/analytic-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +123,7 @@
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Docker.analytic-service-db.executor": "Run",
+    "Docker.analytic-service.executor": "Run",
     "Docker.application-service-db.executor": "Run",
     "Docker.application-service.executor": "Run",
     "HTTP Request.create-application | GET request to example server.executor": "Run",
@@ -276,6 +277,13 @@
         <option name="environmentVariables" />
       </selectedOptions>
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.applyproof.applicationservice.ApplicationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MailServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="mail-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.applyproof.mailservice.MailServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -603,6 +611,7 @@
       <item itemvalue="HTTP Request.delete-application | GET request to example server" />
       <item itemvalue="HTTP Request.get-applications | GET request to example server" />
       <item itemvalue="HTTP Request.update-application | #1" />
+      <item itemvalue="Spring Boot.MailServiceApplication" />
       <item itemvalue="Spring Boot.AnalyticServiceApplication" />
       <item itemvalue="Spring Boot.ApplicationServiceApplication" />
     </list>
