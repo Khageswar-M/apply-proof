@@ -94,4 +94,22 @@ public class ApplicationStatsController {
                 ApiResponse.success("Fetched stats for range successfully", stats)
         );
     }
+
+    // GET /analytics/date/2026-10-31 -> count for one day
+    @GetMapping("/date/{userId}")
+    public ResponseEntity<ApiResponse<Integer>> getCountForDate(
+            @PathVariable UUID userId,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ){
+        LocalDate applyDate = date != null ? date : LocalDate.now();
+        int count = statsService.getCountForDate(userId, applyDate);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Fetched count for date successfully",
+                        count
+                )
+        );
+    }
 }

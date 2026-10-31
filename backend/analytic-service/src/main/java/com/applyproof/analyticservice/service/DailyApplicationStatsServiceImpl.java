@@ -92,6 +92,7 @@ public class DailyApplicationStatsServiceImpl implements DailyApplicationStatsSe
     @Override
     @Transactional(readOnly = true)
     public int getCountForDate(UUID userId, LocalDate date) {
+        log.info("Get count for date requested by user {}", userId);
         return repository.findByUserIdAndApplyDate(userId, date)
                 .map(DailyApplicationStats::getApplyCount)
                 .orElse(0);
