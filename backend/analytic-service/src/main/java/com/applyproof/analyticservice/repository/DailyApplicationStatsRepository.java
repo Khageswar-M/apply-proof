@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @Repository
 public interface DailyApplicationStatsRepository extends JpaRepository<DailyApplicationStats, Long> {
+
     List<DailyApplicationStats> findByUserIdOrderByApplyDateAsc(UUID userId);
 
     List<DailyApplicationStats> findByUserIdAndApplyDateBetweenOrderByApplyDateAsc(
