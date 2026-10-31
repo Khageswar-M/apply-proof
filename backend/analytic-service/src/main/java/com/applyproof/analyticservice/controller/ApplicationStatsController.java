@@ -67,4 +67,31 @@ public class ApplicationStatsController {
                 )
         );
     }
+
+    // GET /analytics/userId/range?from=2026-10-01&to=2026-10-31
+    @GetMapping("/{userId}/range")
+    public ResponseEntity<ApiResponse<List<StatsResponse>>> getStatsBetween(
+            @PathVariable UUID userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+    ){
+        if(from.isAfter(to)){
+            return ResponseEntity.badRequest().body(ApiResponse.failure(
+                    "'from' date must not be after 'to' date",
+                    null
+            ));
+        }
+
+        List<StatsResponse> stats = statsService.getStatsForUserBetween(userId, from, to)
+                .stream()
+                .map(stat -> StatsResponse.builder()
+                        .date(stat.date())
+                        .count(stat.count())
+                        .build())
+                .toList();
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Fetched stats for range successfully", stats)
+        );
+    }
 }

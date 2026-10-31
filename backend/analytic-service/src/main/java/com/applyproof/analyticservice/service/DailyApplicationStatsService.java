@@ -16,9 +16,11 @@ public interface DailyApplicationStatsService {
     // call this everytime the user applies to a job
     void recordApplication(UUID userId, LocalDate date);
 
-
     // get all stats by userId
     List<StatsResponse> getAllStatsFrom(UUID userId);
+
+    // get stats within a date range
+    List<StatsResponse> getStatsForUserBetween(UUID userId, LocalDate from, LocalDate to);
 
     // Count for one specific day (0 if no row exists)
     int getCountForDate(UUID userId, LocalDate date);
