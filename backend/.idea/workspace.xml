@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/dto/response/StatsResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/controller/ApplicationStatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/controller/ApplicationStatsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/service/DailyApplicationStatsServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

@@ -1,15 +1,18 @@
 package com.applyproof.analyticservice.dto.response;
 
+import com.applyproof.analyticservice.modal.DailyApplicationStats;
 import lombok.Builder;
+
+import java.time.LocalDate;
 
 @Builder
 public record StatsResponse(
-        Long id,
 
-        String userId,
+        LocalDate date,
 
-        String applyDate,
-
-        int applyCount
+        int count
 ) {
+    public static StatsResponse from(DailyApplicationStats stats){
+        return new StatsResponse(stats.getApplyDate(), stats.getApplyCount());
+    }
 }
