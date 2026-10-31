@@ -112,4 +112,20 @@ public class ApplicationStatsController {
                 )
         );
     }
+
+
+    // GET /analytics/total/user-id
+    @GetMapping("/total/{userId}")
+    public ResponseEntity<ApiResponse<Integer>> getTotalCount(
+            @PathVariable UUID userId
+    ){
+        int count = statsService.getTotalApplications(userId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Fetched total applications successfully",
+                        count
+                )
+        );
+    }
 }
