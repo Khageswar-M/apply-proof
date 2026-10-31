@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2a36f1b-bae4-4418-9c3e-a6d975996bdc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/analytic-service/src/main/java/com/applyproof/analyticservice/mapper/DailyApplicationStatsMapper.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytic-service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,10 +24,10 @@
         <option value="Enum" />
         <option value="Exception" />
         <option value="HTTP Request" />
-        <option value="Dockerfile" />
         <option value="Interface" />
         <option value="Record" />
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -50,61 +50,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="5.729323160994021E-134" />
-      <entry key="MS500" value="2.2470912791684698E-27" />
-      <entry key="S2" value="2.2193603964846631E-7" />
-      <entry key="S5" value="0.0029030490111089666" />
-      <entry key="S10" value="0.10630072129233756" />
-      <entry key="S30" value="1.8668695056720979" />
-      <entry key="S60" value="4.341812119534523" />
-      <entry key="M2" value="6.94154769329914" />
-      <entry key="M5" value="11.294032759475625" />
-      <entry key="M10" value="16.302366181719556" />
-      <entry key="M15" value="20.402580579891044" />
-      <entry key="M30" value="37.49827456990507" />
-      <entry key="H1" value="86.49435696752741" />
-      <entry key="H2" value="189.7686791213794" />
-      <entry key="H4" value="370.52908621523926" />
-      <entry key="D1" value="858.7895514785398" />
-      <entry key="W1" value="1022.8421532496083" />
+      <entry key="MS100" value="1.0733021843269923" />
+      <entry key="MS500" value="1.592957249705474" />
+      <entry key="S2" value="1.877517620564265" />
+      <entry key="S5" value="1.9492165323219863" />
+      <entry key="S10" value="1.9905712986370667" />
+      <entry key="S30" value="2.393101910356236" />
+      <entry key="S60" value="2.9002047492199967" />
+      <entry key="M2" value="3.6435001309053403" />
+      <entry key="M5" value="6.947096882310666" />
+      <entry key="M10" value="12.583325812730411" />
+      <entry key="M15" value="17.358067233341565" />
+      <entry key="M30" value="34.40729357564571" />
+      <entry key="H1" value="81.92924562000444" />
+      <entry key="H2" value="184.1452985426673" />
+      <entry key="H4" value="365.0185939813277" />
+      <entry key="D1" value="859.0773544981901" />
+      <entry key="W1" value="1026.2093927052842" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000199321363767" />
-      <entry key="S5" value="1.0292719989903272" />
-      <entry key="S10" value="1.3984967403312485" />
-      <entry key="S30" value="3.8479294070916032" />
-      <entry key="S60" value="6.374995078001592" />
-      <entry key="M2" value="9.08942601515116" />
-      <entry key="M5" value="15.50801174659691" />
-      <entry key="M10" value="24.15165986701679" />
-      <entry key="M15" value="31.303037233419502" />
-      <entry key="M30" value="58.155271956279456" />
-      <entry key="H1" value="120.66300733150042" />
-      <entry key="H2" value="224.80253695852926" />
-      <entry key="H4" value="382.7329531852557" />
-      <entry key="D1" value="791.2972115032858" />
-      <entry key="W1" value="928.0237939830489" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="5.628039821477094E-82" />
+      <entry key="S5" value="3.255888773228746E-33" />
+      <entry key="S10" value="7.865587369821416E-17" />
+      <entry key="S30" value="1.4742925231652912E-5" />
+      <entry key="S60" value="0.012478377999767969" />
+      <entry key="M2" value="0.4021384510088073" />
+      <entry key="M5" value="4.455452089854526" />
+      <entry key="M10" value="12.945380264242832" />
+      <entry key="M15" value="20.65530901708009" />
+      <entry key="M30" value="47.240197045110115" />
+      <entry key="H1" value="108.75154859906047" />
+      <entry key="H2" value="213.41840036795597" />
+      <entry key="H4" value="372.9161420420675" />
+      <entry key="D1" value="787.877786886496" />
+      <entry key="W1" value="927.4498358877672" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.001449730049442431" />
-      <entry key="MS500" value="0.2705561611314287" />
-      <entry key="S2" value="0.7212266422959293" />
-      <entry key="S5" value="0.9037067016599408" />
-      <entry key="S10" value="1.3875374821877378" />
-      <entry key="S30" value="5.508392265568613" />
-      <entry key="S60" value="10.516891108273713" />
-      <entry key="M2" value="15.881818603223447" />
-      <entry key="M5" value="26.70511523090132" />
-      <entry key="M10" value="40.38170453010476" />
-      <entry key="M15" value="51.64368701160376" />
-      <entry key="M30" value="95.59446098026643" />
-      <entry key="H1" value="207.0927108346736" />
-      <entry key="H2" value="414.508282289713" />
-      <entry key="H4" value="753.2072297517248" />
-      <entry key="D1" value="1650.0677640076144" />
-      <entry key="W1" value="1950.862767717199" />
+      <entry key="MS100" value="0.8827030134075943" />
+      <entry key="MS500" value="1.003324994994141" />
+      <entry key="S2" value="1.4027321226944591" />
+      <entry key="S5" value="1.696952843910808" />
+      <entry key="S10" value="1.8513281943848698" />
+      <entry key="S30" value="2.3431991698199672" />
+      <entry key="S60" value="2.8867207831789234" />
+      <entry key="M2" value="4.026060979493429" />
+      <entry key="M5" value="11.369455372294174" />
+      <entry key="M10" value="25.48730865745849" />
+      <entry key="M15" value="37.9707537302928" />
+      <entry key="M30" value="81.59861485710805" />
+      <entry key="H1" value="190.62208289477832" />
+      <entry key="H2" value="397.50373193264204" />
+      <entry key="H4" value="737.8812220857835" />
+      <entry key="D1" value="1646.9362061554982" />
+      <entry key="W1" value="1953.6560484218262" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -191,7 +191,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.AnalyticServiceApplication">
+  <component name="RunManager" selected="Docker.analytic-service">
     <configuration name="create-application | GET request to example server" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/api-request/create-application.http" executionIdentifier="GET request to example server" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -368,6 +368,49 @@
               </DockerVolumeBindingImpl>
             </list>
           </option>
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="analytic-service" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="analytic-service:latest" />
+          <option name="containerName" value="analytic-service" />
+          <option name="envVars">
+            <list>
+              <DockerEnvVarImpl>
+                <option name="name" value="SPRING_DATASOURCE_PASSWORD" />
+                <option name="value" value="password" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="SPRING_DATASOURCE_URL" />
+                <option name="value" value="jdbc:mysql://analytic-service-db:3306/db" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="SPRING_DATASOURCE_USERNAME" />
+                <option name="value" value="user" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="SPRING_JPA_HIBERNATE_DDL_AUTO" />
+                <option name="value" value="update" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="SPRING_SQL_INIT_MODE" />
+                <option name="value" value="always" />
+              </DockerEnvVarImpl>
+            </list>
+          </option>
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="4001" />
+                <option name="hostPort" value="4001" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
+          <option name="commandLineOptions" value="--network internal" />
+          <option name="sourceFilePath" value="analytic-service/Dockerfile" />
         </settings>
       </deployment>
       <method v="2" />
@@ -551,6 +594,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.analytic-service" />
       <item itemvalue="Docker.analytic-service-db" />
       <item itemvalue="Docker.application-service" />
       <item itemvalue="Docker.application-service-db" />
