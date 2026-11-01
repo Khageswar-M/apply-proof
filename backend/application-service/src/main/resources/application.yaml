@@ -21,13 +21,6 @@ spring:
     init:
       mode: always
 
-  grpc:
-    client:
-      channels:
-        analytic-service:
-                  address: 'static://localhost:4001'
-                  negotiation-type: plaintext
-
   #  kafka:
 #    bootstrap-servers: localhost:9092
 #    producer:
@@ -64,6 +57,13 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+#
+analytic:
+  service:
+    address: ${ANALYTIC_SERVICE_ADDRESS}
+    grpc:
+      port: ${ANALYTIC_SERVICE_GRPC_PORT}
+
 
 server:
   port: 4000
