@@ -1,4 +1,11 @@
 spring:
+
+  grpc:
+    server:
+      port: 9001
+      reflection:
+        enabled: true
+
   application:
     name: analytic-service
 
@@ -20,6 +27,8 @@ spring:
   sql:
     init:
       mode: always
+
+
 
 server:
   port: 4001

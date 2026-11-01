@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS daily_application_stats;
-
 CREATE TABLE IF NOT EXISTS daily_application_stats (
         id BIGINT NOT NULL AUTO_INCREMENT,
         user_id CHAR(36) NOT NULL,
@@ -11,7 +9,7 @@ CREATE TABLE IF NOT EXISTS daily_application_stats (
         CONSTRAINT chk_apply_count CHECK (apply_count >= 0)
 );
 
-INSERT INTO daily_application_stats
+INSERT IGNORE INTO daily_application_stats
 (user_id, apply_date, apply_count)
 VALUES
     ('a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d34', '2026-10-22', 3),
