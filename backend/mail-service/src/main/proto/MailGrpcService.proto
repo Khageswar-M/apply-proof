@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "mail";
+
+service MailingGrpcService{
+  rpc SendingMail(MailingRequest) returns (MailingResponse);
+}
+
+message MailingRequest{
+  string to = 1;
+  string subject = 2;
+  string body = 3;
+}
+
+message MailingResponse{
+  bool send = 1;
+  string to = 2;
+}
