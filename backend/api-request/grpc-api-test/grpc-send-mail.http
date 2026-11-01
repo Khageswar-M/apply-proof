@@ -1,0 +1,7 @@
+GRPC localhost:9002/MailingGrpcService/SendingMail
+
+{
+  "to": "khageswarmaharana462@gmail.com",
+  "subject": "gRPC mailing test",
+  "body": "Mail received by gRPC service"
+}
