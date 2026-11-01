@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: mail-service
+  mail:
+    host: ${RESEND_HOST}
+    port: ${RESEND_PORT}
+    username: ${RESEND_USERNAME}
+    password: ${RESEND_API_KEY}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+app:
+  mail:
+    from: ${MAIL_SERVICE:onboarding@resend.dev}
+
+server:
+  port: 4002
+
+logging:
+  level:
+    root: info

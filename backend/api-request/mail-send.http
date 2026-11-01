@@ -1,0 +1,8 @@
+POST http://localhost:4002/mail/send
+Content-Type: application/json
+
+{
+  "to": "khageswarmaharana462@gmail.com",
+  "subject": "Hello",
+  "body": "Mail test successful"
+}
