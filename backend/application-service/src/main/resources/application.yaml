@@ -21,18 +21,25 @@ spring:
     init:
       mode: always
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
-      acks: all
-      properties:
-        enable.idempotence: true
-app:
-  kafka:
-    topics:
-      application-created: application.created.v1
+  grpc:
+    client:
+      channels:
+        analytic-service:
+                  address: 'static://localhost:4001'
+                  negotiation-type: plaintext
+
+  #  kafka:
+#    bootstrap-servers: localhost:9092
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+#      acks: all
+#      properties:
+#        enable.idempotence: true
+#app:
+#  kafka:
+#    topics:
+#      application-created: application.created.v1
 
 
   #    FOR H2 INMEMORY DY CONFIGURATION
