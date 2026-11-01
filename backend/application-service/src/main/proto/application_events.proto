@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.applyproof.application.grpc";
+option java_outer_classname = "ApplicationEventsProto";
+
+package applyproof.application;
+
+// Kafka payload: published by application-service, consumes by the stats services
+message ApplicationRecordedEvent{
+  string user_id = 1; // UUID as string
+  string apply_date = 2;
+}
+
+// Only needed if you also want a direct gRPC call to the stats service
+service ApplicationStatsService{
+  rpc RecordApplication(ApplicationRecordedEvent) returns (RecordApplicationResponse);
+}
+
+message RecordApplicationResponse{
+  bool success = 1;
+}
