@@ -1,10 +1,11 @@
 spring:
 
-  grpc:
-    server:
-      port: 9001
-      reflection:
-        enabled: true
+  kafka:
+    consumer:
+      group-id: analytic-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
 
   application:
     name: analytic-service
