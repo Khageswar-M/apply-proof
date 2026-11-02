@@ -47,6 +47,12 @@ public class User {
     private boolean emailVerified = false;
 
     @Column(
+            name = "is_login",
+            nullable = false
+    )
+    private boolean isLoggedIn = false;
+
+    @Column(
             name = "created_at",
             nullable = false,
             updatable = false
