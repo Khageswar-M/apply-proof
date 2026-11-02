@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package analytic.event;
+
+option java_package = "analytic.event";
+option java_multiple_files = true;
+
+message ApplyCountEvent{
+  string user_id = 1;
+  string apply_date = 2;
+}
