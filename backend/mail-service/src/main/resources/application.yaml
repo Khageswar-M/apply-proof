@@ -1,6 +1,14 @@
 spring:
   application:
     name: mail-service
+
+  kafka:
+    consumer:
+      group-id: analytic-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+
   mail:
     host: ${RESEND_HOST}
     port: ${RESEND_PORT}
@@ -13,11 +21,6 @@ spring:
           starttls:
             enable: true
             required: true
-  grpc:
-    server:
-      port: ${GRPC_SERVER_PORT}
-      reflection:
-        enabled: true
 
 app:
   mail:

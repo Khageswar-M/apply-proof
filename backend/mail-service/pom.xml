@@ -65,6 +65,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--    Kafka   -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka</artifactId>
+        </dependency>
+
         <!-- gRPC Server -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
