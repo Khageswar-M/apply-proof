@@ -70,4 +70,17 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<String>> handleUserAlreadyExistsException(
+            UserAlreadyExistsException ex
+    ){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage(),
+                                null
+                        )
+                );
+    }
+
 }

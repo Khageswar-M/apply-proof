@@ -6,6 +6,7 @@ import com.applyproof.authservice.dto.request.VerifyOtpRequest;
 import com.applyproof.authservice.dto.response.LoginResponse;
 import com.applyproof.authservice.dto.response.SignUpResponse;
 import com.applyproof.authservice.exception.EmailNotVerifiedException;
+import com.applyproof.authservice.exception.UserAlreadyExistsException;
 import com.applyproof.authservice.exception.UserNotFoundException;
 import com.applyproof.authservice.kafka.KafkaMailEventProducer;
 import com.applyproof.authservice.modal.User;
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignUpResponse signup(EmailRequest request) {
         if (isUserExists(request.email())) {
-            throw new RuntimeException("User already exists!");
+            throw new UserAlreadyExistsException("An account is already exists with this email, please do login.");
         }
 
         User newUser = User.builder()
