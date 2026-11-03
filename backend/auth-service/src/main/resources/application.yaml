@@ -49,6 +49,18 @@ app:
   email:
     subject: ${EMAIL_SUBJECT}
     body: ${EMAIL_BODY}
+  cookie:
+    secure: true
+    same-site: Strict
+
+jwt:
+  secret:
+    key: ${SECRET_KEY}
+  access:
+    expiration-ms: 600000    # 10 min
+  refresh:
+    expiration-ms: 604800000 # 7 days
+
 
 logging:
   level:

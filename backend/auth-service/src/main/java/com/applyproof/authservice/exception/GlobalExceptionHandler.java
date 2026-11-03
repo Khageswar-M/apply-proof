@@ -83,4 +83,30 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ApiResponse<String>> handleTokenExpiredException(
+            TokenExpiredException ex
+    ){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage(),
+                                null
+                        )
+                );
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ApiResponse<String>> handleInvalidTokenException(
+            InvalidTokenException ex
+    ){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage(),
+                                null
+                        )
+                );
+    }
+
 }
