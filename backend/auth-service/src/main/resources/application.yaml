@@ -37,6 +37,14 @@ spring:
 server:
   port: 4003
 
+app:
+  otp:
+    length: ${OTP_LENGTH}
+    expiration: ${OTP_EXPIRATION}
+  email:
+    subject: ${EMAIL_SUBJECT}
+    body: ${EMAIL_BODY}
+
 logging:
   level:
     root: info
