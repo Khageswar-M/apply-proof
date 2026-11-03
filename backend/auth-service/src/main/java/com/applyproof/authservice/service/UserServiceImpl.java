@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         MailRequest request = MailRequest.builder()
                 .to(email)
                 .subject(emailSubject)
-                .body(otp + emailBody)
+                .body(otp + " " +emailBody)
                 .build();
 
         kafkaProducer.publishMailEvent(request);
