@@ -3,19 +3,25 @@ package com.applyproof.authservice.service;
 import com.applyproof.authservice.dto.request.MailRequest;
 import com.applyproof.authservice.dto.request.EmailRequest;
 import com.applyproof.authservice.dto.request.VerifyOtpRequest;
+import com.applyproof.authservice.dto.response.AuthResult;
 import com.applyproof.authservice.dto.response.LoginResponse;
 import com.applyproof.authservice.dto.response.SignUpResponse;
+import com.applyproof.authservice.dto.response.TokenPair;
 import com.applyproof.authservice.exception.EmailNotVerifiedException;
+import com.applyproof.authservice.exception.InvalidTokenException;
 import com.applyproof.authservice.exception.UserAlreadyExistsException;
 import com.applyproof.authservice.exception.UserNotFoundException;
 import com.applyproof.authservice.kafka.KafkaMailEventProducer;
 import com.applyproof.authservice.modal.User;
 import com.applyproof.authservice.repository.UserRepository;
 import com.applyproof.authservice.service.redisService.RedisService;
+import com.applyproof.authservice.service.tokenService.AuthTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,12 +30,18 @@ import java.time.LocalDateTime;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final String OTP_PREFIX = "otp:";
+    private static final String ATTEMPTS_PREFIX = "otp:attempts:";
+    private static final int MAX_OTP_ATTEMPTS = 5;
+
     private final UserRepository repository;
     private final RedisService redisService;
     private final KafkaMailEventProducer kafkaProducer;
+    private final AuthTokenService authTokenService;
+    private final SecureRandom secureRandom = new SecureRandom();
 
     @Value("${app.otp.length}")
-    private int otpLength; // Updated to camelCase convention
+    private int otpLength;
 
     @Value("${app.otp.expiration}")
     private int otpExpiration;
@@ -43,52 +55,50 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(
             UserRepository repository,
             RedisService redisService,
-            KafkaMailEventProducer kafkaProducer
-    ){
+            KafkaMailEventProducer kafkaProducer,
+            AuthTokenService authTokenService
+    ) {
         this.repository = repository;
         this.redisService = redisService;
         this.kafkaProducer = kafkaProducer;
+        this.authTokenService = authTokenService;
     }
 
     @Override
     public void sendOtp(EmailRequest request) {
-        // Generate OTP
+        String email = normalize(request.email());
         String otp = generateOtp(otpLength);
 
-        // Add OTP into the Redis cache
-        redisService.set(request.email(), otp, Duration.ofSeconds(otpExpiration));
+        Duration ttl = Duration.ofSeconds(otpExpiration);
+        redisService.set(OTP_PREFIX + email, otp, ttl);
+        redisService.delete(ATTEMPTS_PREFIX + email);   // new OTP, fresh attempt counter
 
-        // Build and publish Mail Event via Kafka
         MailRequest mailRequest = MailRequest.builder()
-                .to(request.email())
+                .to(email)
                 .subject(emailSubject)
-                .body(otp + " " +emailBody)
+                .body(otp + " " + emailBody)
                 .build();
 
         kafkaProducer.publishMailEvent(mailRequest);
 
-        log.info("Kafka email producer event produced successfully for email {}", request.email());
+        log.info("OTP mail event published for email {}", email);
     }
 
     @Override
-    public boolean verifyOtp(VerifyOtpRequest verifyOtpRequest) {
-        // Check if Redis has the correct OTP for the email
-        if (!verify(verifyOtpRequest.email(), verifyOtpRequest.otp())) {
+    public boolean verifyOtp(VerifyOtpRequest request) {
+        String email = normalize(request.email());
+
+        if (!verify(email, request.otp())) {
             return false;
         }
 
-
-        // 🔒 SECURITY FIX: Delete OTP from Redis so it cannot be reused (Replay Attack prevention)
-        redisService.delete(verifyOtpRequest.email()); // (Make sure your RedisService has a delete method)
-
-        // Find existing user or create a new one, then mark as verified and save
-        User user = repository.findByEmail(verifyOtpRequest.email()).orElse(
+        // Existing user (created by signup) or a brand-new one
+        User user = repository.findByEmail(email).orElseGet(() ->
                 User.builder()
-                        .email(verifyOtpRequest.email())
+                        .email(email)
                         .isLoggedIn(false)
                         .createdAt(LocalDateTime.now())
-                        .build()
-        );
+                        .build());
 
         user.setEmailVerified(true);
         user.setUpdatedAt(LocalDateTime.now());
@@ -98,36 +108,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResponse login(EmailRequest request) {
-        User existingUser = repository.findByEmail(request.email())
+    public AuthResult login(VerifyOtpRequest request) {
+        String email = normalize(request.email());
+
+        // OTP is the credential: no valid OTP, no tokens
+        if (!verify(email, request.otp())) {
+            throw new InvalidTokenException("Invalid or expired OTP");
+        }
+
+        User user = repository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if(!existingUser.isEmailVerified()){
+        if (!user.isEmailVerified()) {
             throw new EmailNotVerifiedException("Email is not verified");
         }
 
-        existingUser.setLoggedIn(true);
-        existingUser.setUpdatedAt(LocalDateTime.now());
+        user.setLoggedIn(true);
+        user.setUpdatedAt(LocalDateTime.now());
+        User saved = repository.save(user);
 
-        User loggedInUser = repository.save(existingUser);
+        TokenPair tokens = authTokenService.issue(saved.getEmail());
 
-        return LoginResponse.builder()
-                .userId(loggedInUser.getId().toString())
-                .email(loggedInUser.getEmail())
+        LoginResponse userInfo = LoginResponse.builder()
+                .userId(saved.getId().toString())
+                .email(saved.getEmail())
                 .build();
+
+        return new AuthResult(userInfo, tokens);
     }
 
     @Override
     public SignUpResponse signup(EmailRequest request) {
-        if (isUserExists(request.email())) {
-            throw new UserAlreadyExistsException("An account is already exists with this email, please do login.");
+        String email = normalize(request.email());
+
+        if (isUserExists(email)) {
+            throw new UserAlreadyExistsException(
+                    "An account already exists with this email, please log in.");
         }
 
         User newUser = User.builder()
-                .email(request.email())
-                .emailVerified(true)
+                .email(email)
+                .emailVerified(false)            // becomes true only after OTP verification
                 .isLoggedIn(false)
-                .emailVerified(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -138,29 +160,68 @@ public class UserServiceImpl implements UserService {
                 .userId(savedUser.getId().toString())
                 .email(savedUser.getEmail())
                 .build();
-
     }
 
     public boolean isUserExists(String email) {
-        return repository.existsByEmail(email);
+        return repository.existsByEmail(normalize(email));
+    }
+
+    // ---------- helpers ----------
+
+    private String normalize(String email) {
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+        return email.trim().toLowerCase();
     }
 
     private String generateOtp(int length) {
-        if (length <= 0)
+        if (length <= 0) {
             throw new IllegalArgumentException("Length must be greater than 0");
-
-        var random = new SecureRandom();
-        var otp = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            otp.append(random.nextInt(10));
         }
-
+        StringBuilder otp = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            otp.append(secureRandom.nextInt(10));
+        }
         return otp.toString();
     }
 
-    private boolean verify(String key, String otp) {
-        String value = redisService.get(key);
-        return value != null && value.equals(otp);
+    /**
+     * Checks the OTP with attempt limiting. On success the OTP is deleted (single use).
+     * On failure the attempt counter goes up; after MAX_OTP_ATTEMPTS the OTP is invalidated.
+     */
+    private boolean verify(String email, String otp) {
+        String otpKey = OTP_PREFIX + email;
+        String attemptsKey = ATTEMPTS_PREFIX + email;
+
+        int attempts = parseInt(redisService.get(attemptsKey));
+        if (attempts >= MAX_OTP_ATTEMPTS) {
+            redisService.delete(otpKey);
+            throw new InvalidTokenException("Too many wrong attempts, please request a new OTP");
+        }
+
+        String stored = redisService.get(otpKey);
+        boolean matches = stored != null && otp != null
+                && MessageDigest.isEqual(
+                stored.getBytes(StandardCharsets.UTF_8),
+                otp.getBytes(StandardCharsets.UTF_8));
+
+        if (!matches) {
+            redisService.set(attemptsKey, String.valueOf(attempts + 1),
+                    Duration.ofSeconds(otpExpiration));
+            return false;
+        }
+
+        redisService.delete(otpKey);        // replay protection
+        redisService.delete(attemptsKey);
+        return true;
+    }
+
+    private int parseInt(String value) {
+        try {
+            return value == null ? 0 : Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }
