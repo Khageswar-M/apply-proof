@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record LoginResponse(
-        String userId
+        String userId,
+        String email
 ) {
 }

@@ -1,7 +1,12 @@
 package com.applyproof.authservice.service;
 
 import com.applyproof.authservice.dto.request.MailRequest;
+import com.applyproof.authservice.dto.request.EmailRequest;
+import com.applyproof.authservice.dto.request.VerifyOtpRequest;
 import com.applyproof.authservice.dto.response.LoginResponse;
+import com.applyproof.authservice.dto.response.SignUpResponse;
+import com.applyproof.authservice.exception.EmailNotVerifiedException;
+import com.applyproof.authservice.exception.UserNotFoundException;
 import com.applyproof.authservice.kafka.KafkaMailEventProducer;
 import com.applyproof.authservice.modal.User;
 import com.applyproof.authservice.repository.UserRepository;
@@ -45,39 +50,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendOtp(String email) {
+    public void sendOtp(EmailRequest request) {
         // Generate OTP
         String otp = generateOtp(otpLength);
 
         // Add OTP into the Redis cache
-        redisService.set(email, otp, Duration.ofSeconds(otpExpiration));
+        redisService.set(request.email(), otp, Duration.ofSeconds(otpExpiration));
 
         // Build and publish Mail Event via Kafka
-        MailRequest request = MailRequest.builder()
-                .to(email)
+        MailRequest mailRequest = MailRequest.builder()
+                .to(request.email())
                 .subject(emailSubject)
                 .body(otp + " " +emailBody)
                 .build();
 
-        kafkaProducer.publishMailEvent(request);
+        kafkaProducer.publishMailEvent(mailRequest);
 
-        log.info("Kafka email producer event produced successfully for email {}", email);
+        log.info("Kafka email producer event produced successfully for email {}", request.email());
     }
 
     @Override
-    public boolean verifyOtp(String email, String otp) {
+    public boolean verifyOtp(VerifyOtpRequest verifyOtpRequest) {
         // Check if Redis has the correct OTP for the email
-        if (!verify(email, otp)) {
+        if (!verify(verifyOtpRequest.email(), verifyOtpRequest.otp())) {
             return false;
         }
 
+
         // 🔒 SECURITY FIX: Delete OTP from Redis so it cannot be reused (Replay Attack prevention)
-        redisService.delete(email); // (Make sure your RedisService has a delete method)
+        redisService.delete(verifyOtpRequest.email()); // (Make sure your RedisService has a delete method)
 
         // Find existing user or create a new one, then mark as verified and save
-        User user = repository.findByEmail(email).orElse(
+        User user = repository.findByEmail(verifyOtpRequest.email()).orElse(
                 User.builder()
-                        .email(email)
+                        .email(verifyOtpRequest.email())
                         .isLoggedIn(false)
                         .createdAt(LocalDateTime.now())
                         .build()
@@ -91,11 +97,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResponse login(String email) {
-        User existingUser = repository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User does not exist!"));
+    public LoginResponse login(EmailRequest request) {
+        User existingUser = repository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        // TODO: Check if existingUser.isEmailVerified() is true before letting them log in!
+        if(!existingUser.isEmailVerified()){
+            throw new EmailNotVerifiedException("Email is not verified");
+        }
 
         existingUser.setLoggedIn(true);
         existingUser.setUpdatedAt(LocalDateTime.now());
@@ -103,18 +111,33 @@ public class UserServiceImpl implements UserService {
         User loggedInUser = repository.save(existingUser);
 
         return LoginResponse.builder()
-                .userId(loggedInUser.getEmail()) // .toString() was redundant since email is already a String
+                .userId(loggedInUser.getId().toString())
+                .email(loggedInUser.getEmail())
                 .build();
     }
 
     @Override
-    public void signup(String email) {
-        if (isUserExists(email)) {
+    public SignUpResponse signup(EmailRequest request) {
+        if (isUserExists(request.email())) {
             throw new RuntimeException("User already exists!");
         }
 
-        // Signup typically triggers the OTP flow rather than saving a verified user instantly
-        sendOtp(email);
+        User newUser = User.builder()
+                .email(request.email())
+                .emailVerified(true)
+                .isLoggedIn(false)
+                .emailVerified(true)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        User savedUser = repository.save(newUser);
+
+        return SignUpResponse.builder()
+                .userId(savedUser.getId().toString())
+                .email(savedUser.getEmail())
+                .build();
+
     }
 
     public boolean isUserExists(String email) {
@@ -137,6 +160,6 @@ public class UserServiceImpl implements UserService {
 
     private boolean verify(String key, String otp) {
         String value = redisService.get(key);
-        return value != null && value.equals(otp); // Safe null check to avoid NullPointerException
+        return value != null && value.equals(otp);
     }
 }

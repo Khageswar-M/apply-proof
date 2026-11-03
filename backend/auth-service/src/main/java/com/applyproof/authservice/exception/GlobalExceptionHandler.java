@@ -2,6 +2,7 @@ package com.applyproof.authservice.exception;
 
 import com.applyproof.authservice.dto.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,6 +39,35 @@ public class GlobalExceptionHandler {
         log.warn("Validation failed for {}", ex.getMessage());
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleUserNotFoundException(
+            UserNotFoundException ex
+    ){
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage(),
+                                null
+                        )
+                );
+
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<ApiResponse<String>> handleEmailNotVerifiedException(
+            EmailNotVerifiedException ex
+    ){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage(),
+                                null
+                        )
+                );
     }
 
 }
