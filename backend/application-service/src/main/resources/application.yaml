@@ -2,6 +2,11 @@ spring:
   application:
     name: application-service
 
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
   datasource:
     #  FOR MYSQL CONFIGURATION
     url: jdbc:mysql://localhost:${DATABASE_PORT}/${DATABASE_NAME}
@@ -20,6 +25,19 @@ spring:
   sql:
     init:
       mode: always
+
+  #  kafka:
+#    bootstrap-servers: localhost:9092
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+#      acks: all
+#      properties:
+#        enable.idempotence: true
+#app:
+#  kafka:
+#    topics:
+#      application-created: application.created.v1
 
 
   #    FOR H2 INMEMORY DY CONFIGURATION
@@ -44,6 +62,15 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+#
+analytic:
+  service:
+    address: ${ANALYTIC_SERVICE_ADDRESS}
+    grpc:
+      port: ${ANALYTIC_SERVICE_GRPC_PORT}
+
+
+
 
 server:
   port: 4000

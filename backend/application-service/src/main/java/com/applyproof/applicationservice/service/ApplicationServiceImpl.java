@@ -4,6 +4,8 @@ import com.applyproof.applicationservice.dto.request.ApplicationCreateRequest;
 import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.exception.ApplicationNotFoundException;
+import com.applyproof.applicationservice.grpc.AnalyticsServiceGrpcClient;
+import com.applyproof.applicationservice.kafka.ApplicationEventProducer;
 import com.applyproof.applicationservice.mapper.ApplicationMapper;
 import com.applyproof.applicationservice.model.ApplicationStatus;
 import com.applyproof.applicationservice.model.JobApplications;
@@ -20,11 +22,17 @@ import java.util.UUID;
 public class ApplicationServiceImpl implements ApplicationService{
 
     private final ApplicationRepository repository;
+    private final AnalyticsServiceGrpcClient grpcClient;
+    private final ApplicationEventProducer kafkaProducer;
 
     public ApplicationServiceImpl(
-            ApplicationRepository repository
+            ApplicationRepository repository,
+            AnalyticsServiceGrpcClient grpcClient,
+            ApplicationEventProducer kafkaProducer
     ){
         this.repository = repository;
+        this.grpcClient = grpcClient;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @Override
@@ -102,6 +110,15 @@ public class ApplicationServiceImpl implements ApplicationService{
                 .build();
 
         JobApplications newJobApplication = repository.save(jobApplications);
+
+//        grpcClient.recordApplication(
+//                newJobApplication.getUserId().toString(),
+//                newJobApplication.getAppliedDateTime().toLocalDate().toString()
+//        );
+
+        kafkaProducer.publishApplyEvent(
+                newJobApplication.getUserId().toString(),
+                newJobApplication.getAppliedDateTime().toLocalDate().toString());
 
         return ApplicationMapper.toDto(newJobApplication);
     }

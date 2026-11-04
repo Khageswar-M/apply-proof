@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/applications")
+@RequestMapping("/api/v1/applications")
 public class ApplicationController {
 
     private final ApplicationService service;
