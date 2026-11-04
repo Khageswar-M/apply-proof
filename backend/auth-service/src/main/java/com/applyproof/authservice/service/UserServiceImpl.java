@@ -108,16 +108,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthResult login(VerifyOtpRequest request) {
+    public AuthResult login(EmailRequest request) {
         String email = normalize(request.email());
-
-        // OTP is the credential: no valid OTP, no tokens
-        if (!verify(email, request.otp())) {
-            throw new InvalidTokenException("Invalid or expired OTP");
-        }
-
         User user = repository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("You don't have any account created yet, please sign-up"));
 
         if (!user.isEmailVerified()) {
             throw new EmailNotVerifiedException("Email is not verified");
@@ -132,6 +126,7 @@ public class UserServiceImpl implements UserService {
         LoginResponse userInfo = LoginResponse.builder()
                 .userId(saved.getId().toString())
                 .email(saved.getEmail())
+                .refreshToken(tokens.refreshToken())
                 .build();
 
         return new AuthResult(userInfo, tokens);

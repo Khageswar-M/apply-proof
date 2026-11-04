@@ -50,7 +50,7 @@ public class AuthServiceController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody VerifyOtpRequest request) {
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody EmailRequest request) {
         AuthResult result = userService.login(request);
         return withTokenCookies(result.tokens())
                 .body(ApiResponse.success("User logged-in successfully", result.user()));

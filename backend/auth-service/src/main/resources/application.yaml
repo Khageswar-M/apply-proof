@@ -22,7 +22,6 @@ spring:
 #        web-allow-others: false # Recommended for security
 
   jpa:
-    # Note: In newer Spring Boot/Hibernate versions, database-platform is auto-detected and optional
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
@@ -57,9 +56,9 @@ jwt:
   secret:
     key: ${SECRET_KEY}
   access:
-    expiration-ms: 600000    # 10 min
+    expiration-ms: ${JWT_ACCESS_TOKEN_EXP_MS}    # 10 min
   refresh:
-    expiration-ms: 604800000 # 7 days
+    expiration-ms: ${JWT_REFRESH_TOKEN_EXP_MS}    # 7 days
 
 
 logging:

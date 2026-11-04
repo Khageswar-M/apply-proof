@@ -9,6 +9,6 @@ import com.applyproof.authservice.dto.response.SignUpResponse;
 public interface UserService {
     void sendOtp(EmailRequest request);
     boolean verifyOtp(VerifyOtpRequest request);
-    AuthResult login(VerifyOtpRequest request);      // changed
+    AuthResult login(EmailRequest request);      // changed
     SignUpResponse signup(EmailRequest request);
 }
