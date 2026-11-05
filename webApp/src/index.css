@@ -306,4 +306,25 @@ body {
   .hero-sTwo-card-footer {
     @apply flex justify-between items-center gap-2 text-[10px] text-gray-500;
   }
+
+
+
+
+
+
+
+
+
+  /* INSPIRATION STYLES */
+  .inspiration-container {
+    @apply bg-neutral-900 w-full rounded-lg flex flex-row items-center justify-between px-10 ;
+  }
+
+  .inspiration-container > h1 {
+    @apply text-lg py-7 text-neutral-50;
+  }
+
+  .inspiration-container > div {
+    @apply bg-tertiary-500 text-xs font-bold text-neutral-950 px-5 py-2 rounded-full
+  }
 }

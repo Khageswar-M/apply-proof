@@ -27,7 +27,7 @@ const Hero = () => {
 
             <section className="section-two">
                 {/* Floating Cards */}
-                <div className="hero-sTwo-cards-container">
+                {/* <div className="hero-sTwo-cards-container">
                     {POSITIONS.map((pos, index) => (
                         <div
                             key={index}
@@ -53,7 +53,7 @@ const Hero = () => {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Person Illustration (exact center) */}
                 <div className="hero-sTwo-person-container">
