@@ -4,6 +4,7 @@ import HeaderBar from '../pages/landingPage/HeaderBar'
 import Hero from '../pages/landingPage/Hero'
 import Inspiration from '../pages/landingPage/Inspiration'
 import Disciplines from '../pages/landingPage/Disciplines'
+import FooterBar from '../pages/landingPage/FooterBar'
 
 const LandingPage = () => {
   return (
@@ -12,6 +13,7 @@ const LandingPage = () => {
         <Hero/>
         <Inspiration/>
         <Disciplines/>
+        <FooterBar/>
     </div>
   )
 }

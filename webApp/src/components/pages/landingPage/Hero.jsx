@@ -27,39 +27,12 @@ const Hero = () => {
 
             <section className="section-two">
                 {/* Floating Cards */}
-                {/* <div className="hero-sTwo-cards-container">
-                    {POSITIONS.map((pos, index) => (
-                        <div
-                            key={index}
-                            className="hero-sTwo-card"
-                            style={{ top: pos.top, left: pos.left, rotate: pos.rotate }}
-                        >
-                            <div className="hero-sTwo-card-header">
-                                <span>{CardData.heading}</span>
-                                <span
-                                    className={`${CardData.status["bg-color"]} ${CardData.status["text-color"]} hero-sTwo-status`}
-                                >
-                                    {CardData.status.title}
-                                </span>
-                            </div>
-
-                            <div className="hero-sTwo-card-description">{CardData.description}</div>
-
-                            <hr />
-
-                            <div className="hero-sTwo-card-footer">
-                                <span>{CardData["btm-left-text"]}</span>
-                                <span>{CardData["btm-right-text"]}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div> */}
 
                 {/* Person Illustration (exact center) */}
                 <div className="hero-sTwo-person-container">
                     <img
                         className="hero-sTwo-PersonIcon"
-                        src="/icons/person-with-laptop.png"
+                        src="/icons/PersonAndLaptop.png"
                         alt="Person with laptop"
                     />
                 </div>
