@@ -317,14 +317,90 @@ body {
 
   /* INSPIRATION STYLES */
   .inspiration-container {
-    @apply bg-neutral-900 w-full rounded-lg flex flex-row items-center justify-between px-10 ;
+    @apply bg-neutral-900 w-full rounded-lg flex flex-row items-center justify-between px-10;
   }
 
-  .inspiration-container > h1 {
-    @apply text-lg py-7 text-neutral-50;
+  .inspiration-container>h1 {
+    @apply text-lg py-7 text-neutral-50 font-serif;
   }
 
-  .inspiration-container > div {
-    @apply bg-tertiary-500 text-xs font-bold text-neutral-950 px-5 py-2 rounded-full
+  .inspiration-container>div {
+    @apply bg-tertiary-500 text-xs font-bold text-neutral-950 px-5 py-2 rounded-full 
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .disc-section {
+    @apply w-full bg-canvas py-16 px-6;
+  }
+
+  .disc-container {
+    @apply mx-auto max-w-6xl;
+  }
+
+  /* Heading block */
+  .disc-eyebrow {
+    @apply font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-600;
+  }
+
+  .disc-heading {
+    @apply mt-3 font-serif text-3xl font-medium text-neutral-900;
+  }
+
+  /* Grid */
+  .disc-grid {
+    @apply mt-10 grid grid-cols-1 gap-6 md:grid-cols-3;
+  }
+
+  /* Card */
+  .disc-card {
+    @apply flex flex-col rounded-card bg-surface p-7 shadow-card;
+  }
+
+  .disc-card-top {
+    @apply flex items-center justify-between border-b border-line pb-4;
+  }
+
+  .disc-number {
+    @apply font-serif text-4xl text-tertiary-500;
+  }
+
+  /* Tag (top right) */
+  .disc-tag {
+    @apply font-sans text-[9px] font-medium uppercase tracking-[0.15em];
+  }
+
+  .disc-tag-neutral {
+    @apply text-neutral-300;
+  }
+
+  .disc-tag-accent {
+    @apply text-status-interview;
+  }
+
+  .disc-title {
+    @apply mt-6 font-headline text-base font-semibold text-neutral-900;
+  }
+
+  .disc-description {
+    @apply mt-3 flex-1 font-sans text-[13px] leading-relaxed text-neutral-600;
+  }
+
+  /* Footer */
+  .disc-footer {
+    @apply mt-6 flex items-center gap-2 border-t border-line pt-4;
+    @apply font-sans text-[11px] text-primary-700;
+  }
+
+  .disc-footer-icon {
+    @apply shrink-0 select-none leading-none;
   }
 }
