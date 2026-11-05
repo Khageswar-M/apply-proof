@@ -4,7 +4,7 @@ import LandingPage from './components/screens/LandingPage'
 
 const App = () => {
   return (
-    <div>
+    <div className='app-container'>
       <LandingPage/>
     </div>
   )

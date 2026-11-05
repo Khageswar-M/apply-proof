@@ -16,18 +16,18 @@ const HeaderBar = () => {
 
                 <div className="header-nav-container">
                     <ul className='ul-container'>
-                        <li>Feature</li>
-                        <li>How it works</li>
-                        <li>Privacy Manifesto</li>
+                        <li>Pillars</li>
+                        <li>Workflow</li>
+                        <li>Vault</li>
                     </ul>
                 </div>
 
 
 
                 <div className='header-button-container'>
-                    <button className='header-login-btn'>Log in</button>
+                    <button className='header-login-btn'>Log In</button>
                     <button className="header-signup-btn">
-                        Sign up
+                        Get started
                         <span className="material-symbols-outlined !text-sm">
                             arrow_forward
                         </span>
