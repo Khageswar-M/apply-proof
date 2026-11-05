@@ -1,1 +1,74 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary-50: #EEF6F4;
+  --color-primary-100: #D6E9E4;
+  --color-primary-200: #B0D3CA;
+  --color-primary-300: #85B9AD;
+  --color-primary-400: #5A9C8D;
+  --color-primary-500: #3F8474;
+  --color-primary-600: #2F6F62;
+  --color-primary-700: #285E53;
+  --color-primary-800: #214C43;
+  --color-primary-900: #1B3E37;
+  --color-primary-950: #0E2420;
+
+  --color-secondary-50: #F5F9F7;
+  --color-secondary-100: #E4EFEB;
+  --color-secondary-200: #CFE2DB;
+  --color-secondary-300: #B2CFC5;
+  --color-secondary-400: #8FB7AA;
+  --color-secondary-500: #6D9E8F;
+  --color-secondary-600: #55806F;
+  --color-secondary-700: #446558;
+  --color-secondary-800: #364F46;
+  --color-secondary-900: #2B3F38;
+
+  --color-tertiary-50: #FBF6EA;
+  --color-tertiary-100: #F5EAC9;
+  --color-tertiary-200: #EBD59A;
+  --color-tertiary-300: #E0BC6B;
+  --color-tertiary-400: #D4A84F;
+  --color-tertiary-500: #C99A3B;
+  --color-tertiary-600: #A87B2A;
+  --color-tertiary-700: #86601F;
+  --color-tertiary-800: #6B4D1D;
+  --color-tertiary-900: #57401B;
+
+  --color-neutral-50: #F5F7FA;
+  --color-neutral-100: #E4E7EB;
+  --color-neutral-200: #CBD2D9;
+  --color-neutral-300: #9AA5B1;
+  --color-neutral-400: #7B8794;
+  --color-neutral-500: #616E7C;
+  --color-neutral-600: #52606D;
+  --color-neutral-700: #3E4C59;
+  --color-neutral-800: #323F4B;
+  --color-neutral-900: #1F2933;
+  --color-neutral-950: #121A21;
+
+  --color-canvas: #F8F6F1;
+  --color-surface: #FFFFFF;
+  --color-line: #E8E4DA;
+  --color-danger: #B85C5C;
+
+  --color-status-applied: #4A7BA6;
+  --color-status-shortlisted: #C99A3B;
+  --color-status-interview: #7D6BA8;
+  --color-status-interviewed: #3F8F85;
+  --color-status-final: #D17F45;
+  --color-status-offer: #4C9A5F;
+  --color-status-rejected: #B85C5C;
+
+  --font-headline: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, serif;
+
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --shadow-card: 0 1px 3px rgba(31, 41, 51, 0.06);
+}
+
+body {
+  @apply bg-canvas text-neutral-600 font-sans;
+}
