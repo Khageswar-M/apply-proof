@@ -1,5 +1,6 @@
 import SignupPage from '../pages/authScreen/SignupPage'
 import LoginPage from '../pages/authScreen/LoginPage'
+import { useState } from 'react';
 
 const LEFT_SECTION_LAST_CHILD_LISTS = [
     {
@@ -20,6 +21,7 @@ const LEFT_SECTION_LAST_CHILD_LISTS = [
 ];
 
 const AuthScreen = () => {
+    const [authButton, setAuthButton] = useState(true);
     return (
         <div className='auth-screen-container'>
 
@@ -63,7 +65,49 @@ const AuthScreen = () => {
 
 
                 <section className='auth-screen-section auth-screen-section-container-right-section'>
+                    <div>
+                        <div>
+                            <div>
+                                <p>Access your Journal</p>
+                                <p>Log in or register via secure email OTP</p>
+                            </div>
+                            <div>
+                                <button
+                                    className={authButton ? 'auth-btn-active' : 'text-neutral-400'}
+                                    onClick={() => setAuthButton(true)}
+                                >
+                                    Log In
+                                </button>
 
+                                <button
+                                    className={!authButton ? 'auth-btn-active' : 'text-neutral-400'}
+                                    onClick={() => setAuthButton(false)}
+                                >
+                                    Sign Up
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className='email-wrap'>
+                            <div className='email-container'>
+                                <div className='email-box'>
+                                    <label htmlFor="">Email Address</label>
+                                    <input type="email" required />
+                                    <span>Error</span>
+                                </div>
+                                <span>We will send a 6-digit cryptographic verification code to this address.</span>
+                            </div>
+
+                            <button>
+                                <span class="material-symbols-outlined !text-lg">
+                                    forward_to_inbox
+                                </span>Send verification code
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div></div>
                 </section>
             </div>
         </div>

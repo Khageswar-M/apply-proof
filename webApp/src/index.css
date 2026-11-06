@@ -543,8 +543,75 @@ body {
 
 
   .auth-screen-section-container-right-section {
-    @apply h-full w-[60%]
+    @apply h-full w-[60%] flex flex-col justify-between
   }
+  .auth-screen-section-container-right-section > div:first-child {
+    @apply flex flex-col gap-5
+  }
+
+ .auth-screen-section-container-right-section > div:first-child > div:first-child  {
+  @apply flex flex-row items-center justify-between
+ }
+
+ .auth-screen-section-container-right-section > div:first-child > div:first-child > div:first-child {
+  @apply flex flex-col items-start
+ }
+ .auth-screen-section-container-right-section > div:first-child > div:first-child > div:first-child > p:first-child {
+  @apply text-lg font-bold
+ }
+
+ .auth-screen-section-container-right-section > div:first-child > div:first-child > div:first-child > p:last-child {
+  @apply text-xs text-neutral-500
+ }
+
+ .auth-screen-section-container-right-section > div:first-child > div:first-child > div:last-child {
+  @apply bg-neutral-200/40 p-1 rounded-sm flex flex-row items-center
+ }
+
+ .auth-screen-section-container-right-section > div:first-child > div:first-child > div:last-child > button {
+  @apply text-xs px-3 py-1 rounded-sm cursor-pointer
+ }
+
+ .auth-btn-active {
+  @apply bg-primary-500/60 text-primary-700 font-bold
+ }
+
+ .email-wrap {
+  @apply flex flex-col items-start gap-5 w-full
+ }
+
+ .email-container {
+  @apply flex flex-col items-start w-full
+ }
+
+ .email-box {
+  @apply flex flex-col items-start w-full
+ }
+
+ .email-box > label:first-child {
+  @apply text-sm
+ }
+
+ .email-box > input:nth-child(2) {
+  @apply w-full border border-neutral-400 rounded-sm px-2
+ }
+
+ .email-box > input:nth-child(2):active {
+  @apply border
+ }
+
+ .email-box > span:last-child {
+  @apply text-sm text-danger
+ }
+
+ .email-container > span:last-child {
+  @apply text-xs
+ }
+
+ .email-wrap > button:last-child {
+  @apply flex flex-wrap items-center justify-center gap-2 w-full text-sm bg-primary-700 text-white rounded-md
+ }
+ 
 
   /* SIGNUP PAGE STYLES */
 
