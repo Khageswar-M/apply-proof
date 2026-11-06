@@ -1,11 +1,11 @@
-import React from 'react'
-
-import LandingPage from './components/screens/LandingPage'
+import LandingPage from './components/screens/LandingPageScreen'
+import AuthScreen from './components/screens/AuthScreen'
 
 const App = () => {
   return (
     <div className='app-container'>
-      <LandingPage/>
+      {/* <LandingPage/> */}
+      <AuthScreen/>
     </div>
   )
 }

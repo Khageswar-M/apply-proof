@@ -6,7 +6,7 @@ const Inspiration = lazy(() => import('../pages/landingPage/Inspiration'));
 const Disciplines = lazy(() => import('../pages/landingPage/Disciplines'));
 const FooterBar = lazy(() => import('../pages/landingPage/FooterBar'));
 
-const LandingPage = () => {
+const LandingPageScreen = () => {
   return (
     <div className='landing-page-container'>
         <Suspense fallback={<div>Loading...</div>}>
@@ -20,4 +20,4 @@ const LandingPage = () => {
   )
 }
 
-export default LandingPage
+export default LandingPageScreen;
