@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
-import HeaderBar from '../pages/landingPage/HeaderBar'
-import Hero from '../pages/landingPage/Hero'
-import Inspiration from '../pages/landingPage/Inspiration'
-import Disciplines from '../pages/landingPage/Disciplines'
-import FooterBar from '../pages/landingPage/FooterBar'
+const HeaderBar = lazy(() => import('../pages/landingPage/HeaderBar'));
+const Hero = lazy(() => import('../pages/landingPage/Hero'));
+const Inspiration = lazy(() => import('../pages/landingPage/Inspiration'));
+const Disciplines = lazy(() => import('../pages/landingPage/Disciplines'));
+const FooterBar = lazy(() => import('../pages/landingPage/FooterBar'));
 
 const LandingPage = () => {
   return (
     <div className='landing-page-container'>
-        <HeaderBar/>
-        <Hero/>
-        <Inspiration/>
-        <Disciplines/>
-        <FooterBar/>
+        <Suspense fallback={<div>Loading...</div>}>
+            <HeaderBar />
+            <Hero />
+            <Inspiration />
+            <Disciplines />
+            <FooterBar />
+        </Suspense>
     </div>
   )
 }
