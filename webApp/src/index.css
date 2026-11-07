@@ -611,6 +611,66 @@ body {
  .email-wrap > button:last-child {
   @apply flex flex-wrap items-center justify-center gap-2 w-full text-sm bg-primary-700 text-white rounded-md
  }
+
+ .right-section-bottom-container {
+  @apply flex flex-col items-center gap-5 text-center
+ }
+
+ .right-section-bottom-container > hr:first-child {
+  @apply w-full text-neutral-300
+ }
+
+ .right-section-bottom-container > p:last-child {
+  @apply text-sm
+ }
+
+ .right-section-bottom-container > p:last-child > span:first-child {
+  @apply font-bold
+ }
+
+
+
+
+
+
+
+ .verification-wrapper {
+  @apply flex flex-col gap-2
+ }
+
+ .verification-wrapper > span:first-child {
+  @apply text-sm text-neutral-500 text-center
+ }
+
+ .verification-wrapper > div:nth-child(2) {
+  @apply text-sm text-start
+ }
+
+ .verification-wrapper > div:nth-child(3) {
+  @apply flex flex-row items-center justify-between text-xs
+ }
+
+ .verification-wrapper > div:nth-child(3) > span:first-child {
+  @apply font-bold
+ }
+
+ .verification-wrapper > div:nth-child(3) > span:last-child {
+  @apply font-bold text-primary-600 bg-primary-500/50 px-3 py-0.5 rounded-full
+ }
+
+ .verification-wrapper > div:nth-child(4) {
+  @apply flex flex-row items-center justify-between w-sm max-w-sm m-auto gap-4
+ }
+
+ .verification-wrapper > div:nth-child(4) > input {
+  @apply border w-full text-center
+ }
+
+ .verification-wrapper > button:last-child {
+  @apply bg-primary-500 text-white rounded-md cursor-pointer active:bg-primary-400
+ }
+
+
  
 
   /* SIGNUP PAGE STYLES */

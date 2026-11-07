@@ -104,10 +104,41 @@ const AuthScreen = () => {
                                 </span>Send verification code
                             </button>
                         </div>
+
+                        <div className='verification-wrapper'>
+                            <span>Email verification</span>
+                            <div>Code sent to test@example.com</div>
+                            <div>
+                                <span>Enter 6 Digit Code</span>
+                                <span>Ready to verify</span>
+                            </div>
+                            <div>
+                                {
+                                    Array.from({length: 6}).map((index) => (
+                                        <input 
+                                            key={index}
+                                            type="number" 
+                                            max={9}
+                                            min={0}
+                                        />
+                                    ))
+                                }
+                            </div>
+
+                            <button>Verify OTP</button>
+                        </div>
                     </div>
 
 
-                    <div></div>
+                    <div className='right-section-bottom-container'>
+                        <hr />
+
+                        <p>
+                            <span>100% Client-Side privacy: </span>
+                            <span>Your cryptographic key is derived locally. Your credentials and job ledger never leave your device unencrypted.</span>
+                        </p>
+
+                    </div>
                 </section>
             </div>
         </div>
