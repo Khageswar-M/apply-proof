@@ -697,7 +697,7 @@ body {
   }
 
   .aside-container {
-    @apply bg-white h-full flex flex-col p-5 justify-between
+    @apply bg-white h-full flex flex-col p-5 justify-between overflow-hidden
   }
 
   .aside-wrapper {
@@ -714,5 +714,17 @@ body {
 
   .aside-tabs-active {
     @apply text-sm border px-2 py-0.5 rounded-r-md border-l-3 border-l-primary-500 bg-primary-300
+  }
+
+  .profile-container {
+    @apply bg-neutral-100 rounded-md py-2
+  }
+
+  .profile-wrapper {
+    @apply flex flex-row items-center gap-2 overflow-hidden
+  }
+
+  .profile-icon {
+    @apply bg-primary-500 text-white p-1 w-7 h-7 flex flex-row items-center justify-center rounded-full
   }
 }

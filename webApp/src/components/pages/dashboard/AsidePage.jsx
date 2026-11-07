@@ -46,6 +46,14 @@ const AsidePage = () => {
                     }
                 </ul>
             </div>
+
+
+            <div className='profile-container'>
+                <div className='profile-wrapper'>
+                    <div className='profile-icon'>K</div>
+                    <div className='profile-email'>khageswarmaharana462@gmail.com</div>
+                </div>
+            </div>
         </div>
     )
 }
