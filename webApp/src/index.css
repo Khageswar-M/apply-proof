@@ -671,9 +671,48 @@ body {
  }
 
 
- 
-
   /* SIGNUP PAGE STYLES */
 
   /* LOGIN PAGE STYLES */
+
+
+
+
+
+
+
+
+
+  /* APPLICATION CONTAINER CONTAINER */
+  .application-container {
+    @apply w-screen h-screen flex flex-row
+  }
+
+  .app-left-section {
+    @apply w-[15%] min-w-[200px] max-w-[300px] shrink-0;
+  }
+
+  .app-right-section {
+    @apply flex-1 min-w-[500px];
+  }
+
+  .aside-container {
+    @apply bg-white h-full flex flex-col p-5 justify-between
+  }
+
+  .aside-wrapper {
+    @apply flex flex-col gap-5
+  }
+
+  .aside-title {
+    @apply text-center font-bold tracking-wider
+  }
+
+  .aside-tabs {
+    @apply flex flex-col gap-2 cursor-pointer
+  }
+
+  .aside-tabs-active {
+    @apply text-sm border px-2 py-0.5 rounded-r-md border-l-3 border-l-primary-500 bg-primary-300
+  }
 }
