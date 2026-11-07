@@ -727,4 +727,56 @@ body {
   .profile-icon {
     @apply bg-primary-500 text-white p-1 w-7 h-7 flex flex-row items-center justify-center rounded-full
   }
+
+  .main-page-container {
+    @apply h-full p-5
+  }
+
+  .dash-board-container {
+    @apply flex flex-col gap-5
+  }
+
+  .dash-board-header-container {
+    @apply flex flex-row items-center justify-between
+  }
+
+  .dash-head-left {
+    @apply flex flex-col gap-1
+  }
+
+  .dash-head-left > p:first-child {
+    @apply flex flex-row items-center gap-2
+  }
+
+  .dash-head-left > p:first-child > span:first-child {
+    @apply text-xs text-primary-600
+  }
+
+  .dash-head-left > p:first-child > span:last-child {
+    @apply text-xs text-neutral-500
+  }
+
+  .dash-head-left > p:nth-child(2) {
+    @apply text-xl font-bold
+  }
+
+  .dash-head-left > p:last-child {
+    @apply text-sm text-neutral-700
+  }
+
+  .dash-head-right > div {
+    @apply flex flex-row items-center text-xs  p-2 gap-2
+  }
+
+  .dash-head-right > div > button {
+    @apply cursor-pointer gap-2 shadow flex flex-row items-center  px-4 py-2 rounded-md
+  }
+
+  .dash-head-right > div > button:first-child {
+    @apply bg-white active:bg-neutral-100 
+  }
+
+  .dash-head-right > div > button:last-child {
+    @apply bg-primary-700 active:bg-primary-600  text-white 
+  }
 }
