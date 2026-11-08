@@ -53,7 +53,7 @@ const ApplyCountCharts = () => {
     );
 
     return (
-        <div className="apply-count-charts-container flex h-50 max-h-50 w-full flex-col overflow-hidden p-5 shadow">
+        <div className="apply-count-charts-container flex h-50 max-full w-full flex-col overflow-hidden p-5 shadow">
 
             {/* Header */}
             <div className="flex shrink-0 flex-row items-center justify-between">

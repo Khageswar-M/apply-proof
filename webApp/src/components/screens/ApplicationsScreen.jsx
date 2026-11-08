@@ -8,7 +8,7 @@ const ApplicationsScreen = () => {
         <AsidePage/>
       </section>
 
-      <section className='app-right-section'>
+      <section className='app-right-section overflow-y-scroll'>
         <MainPage/>
       </section>
     </div>

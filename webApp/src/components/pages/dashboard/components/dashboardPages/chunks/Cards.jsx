@@ -49,7 +49,7 @@ const Cards = () => {
     ];
 
     return (
-        <section className="w-full max-h-50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <section className="w-full max-h-50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
             {cards.map((card, index) => (
                 <div
