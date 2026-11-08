@@ -2,22 +2,17 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <div className='dash-board-header-container'>
-            <div className='dash-head-left'>
-                <p>
-                    <span>DAILY MOMENTUM OVERVIEW</span>
-                    <span>Wednesday, Oct 29</span>
-                </p>
-                <p>Good morning, Khageswar</p>
-                <p>Your intentional career search rhythm is on track.</p>
+        <div className='flex flex-row items-center justify-between'>
+            <div className='flex flex-col gap-1'>
+                <p className='text-xl font-bold'>Good morning, Khageswar</p>
+                <p className='text-sm text-neutral-700'>Here is your job hunt momentum for today.</p>
             </div>
 
 
             <div className='dash-head-right'>
-                <div>
-                    <button>
-                        <span class="material-symbols-outlined !text-sm">tune</span> Filter View</button>
-                    <button> <span class="material-symbols-outlined !text-sm">add</span>Add Application</button>
+                <div className='flex flex-row items-center text-xs p-2 gap-2'>
+                    <button className='bg-white active:bg-neutral-100'> <span class="material-symbols-outlined !text-sm">tune</span> Filter View</button>
+                    <button className='bg-primary-700 active:bg-primary-600 text-white'> <span class="material-symbols-outlined !text-sm">add</span>Add Application</button>
                 </div>
             </div>
         </div>
