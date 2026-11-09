@@ -13,10 +13,15 @@ const STATUSES = ['APPLIED', 'SHORTLISTED', 'INTERVIEW CALL', 'INTERVIEWED', 'FI
 
 /* ---------- date / time helpers (local time, not UTC) ---------- */
 const pad = (n) => String(n).padStart(2, '0');
+
+
 const getToday = () => {
   const d = new Date();
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
+
+
+
 const getNow = () => {
   const d = new Date();
   return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
