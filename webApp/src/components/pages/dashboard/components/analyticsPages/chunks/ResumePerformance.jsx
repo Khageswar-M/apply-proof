@@ -54,7 +54,7 @@ const ResumePerformance = ({ resumes = SAMPLE, onCompare }) => {
 
       {/* table */}
       <div className='overflow-x-auto'>
-        <table className='w-full min-w-[420px] text-left text-sm'>
+        <table className='w-full min-w-100 text-left text-sm'>
           <thead>
             <tr className='border-y border-gray-200 bg-gray-50 text-xs font-semibold text-gray-600'>
               <th className='px-3 py-2.5 font-semibold'>Resume Document</th>
