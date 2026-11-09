@@ -1,23 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const TABS = [
-  { id: 1, title: 'Dashboard',       icon: 'dashboard' },
-  { id: 2, title: 'Applications',    icon: 'work' },
-  { id: 3, title: 'Add Application', icon: 'add_circle' },
-  { id: 4, title: 'Analytics',       icon: 'monitoring' },
-  { id: 5, title: 'Settings',        icon: 'settings' },
+  { path: '/dashboard',       title: 'Dashboard',       icon: 'dashboard' },
+  { path: '/applications',    title: 'Applications',    icon: 'work' },
+  { path: '/add-application', title: 'Add Application', icon: 'add_circle' },
+  { path: '/analytics',       title: 'Analytics',       icon: 'monitoring' },
+  { path: '/settings',        title: 'Settings',        icon: 'settings' },
 ]
 
-const AsidePage = ({ email = 'khageswarmaharana462@gmail.com', onChange }) => {
-  const [activeTab, setActiveTab] = useState(1)
-
-  const handleSelect = (id) => {
-    setActiveTab(id)
-    onChange?.(id)
-  }
-
+const AsidePage = ({ email = 'khageswarmaharana462@gmail.com' }) => {
   return (
-    <aside className='flex h-full  shrink-0 flex-col justify-between border-r border-gray-200 bg-white p-4'>
+    <aside className='flex h-full shrink-0 flex-col justify-between border-r border-gray-200 bg-white p-4'>
       <div className='flex flex-col gap-6'>
         {/* Brand */}
         <div className='flex items-center gap-2 px-2'>
@@ -30,26 +24,23 @@ const AsidePage = ({ email = 'khageswarmaharana462@gmail.com', onChange }) => {
         {/* Tabs */}
         <nav>
           <ul className='flex flex-col gap-1'>
-            {TABS.map(({ id, title, icon }) => {
-              const active = activeTab === id
-              return (
-                <li key={id}>
-                  <button
-                    type='button'
-                    onClick={() => handleSelect(id)}
-                    aria-current={active ? 'page' : undefined}
-                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition cursor-pointer
-                      focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100
-                      ${active
-                        ? 'bg-emerald-600 font-semibold text-white'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}`}
-                  >
-                    <span className='material-symbols-outlined !text-sm'>{icon}</span>
-                    {title}
-                  </button>
-                </li>
-              )
-            })}
+            {TABS.map(({ path, title, icon }) => (
+              <li key={path}>
+                <NavLink
+                  to={path}
+                  className={({ isActive }) =>
+                    `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition cursor-pointer
+                    focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100
+                    ${isActive
+                      ? 'bg-emerald-600 font-semibold text-white'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}`
+                  }
+                >
+                  <span className='material-symbols-outlined !text-sm'>{icon}</span>
+                  {title}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
