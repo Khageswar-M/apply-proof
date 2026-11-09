@@ -59,7 +59,7 @@ const Stats = ({ applications = [] }) => {
                 </span>
             </div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col items-center'>
                 <div ref={scrollRef} className='overflow-x-auto pb-1'>
                     <HeatMap
                         value={data}
