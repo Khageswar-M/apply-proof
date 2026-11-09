@@ -1,4 +1,7 @@
 import React, { useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
+
 
 const JOB_BOARDS = [
   { value: 'LINKEDIN', label: 'LinkedIn' },
@@ -37,6 +40,23 @@ const initialForm = () => ({
   appliedTime: getNow(),
   notes: '',
 });
+
+// turns a saved application back into the form's shape
+const formFromApplication = (a) => {
+  const d = new Date(a.appliedAt);
+  const validDate = !isNaN(d);
+
+  return {
+    companyName: a.companyName ?? a.company ?? '',
+    jobBoard: a.jobBoard ?? a.board ?? 'LINKEDIN',
+    jobRole: a.position ?? a.role ?? '',
+    resumeName: a.resumeName ?? a.resume ?? '',
+    status: (a.status ?? 'APPLIED').replace(/_/g, ' '),   // INTERVIEW_CALL -> INTERVIEW CALL
+    appliedDate: validDate ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` : getToday(),
+    appliedTime: validDate ? `${pad(d.getHours())}:${pad(d.getMinutes())}` : getNow(),
+    notes: a.notes ?? '',
+  };
+};
 
 /* ---------- validation ---------- */
 const checkText = (value, label, min = 2, max = 100) => {
@@ -113,13 +133,19 @@ const Field = ({ label, htmlFor, required, optional, error, children }) => (
 );
 
 /* ---------- form ---------- */
-const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) }) => {
-  const [form, setForm] = useState(initialForm);
+const ApplicationFormInner = ({ application, onSubmit = async (payload, id) => console.log(id, payload) }) => {
+  const dispatch = useDispatch();
+  const isEdit = !!application;
+
+  const baseForm = () => (isEdit ? formFromApplication(application) : initialForm());
+
+  const [form, setForm] = useState(baseForm);
   const [touched, setTouched] = useState({});
   const [saving, setSaving] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const dateRef = useRef(null);
   const timeRef = useRef(null);
+
 
   const errors = validate(form);
   const err = (name) => (touched[name] ? errors[name] : undefined);
@@ -136,9 +162,14 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
   };
 
   const handleClear = () => {
-    setForm(initialForm());
+    setForm(baseForm());      // add mode: empty form, edit mode: original values
     setTouched({});
     setSubmitError('');
+  };
+
+  const closeDrawer = () => {
+    dispatch(setUpdateDrawerOpen(false));
+    dispatch(setUpdateObject(null));
   };
 
   const handleSubmit = async (e) => {
@@ -149,10 +180,12 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
     try {
       setSaving(true);
       setSubmitError('');
-      await onSubmit(createApplicationRequest(form));
-      handleClear();
+      await onSubmit(createApplicationRequest(form), application?.id);
+
+      if (isEdit) closeDrawer();
+      else handleClear();
     } catch {
-      setSubmitError('Could not save the application. Please try again.');
+      setSubmitError(`Could not ${isEdit ? 'update' : 'save'} the application. Please try again.`);
     } finally {
       setSaving(false);
     }
@@ -167,8 +200,12 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
           className='flex flex-col gap-5 bg-white p-5 rounded-md shadow'
         >
           <p className='flex flex-col'>
-            <span className='text-md font-bold'>Add new application</span>
-            <span className='text-xs text-neutral-500'>Log a new application into your private journal.</span>
+            <span className='text-md font-bold'>
+              {isEdit ? 'Update application' : 'Add new application'}
+            </span>
+            <span className='text-xs text-neutral-500'>
+              {isEdit ? 'Edit the details of this application.' : 'Log a new application into your private journal.'}
+            </span>
           </p>
 
           <Field label='Company Name' htmlFor='companyName' required error={err('companyName')}>
@@ -285,8 +322,10 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
               disabled={saving}
               className='flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary-600 text-white text-sm font-semibold transition hover:bg-emerald-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
             >
-              <span className='material-symbols-outlined text-[20px]'>bookmark_added</span>
-              <span>{saving ? 'Saving…' : 'Save Application'}</span>
+              <span className='material-symbols-outlined text-[20px]'>
+                {isEdit ? 'edit_square' : 'bookmark_added'}
+              </span>
+              <span>{saving ? 'Saving…' : isEdit ? 'Update Application' : 'Save Application'}</span>
             </button>
 
             <button
@@ -294,7 +333,7 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
               onClick={handleClear}
               className='px-4 py-3 rounded-xl text-sm font-medium text-gray-500 transition hover:text-gray-800 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gray-200 cursor-pointer'
             >
-              Clear
+              {isEdit ? 'Reset' : 'Clear'}
             </button>
           </div>
         </form>
@@ -302,5 +341,17 @@ const ApplicationForm = ({ onSubmit = async (payload) => console.log(payload) })
     </div>
   )
 }
+
+const ApplicationForm = (props) => {
+  const updateObject = useSelector((state) => state.app.updateObject);
+
+  return (
+    <ApplicationFormInner
+      key={updateObject?.id ?? 'new'}   // remounts the form when the target changes
+      application={updateObject}
+      {...props}
+    />
+  );
+};
 
 export default ApplicationForm;

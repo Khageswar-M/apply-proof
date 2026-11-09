@@ -160,7 +160,7 @@
 
 /* COMMON STYLES */
 body {
-  @apply bg-canvas font-sans w-full p-0 m-0;
+  @apply bg-canvas font-sans w-full p-0 m-0 relative;
 }
 
 

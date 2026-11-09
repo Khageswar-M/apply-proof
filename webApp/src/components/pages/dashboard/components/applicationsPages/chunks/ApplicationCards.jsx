@@ -1,4 +1,6 @@
 import React from 'react';
+import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const STATUS_STYLES = {
   APPLIED: 'bg-blue-50 text-blue-700 ring-blue-200',
@@ -35,7 +37,7 @@ const SOURCE_ICONS = {
 // Same company always gets the same color, even if the list order changes
 const getAvatarColor = (name = '') =>
   AVATAR_COLORS[
-    [...name].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % AVATAR_COLORS.length
+  [...name].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % AVATAR_COLORS.length
   ];
 
 const getInitial = (name = '') => name.trim().charAt(0).toUpperCase();
@@ -115,6 +117,13 @@ const ApplicationCards = ({
   onStatusChange,
   onResumeView,
 }) => {
+  const dispatch = useDispatch(); // hooks first
+
+  const handleUpdate = (application) => {
+    dispatch(setUpdateObject(application));
+    dispatch(setUpdateDrawerOpen(true));
+  };
+
   if (!applications.length) {
     return (
       <div className="w-full rounded-xl border border-dashed border-stone-300 bg-white p-8 text-center text-sm text-slate-500">
@@ -122,6 +131,8 @@ const ApplicationCards = ({
       </div>
     );
   }
+
+
 
   return (
     <section className="grid w-full grid-cols-1 gap-4 pb-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -143,19 +154,33 @@ const ApplicationCards = ({
                 <h3 className="truncate text-sm font-semibold text-slate-900" title={app.company}>
                   {app.company}
                 </h3>
-                <p className="truncate text-xs text-slate-500" title={app.category}>
+                {/* <p className="truncate text-xs text-slate-500" title={app.category}>
                   {app.category}
-                </p>
+                </p> */}
               </div>
             </div>
 
-            <span
-              className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${
-                STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
-              }`}
-            >
-              {app.status}
-            </span>
+            <div className='flex shrink-0 items-center gap-2'>
+              <button
+                type='button'
+                onClick={(e) => {
+                  e.stopPropagation()   // the card itself is clickable, so don't fire it twice
+                  handleUpdate(app)
+                }}
+                aria-label={`Edit ${app.company}`}
+                title='Edit'
+                className='flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 cursor-pointer'
+              >
+                <span className='material-symbols-outlined text-[16px] leading-none'>edit_square</span>
+              </button>
+
+              <span
+                className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
+                  }`}
+              >
+                {app.status}
+              </span>
+            </div>
           </div>
 
           {/* Position */}
@@ -228,9 +253,8 @@ const ApplicationCards = ({
               </div>
 
               <span
-                className={`truncate text-right text-xs ${
-                  REFERENCE_STYLES[app.status] || 'text-slate-500'
-                }`}
+                className={`truncate text-right text-xs ${REFERENCE_STYLES[app.status] || 'text-slate-500'
+                  }`}
                 title={app.reference}
               >
                 {app.reference}
