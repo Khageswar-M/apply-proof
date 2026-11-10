@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
+import applicationService from '../../../../../../services/applicationService';
 
 
 const JOB_BOARDS = [
@@ -11,6 +12,8 @@ const JOB_BOARDS = [
   { value: 'INSTAHYRE', label: 'Instahyre' },
   { value: 'CAREER_SITE', label: 'Career Site' },
 ];
+
+const DEFAULT_USER_ID = "a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d30";
 
 const STATUSES = ['APPLIED', 'SHORTLISTED', 'INTERVIEW CALL', 'INTERVIEWED', 'FINAL ROUND', 'OFFER', 'REJECTED'];
 
@@ -94,15 +97,16 @@ const validate = (f) => {
 };
 
 /* ---------- request "record" (matches CreateApplicationRequest in Java) ---------- */
-export const createApplicationRequest = (f) =>
+export const createApplicationRequest = (f, userId = DEFAULT_USER_ID) =>
   Object.freeze({
+    userId,
     companyName: f.companyName.trim(),
-    jobBoard: f.jobBoard,                                   // LINKEDIN, NAUKRI...
+    jobBoard: f.jobBoard,
     jobRole: f.jobRole.trim(),
-    resumeName: f.resumeName.trim(),
-    status: f.status.replace(/ /g, '_'),                    // INTERVIEW_CALL
-    appliedAt: new Date(`${f.appliedDate}T${f.appliedTime}`).toISOString(), // Instant
-    notes: f.notes.trim() || null,
+    appliedResumeName: f.resumeName.trim(),
+    currentStatus: f.status.replace(/ /g, '_'),
+    note: f.notes.trim() || null,
+    appliedDateTime: `${f.appliedDate}T${f.appliedTime}:00`,
   });
 
 /* ---------- small UI helpers ---------- */
@@ -133,7 +137,11 @@ const Field = ({ label, htmlFor, required, optional, error, children }) => (
 );
 
 /* ---------- form ---------- */
-const ApplicationFormInner = ({ application, onSubmit = async (payload, id) => console.log(id, payload) }) => {
+const ApplicationFormInner = ({
+  application,
+  userId = DEFAULT_USER_ID,
+  onSubmit = async (payload, id) => console.log(id, payload)
+}) => {
   const dispatch = useDispatch();
   const isEdit = !!application;
 
@@ -172,24 +180,64 @@ const ApplicationFormInner = ({ application, onSubmit = async (payload, id) => c
     dispatch(setUpdateObject(null));
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTouched(Object.fromEntries(Object.keys(form).map((k) => [k, true])));
+
+    setTouched(
+      Object.fromEntries(
+        Object.keys(form).map((k) => [k, true])
+      )
+    );
+
     if (Object.keys(errors).length) return;
+
+    // User ID validation for new applications
+    if (!isEdit && !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(userId ?? "")) {
+      console.log("UserId: " , userId);
+      setSubmitError("A valid user ID is required.");
+
+      return;
+    }
 
     try {
       setSaving(true);
-      setSubmitError('');
-      await onSubmit(createApplicationRequest(form), application?.id);
+      setSubmitError("");
 
-      if (isEdit) closeDrawer();
-      else handleClear();
-    } catch {
-      setSubmitError(`Could not ${isEdit ? 'update' : 'save'} the application. Please try again.`);
+      const payload = createApplicationRequest(form, userId);
+
+      if (isEdit) {
+        // Existing update flow
+        await onSubmit(payload, application?.id);
+        closeDrawer();
+
+      } else {
+        // Create application API
+        const result = await applicationService.createApplication(payload);
+
+        if (!result.success) {
+          throw new Error(result.message);
+        }
+
+        console.log("Application created:", result.data);
+
+        // Reset form after successful creation
+        handleClear();
+      }
+
+    } catch (error) {
+      console.error("Application submission failed:", error);
+
+      setSubmitError(
+        error.message ||
+        `Could not ${isEdit ? "update" : "save"} the application. Please try again.`
+      );
+
     } finally {
       setSaving(false);
     }
   };
+
 
   return (
     <div className='w-full text-left flex flex-col items-center'>
@@ -343,11 +391,13 @@ const ApplicationFormInner = ({ application, onSubmit = async (payload, id) => c
 }
 
 const ApplicationForm = (props) => {
-  const updateObject = useSelector((state) => state.app.updateObject);
+  const updateObject = useSelector(
+    (state) => state.app.updateObject
+  );
 
   return (
     <ApplicationFormInner
-      key={updateObject?.id ?? 'new'}   // remounts the form when the target changes
+      key={updateObject?.id ?? props.userId ?? DEFAULT_USER_ID}
       application={updateObject}
       {...props}
     />
