@@ -10,10 +10,11 @@ public class ApplicationMapper {
         return ApplicationResponse.builder()
                 .id(jobApplication.getId().toString())
                 .companyName(jobApplication.getCompanyName())
-                .resource(jobApplication.getResumeName())
-                .status(jobApplication.getStatus().toString())
-                .resumeName(jobApplication.getResumeName())
-                .appliedDateTime(jobApplication.getAppliedDateTime().toString())
+                .jobBoard(jobApplication.getJobBoard())
+                .jobRole(jobApplication.getJobRole())
+                .appliedResumeName(jobApplication.getAppliedResumeName())
+                .currentStatus(jobApplication.getCurrentStatus())
+                .note(jobApplication.getNote())
                 .build();
     }
 }

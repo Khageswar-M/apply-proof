@@ -10,20 +10,15 @@ public record ApplicationUpdateRequest(
         @Size(max = 100, message = "Company name must not exceed 100 characters")
         String companyName,
 
-        @NotBlank(message = "Application resource is required!")
-        @Size(max = 50, message = "Application resource must not exceed 50 characters")
-        String applicationResource,
+        String jobBoard,
 
-        @NotBlank(message = "Status is required!")
-        @Pattern(
-                regexp = "APPLIED|RECRUITER_CALL|ASSESSMENT|FINAL_DISCUSSION|OFFER|REJECTED",
-                message = "Status must be one of: APPLIED, RECRUITER_CALL, ASSESSMENT, FINAL_DISCUSSION, OFFER, REJECTED"
-        )
-        String status,
+        String jobRole,
 
-        @NotBlank(message = "Resume name is required!")
-        @Size(max = 50, message = "Resume name must not exceed 50 characters")
-        String resumeName
+        String appliedResumeName,
+
+        String currentStatus,
+
+        String note
 
 ) {
 }

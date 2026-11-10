@@ -41,38 +41,43 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        String path = request.getURI().getPath();
 
-        if (request.getMethod() == HttpMethod.OPTIONS || PUBLIC_PATHS.contains(path)) {
-            return chain.filter(exchange);
-        }
+        return chain.filter(exchange);
 
-        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return unauthorized(exchange);
-        }
+//      TODO: uncomment this after implement all the API in the frontend
 
-        return webClient.get()
-                .uri("/api/v1/auth/validate")
-                .header(HttpHeaders.AUTHORIZATION, authHeader)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
-                .map(body -> String.valueOf(body.getOrDefault("userId", "")))
-                .onErrorResume(WebClientResponseException.class, e -> Mono.just(""))
-                .defaultIfEmpty("")
-                .flatMap(userId -> {
-                    if (userId.isEmpty()) {
-                        return unauthorized(exchange);
-                    }
-                    ServerHttpRequest mutated = request.mutate()
-                            .headers(h -> {
-                                h.remove("X-User-Id");   // never trust a client-supplied value
-                                h.add("X-User-Id", userId);
-                            })
-                            .build();
-                    return chain.filter(exchange.mutate().request(mutated).build());
-                });
+//        ServerHttpRequest request = exchange.getRequest();
+//        String path = request.getURI().getPath();
+//
+//        if (request.getMethod() == HttpMethod.OPTIONS || PUBLIC_PATHS.contains(path)) {
+//            return chain.filter(exchange);
+//        }
+//
+//        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            return unauthorized(exchange);
+//        }
+//
+//        return webClient.get()
+//                .uri("/api/v1/auth/validate")
+//                .header(HttpHeaders.AUTHORIZATION, authHeader)
+//                .retrieve()
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+//                .map(body -> String.valueOf(body.getOrDefault("userId", "")))
+//                .onErrorResume(WebClientResponseException.class, e -> Mono.just(""))
+//                .defaultIfEmpty("")
+//                .flatMap(userId -> {
+//                    if (userId.isEmpty()) {
+//                        return unauthorized(exchange);
+//                    }
+//                    ServerHttpRequest mutated = request.mutate()
+//                            .headers(h -> {
+//                                h.remove("X-User-Id");   // never trust a client-supplied value
+//                                h.add("X-User-Id", userId);
+//                            })
+//                            .build();
+//                    return chain.filter(exchange.mutate().request(mutated).build());
+//                });
     }
 
     private Mono<Void> unauthorized(ServerWebExchange exchange) {

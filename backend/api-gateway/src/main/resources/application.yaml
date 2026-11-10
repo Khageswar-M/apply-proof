@@ -1,3 +1,4 @@
+
 server:
   port: 4004
 
@@ -9,13 +10,28 @@ spring:
     gateway:
       server:
         webflux:
+
           globalcors:
+            add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowedOriginPatterns: "*"
-                allowedMethods: "*"
-                allowedHeaders: "*"
+                allowedOrigins:
+                  - "http://localhost:5173"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders:
+                  - "*"
                 allowCredentials: true
+
+          # Remove duplicate CORS response headers
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+
           routes:
             - id: auth-service
               uri: ${AUTH_SERVICE_URL:http://localhost:4003}
@@ -23,12 +39,13 @@ spring:
                 - Path=/api/v1/auth/**
 
             - id: application-service
-              uri: ${APPLICATION_SERVICE_URL:http://localhost:4000}
+              uri: http://localhost:4000
               predicates:
                 - Path=/api/v1/applications/**
 
             - id: analytic-service
-              uri: ${ANALYTIC_SERVICE_URL:http://localhost:4001}
+#              uri: ${ANALYTIC_SERVICE_URL:http://localhost:4001}
+              uri: http://localhost:4001
               predicates:
                 - Path=/api/v1/analytics/**
 
