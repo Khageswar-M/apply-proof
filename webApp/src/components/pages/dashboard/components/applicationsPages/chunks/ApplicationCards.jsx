@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import applicationService from '../../../../../../services/applicationService';
 
+const DEFAULT_USER_ID = 'a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d30';
+
+// Keys now match the backend enum values exactly
 const STATUS_STYLES = {
   APPLIED: 'bg-blue-50 text-blue-700 ring-blue-200',
-  'INTERVIEW CALL': 'bg-purple-50 text-purple-700 ring-purple-200',
+  INTERVIEW_CALL: 'bg-purple-50 text-purple-700 ring-purple-200',
   ASSESSMENT: 'bg-orange-50 text-orange-700 ring-orange-200',
   INTERVIEWED: 'bg-teal-50 text-teal-700 ring-teal-200',
   SHORTLISTED: 'bg-amber-50 text-amber-700 ring-amber-200',
-  'FINAL DISCUSSION': 'bg-indigo-50 text-indigo-700 ring-indigo-200',
+  FINAL_ROUND: 'bg-indigo-50 text-indigo-700 ring-indigo-200',
   OFFER: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
   REJECTED: 'bg-red-50 text-red-600 ring-red-200',
 };
@@ -29,10 +33,43 @@ const AVATAR_COLORS = [
   'bg-red-50 text-red-600',
 ];
 
+const SOURCE_LABELS = {
+  LINKEDIN: 'LinkedIn',
+  INDEED: 'Indeed',
+  NAUKRI: 'Naukri',
+  REFERRAL: 'Referral',
+  COMPANY_WEBSITE: 'Company Website',
+};
+
 const SOURCE_ICONS = {
   Referral: 'group',
   'Company Website': 'language',
 };
+
+const formatStatus = (s = '') => s.replace(/_/g, ' ');
+
+const formatSource = (s = '') =>
+  SOURCE_LABELS[s] ||
+  s.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+const formatDate = (iso) => {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime())
+    ? ''
+    : d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+};
+
+// Backend shape -> card shape (raw fields are kept for the edit drawer)
+const toCard = (a) => ({
+  ...a,
+  company: a.companyName,
+  position: a.jobRole,
+  source: formatSource(a.jobBoard),
+  appliedDate: formatDate(a.appliedDateTime),
+  resume: a.appliedResumeName,
+  status: a.currentStatus,
+  reference: a.note,
+});
 
 // Same company always gets the same color, even if the list order changes
 const getAvatarColor = (name = '') =>
@@ -42,97 +79,64 @@ const getAvatarColor = (name = '') =>
 
 const getInitial = (name = '') => name.trim().charAt(0).toUpperCase();
 
-const SAMPLE_APPLICATIONS = [
-  {
-    id: 1,
-    company: 'Infosys',
-    category: 'Information Tech',
-    position: 'Java Full Stack Developer',
-    source: 'LinkedIn',
-    appliedDate: '28 Oct 2024',
-    resume: 'Resume_Java_v2.pdf',
-    status: 'APPLIED',
-    reference: 'Ref: INF-881',
-  },
-  {
-    id: 2,
-    company: 'Razorpay',
-    category: 'Fintech Core',
-    position: 'React Native Developer',
-    source: 'Referral',
-    appliedDate: '24 Oct 2024',
-    resume: 'Resume_FullStack_v3.pdf',
-    status: 'INTERVIEW CALL',
-    reference: 'R1 Scheduled',
-  },
-  {
-    id: 3,
-    company: 'TCS Innovations',
-    category: 'Enterprise Cloud',
-    position: 'Cloud Solutions Architect',
-    source: 'Naukri',
-    appliedDate: '18 Oct 2024',
-    resume: 'Resume_Cloud_v1.pdf',
-    status: 'OFFER',
-    reference: 'Reviewing Package',
-  },
-  {
-    id: 4,
-    company: 'Freshworks',
-    category: 'SaaS Product',
-    position: 'UI Platform Engineer',
-    source: 'Company Website',
-    appliedDate: '15 Oct 2024',
-    resume: 'Resume_Frontend_v4.pdf',
-    status: 'INTERVIEWED',
-    reference: 'Debrief pending',
-  },
-  {
-    id: 5,
-    company: 'Swiggy',
-    category: 'Consumer Tech',
-    position: 'Senior Backend Engineer',
-    source: 'Indeed',
-    appliedDate: '10 Oct 2024',
-    resume: 'Resume_Backend_v2.pdf',
-    status: 'SHORTLISTED',
-    reference: 'Send ping',
-    followUp: 'Follow-up window: 18 days ago',
-  },
-  {
-    id: 6,
-    company: 'Wipro',
-    category: 'Global Tech Services',
-    position: 'Associate Software Engineer',
-    source: 'LinkedIn',
-    appliedDate: '28 Sep 2024',
-    resume: 'Resume_General_v1.pdf',
-    status: 'REJECTED',
-    reference: 'Archived',
-  },
-];
-
-const ApplicationCards = ({
-  applications = SAMPLE_APPLICATIONS,
-  onStatusChange,
-  onResumeView,
-}) => {
+const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeView }) => {
   const dispatch = useDispatch(); // hooks first
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await applicationService.getApplicationsByUserId(userId);
+        // works whether responseGateway returns the axios response or the body
+        const body = res?.data;
+        const list = Array.isArray(body) ? body : body?.data;
+
+        if (!cancelled) {
+          setApplications(
+            (list || [])
+              .map(toCard)
+              .sort((a, b) => new Date(b.appliedDateTime) - new Date(a.appliedDateTime))
+          );
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err?.response?.data?.message || 'Failed to load applications.');
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
 
   const handleUpdate = (application) => {
     dispatch(setUpdateObject(application));
     dispatch(setUpdateDrawerOpen(true));
   };
 
-  if (!applications.length) {
-    return (
-      <div className="w-full rounded-xl border border-dashed border-stone-300 bg-white p-8 text-center text-sm text-slate-500">
-        No applications yet.
-      </div>
+  const handleStatusChange = (id, status) => {
+    // optimistic local update; hook up the update API here when ready
+    setApplications((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, status, currentStatus: status } : a))
     );
-  }
+    onStatusChange?.(id, status);
+  };
 
+  const messageBox = 'w-full rounded-xl border border-dashed border-stone-300 bg-white p-8 text-center text-sm';
 
+  if (loading) return <div className={`${messageBox} text-slate-500`}>Loading applications...</div>;
+  if (error) return <div className={`${messageBox} text-red-600`}>{error}</div>;
+  if (!applications.length) return <div className={`${messageBox} text-slate-500`}>No applications yet.</div>;
 
   return (
     <section className="grid w-full grid-cols-1 gap-4 pb-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -154,40 +158,35 @@ const ApplicationCards = ({
                 <h3 className="truncate text-sm font-semibold text-slate-900" title={app.company}>
                   {app.company}
                 </h3>
-                {/* <p className="truncate text-xs text-slate-500" title={app.category}>
-                  {app.category}
-                </p> */}
               </div>
             </div>
 
-            <div className='flex shrink-0 items-center gap-2'>
+            <div className="flex shrink-0 items-center gap-2">
               <button
-                type='button'
+                type="button"
                 onClick={(e) => {
-                  e.stopPropagation()   // the card itself is clickable, so don't fire it twice
-                  handleUpdate(app)
+                  e.stopPropagation(); // the card itself is clickable, so don't fire it twice
+                  handleUpdate(app);
                 }}
                 aria-label={`Edit ${app.company}`}
-                title='Edit'
-                className='flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 cursor-pointer'
+                title="Edit"
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 cursor-pointer"
               >
-                <span className='material-symbols-outlined text-[16px] leading-none'>edit_square</span>
+                <span className="material-symbols-outlined text-[16px] leading-none">edit_square</span>
               </button>
 
               <span
-                className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
-                  }`}
+                className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${
+                  STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
+                }`}
               >
-                {app.status}
+                {formatStatus(app.status)}
               </span>
             </div>
           </div>
 
           {/* Position */}
-          <p
-            className="mt-3 truncate text-sm font-medium text-slate-800"
-            title={app.position}
-          >
+          <p className="mt-3 truncate text-sm font-medium text-slate-800" title={app.position}>
             {app.position}
           </p>
 
@@ -200,14 +199,6 @@ const ApplicationCards = ({
             <span aria-hidden="true">·</span>
             <span>Applied {app.appliedDate}</span>
           </div>
-
-          {/* Follow-up */}
-          {/* {app.followUp && (
-            <div className="mt-3 flex items-center gap-1.5 rounded-md bg-amber-50 px-2.5 py-1.5 text-xs text-amber-700">
-              <span className="material-symbols-outlined !text-sm leading-none">schedule</span>
-              {app.followUp}
-            </div>
-          )} */}
 
           {/* Bottom section */}
           <div className="mt-auto pt-4">
@@ -233,7 +224,7 @@ const ApplicationCards = ({
                 <select
                   value=""
                   onChange={(e) => {
-                    if (e.target.value) onStatusChange?.(app.id, e.target.value);
+                    if (e.target.value) handleStatusChange(app.id, e.target.value);
                   }}
                   aria-label={`Update status for ${app.company}`}
                   className="cursor-pointer appearance-none rounded-md border border-stone-200 bg-white py-1 pl-2.5 pr-7 text-xs font-medium text-slate-700 outline-none transition-colors hover:border-stone-300 focus-visible:ring-2 focus-visible:ring-teal-500"
@@ -243,7 +234,7 @@ const ApplicationCards = ({
                   </option>
                   {STATUSES.map((s) => (
                     <option key={s} value={s}>
-                      {s}
+                      {formatStatus(s)}
                     </option>
                   ))}
                 </select>
@@ -253,8 +244,7 @@ const ApplicationCards = ({
               </div>
 
               <span
-                className={`truncate text-right text-xs ${REFERENCE_STYLES[app.status] || 'text-slate-500'
-                  }`}
+                className={`truncate text-right text-xs ${REFERENCE_STYLES[app.status] || 'text-slate-500'}`}
                 title={app.reference}
               >
                 {app.reference}
