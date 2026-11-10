@@ -17,16 +17,15 @@ const DEFAULT_USER_ID = "a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d30";
 
 const STATUSES = ['APPLIED', 'SHORTLISTED', 'INTERVIEW CALL', 'INTERVIEWED', 'FINAL ROUND', 'OFFER', 'REJECTED'];
 
+const UUID_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
 /* ---------- date / time helpers (local time, not UTC) ---------- */
 const pad = (n) => String(n).padStart(2, '0');
-
 
 const getToday = () => {
   const d = new Date();
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
-
-
 
 const getNow = () => {
   const d = new Date();
@@ -44,20 +43,20 @@ const initialForm = () => ({
   notes: '',
 });
 
-// turns a saved application back into the form's shape
+// turns a saved application (raw API shape) back into the form's shape
 const formFromApplication = (a) => {
-  const d = new Date(a.appliedAt);
-  const validDate = !isNaN(d);
+  // appliedDateTime looks like "2026-11-10T20:33"
+  const [date, time] = (a.appliedDateTime ?? '').split('T');
 
   return {
-    companyName: a.companyName ?? a.company ?? '',
-    jobBoard: a.jobBoard ?? a.board ?? 'LINKEDIN',
-    jobRole: a.position ?? a.role ?? '',
-    resumeName: a.resumeName ?? a.resume ?? '',
-    status: (a.status ?? 'APPLIED').replace(/_/g, ' '),   // INTERVIEW_CALL -> INTERVIEW CALL
-    appliedDate: validDate ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` : getToday(),
-    appliedTime: validDate ? `${pad(d.getHours())}:${pad(d.getMinutes())}` : getNow(),
-    notes: a.notes ?? '',
+    companyName: a.companyName ?? '',
+    jobBoard: a.jobBoard ?? 'LINKEDIN',
+    jobRole: a.jobRole ?? '',
+    resumeName: a.appliedResumeName ?? '',
+    status: (a.currentStatus ?? 'APPLIED').replace(/_/g, ' '), // INTERVIEW_CALL -> INTERVIEW CALL
+    appliedDate: date || getToday(),
+    appliedTime: time ? time.slice(0, 5) : getNow(),
+    notes: a.note ?? '',
   };
 };
 
@@ -70,7 +69,7 @@ const checkText = (value, label, min = 2, max = 100) => {
   return '';
 };
 
-const validate = (f) => {
+const validate = (f, isEdit) => {
   const e = {};
 
   const company = checkText(f.companyName, 'company name');
@@ -85,18 +84,23 @@ const validate = (f) => {
   if (!JOB_BOARDS.some((b) => b.value === f.jobBoard)) e.jobBoard = 'Pick a job board';
   if (!STATUSES.includes(f.status)) e.status = 'Pick a status';
 
-  if (!f.appliedDate) e.appliedDate = 'Pick the date you applied';
-  else if (f.appliedDate > getToday()) e.appliedDate = "Date can't be in the future";
+  // date/time can't be changed on update, so only validate them when adding
+  if (!isEdit) {
+    if (!f.appliedDate) e.appliedDate = 'Pick the date you applied';
+    else if (f.appliedDate > getToday()) e.appliedDate = "Date can't be in the future";
 
-  if (!f.appliedTime) e.appliedTime = 'Pick the time you applied';
-  else if (!e.appliedDate && new Date(`${f.appliedDate}T${f.appliedTime}`) > new Date()) {
-    e.appliedTime = "Time can't be in the future";
+    if (!f.appliedTime) e.appliedTime = 'Pick the time you applied';
+    else if (!e.appliedDate && new Date(`${f.appliedDate}T${f.appliedTime}`) > new Date()) {
+      e.appliedTime = "Time can't be in the future";
+    }
   }
 
   return e;
 };
 
-/* ---------- request "record" (matches CreateApplicationRequest in Java) ---------- */
+/* ---------- request "records" ---------- */
+
+// matches CreateApplicationRequest in Java
 export const createApplicationRequest = (f, userId = DEFAULT_USER_ID) =>
   Object.freeze({
     userId,
@@ -109,9 +113,22 @@ export const createApplicationRequest = (f, userId = DEFAULT_USER_ID) =>
     appliedDateTime: `${f.appliedDate}T${f.appliedTime}:00`,
   });
 
+// matches ApplicationUpdateRequest in Java (no userId, no appliedDateTime)
+export const updateApplicationRequest = (f) =>
+  Object.freeze({
+    companyName: f.companyName.trim(),
+    jobBoard: f.jobBoard,
+    jobRole: f.jobRole.trim(),
+    appliedResumeName: f.resumeName.trim(),
+    currentStatus: f.status.replace(/ /g, '_'),
+    note: f.notes.trim() || null,
+  });
+
 /* ---------- small UI helpers ---------- */
-const box = (hasError) =>
-  `group flex items-center gap-2 w-full px-3 py-2.5 rounded-xl bg-white border transition focus-within:ring-4 ${hasError
+const box = (hasError, disabled = false) =>
+  `group flex items-center gap-2 w-full px-3 py-2.5 rounded-xl border transition focus-within:ring-4 ${
+    disabled ? 'bg-gray-50 opacity-60 border-gray-200 ' : 'bg-white '
+  }${hasError
     ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-100'
     : 'border-gray-200 focus-within:border-emerald-600 focus-within:ring-emerald-100'
   }`;
@@ -119,7 +136,7 @@ const box = (hasError) =>
 const ICON =
   'material-symbols-outlined shrink-0 text-[20px] text-gray-400 transition-colors group-focus-within:text-emerald-600';
 
-const INPUT = 'flex-1 min-w-0 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 outline-none';
+const INPUT = 'flex-1 min-w-0 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 outline-none disabled:cursor-not-allowed';
 
 // hides the browser's default calendar/clock icon so only ours shows
 const hideNative = '[&::-webkit-calendar-picker-indicator]:hidden';
@@ -140,7 +157,7 @@ const Field = ({ label, htmlFor, required, optional, error, children }) => (
 const ApplicationFormInner = ({
   application,
   userId = DEFAULT_USER_ID,
-  onSubmit = async (payload, id) => console.log(id, payload)
+  onSuccess, // optional: called with (savedApplication, isEdit) so the parent can refresh the list
 }) => {
   const dispatch = useDispatch();
   const isEdit = !!application;
@@ -154,8 +171,7 @@ const ApplicationFormInner = ({
   const dateRef = useRef(null);
   const timeRef = useRef(null);
 
-
-  const errors = validate(form);
+  const errors = validate(form, isEdit);
   const err = (name) => (touched[name] ? errors[name] : undefined);
 
   const bind = (name) => ({
@@ -180,64 +196,49 @@ const ApplicationFormInner = ({
     dispatch(setUpdateObject(null));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setTouched(
-      Object.fromEntries(
-        Object.keys(form).map((k) => [k, true])
-      )
-    );
+    setTouched(Object.fromEntries(Object.keys(form).map((k) => [k, true])));
 
     if (Object.keys(errors).length) return;
 
-    // User ID validation for new applications
-    if (!isEdit && !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(userId ?? "")) {
-      console.log("UserId: " , userId);
-      setSubmitError("A valid user ID is required.");
-
+    if (!isEdit && !UUID_REGEX.test(userId ?? '')) {
+      setSubmitError('A valid user ID is required.');
       return;
     }
 
     try {
       setSaving(true);
-      setSubmitError("");
+      setSubmitError('');
 
-      const payload = createApplicationRequest(form, userId);
+      const result = isEdit
+        ? await applicationService.updateApplication(application.id, updateApplicationRequest(form))
+        : await applicationService.createApplication(createApplicationRequest(form, userId));
 
-      if (isEdit) {
-        // Existing update flow
-        await onSubmit(payload, application?.id);
-        closeDrawer();
-
-      } else {
-        // Create application API
-        const result = await applicationService.createApplication(payload);
-
-        if (!result.success) {
-          throw new Error(result.message);
-        }
-
-        console.log("Application created:", result.data);
-
-        // Reset form after successful creation
-        handleClear();
+      if (!result?.success) {
+        throw new Error(result?.message || 'Request failed');
       }
 
+      onSuccess?.(result.data, isEdit);
+
+      if (isEdit) {
+        closeDrawer();
+      } else {
+        handleClear(); // fresh empty form after a successful create
+      }
     } catch (error) {
-      console.error("Application submission failed:", error);
+      console.error('Application submission failed:', error);
 
       setSubmitError(
+        error?.response?.data?.message ||
         error.message ||
-        `Could not ${isEdit ? "update" : "save"} the application. Please try again.`
+        `Could not ${isEdit ? 'update' : 'save'} the application. Please try again.`
       );
-
     } finally {
       setSaving(false);
     }
   };
-
 
   return (
     <div className='w-full text-left flex flex-col items-center'>
@@ -307,20 +308,22 @@ const ApplicationFormInner = ({
 
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-start'>
             <Field label='Applied Date' htmlFor='appliedDate' required error={err('appliedDate')}>
-              <div className={box(err('appliedDate'))}>
+              <div className={box(err('appliedDate'), isEdit)}>
                 <input
                   id='appliedDate'
                   ref={dateRef}
                   type='date'
                   max={getToday()}
+                  disabled={isEdit}
                   className={`${INPUT} ${hideNative}`}
                   {...bind('appliedDate')}
                 />
                 <button
                   type='button'
+                  disabled={isEdit}
                   onClick={() => openPicker(dateRef)}
                   aria-label='Open calendar'
-                  className={`${ICON} hover:text-emerald-600`}
+                  className={`${ICON} hover:text-emerald-600 disabled:cursor-not-allowed`}
                 >
                   calendar_month
                 </button>
@@ -328,25 +331,32 @@ const ApplicationFormInner = ({
             </Field>
 
             <Field label='Applied Time' htmlFor='appliedTime' required error={err('appliedTime')}>
-              <div className={box(err('appliedTime'))}>
+              <div className={box(err('appliedTime'), isEdit)}>
                 <input
                   id='appliedTime'
                   ref={timeRef}
                   type='time'
+                  disabled={isEdit}
                   className={`${INPUT} ${hideNative}`}
                   {...bind('appliedTime')}
                 />
                 <button
                   type='button'
+                  disabled={isEdit}
                   onClick={() => openPicker(timeRef)}
                   aria-label='Open time picker'
-                  className={`${ICON} hover:text-emerald-600`}
+                  className={`${ICON} hover:text-emerald-600 disabled:cursor-not-allowed`}
                 >
                   schedule
                 </button>
               </div>
             </Field>
           </div>
+          {isEdit && (
+            <p className='-mt-3 text-xs text-gray-400'>
+              Applied date and time can't be changed after saving.
+            </p>
+          )}
 
           <Field label='Note' htmlFor='notes' optional>
             <div className={box(false)}>
@@ -391,9 +401,7 @@ const ApplicationFormInner = ({
 }
 
 const ApplicationForm = (props) => {
-  const updateObject = useSelector(
-    (state) => state.app.updateObject
-  );
+  const updateObject = useSelector((state) => state.app.updateObject);
 
   return (
     <ApplicationFormInner
