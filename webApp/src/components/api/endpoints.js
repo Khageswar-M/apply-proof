@@ -10,7 +10,12 @@ const API_ENDPOINTS = {
 
         DELETE: (applicationId) =>
             `/api/v1/applications/${applicationId}`,
+
     },
+
+    ANALYTICS: {
+        BY_USER_ID: (userId) => `/api/v1/analytics/${userId}`,
+    }
 };
 
 export default API_ENDPOINTS;
