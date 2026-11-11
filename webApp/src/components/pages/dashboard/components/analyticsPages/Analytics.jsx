@@ -12,7 +12,7 @@ const Analytics = () => {
             <Title />
             <Stats applications={applications} />
 
-            <div className='grid w-full grid-cols-1 gap-5 lg:grid-cols-2 pb-5'>
+            {/* <div className='grid w-full grid-cols-1 gap-5 lg:grid-cols-2 pb-5'>
                 <section className='flex min-w-0 flex-col rounded-md bg-white p-5 shadow'>
                     <StatusBreakDown />
                 </section>
@@ -20,7 +20,7 @@ const Analytics = () => {
                 <section className='flex min-w-0 flex-col rounded-md bg-white p-5 shadow'>
                     <ResumePerformance />
                 </section>
-            </div>
+            </div> */}
         </div>
     )
 }

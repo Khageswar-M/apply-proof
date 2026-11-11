@@ -1,11 +1,14 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Head = ({
     totalApplications = 18,
     onViewModes,
     onNewApplication,
 }) => {
+
+    const navigate = useNavigate();
     return (
         <div className="flex w-full items-center justify-between gap-3">
 
@@ -39,7 +42,7 @@ const Head = ({
 
                 {/* New Application */}
                 <button
-                    onClick={onNewApplication}
+                    onClick={() => navigate("/add-application")}
                     className="flex items-center gap-1.5 rounded-lg border shadow border-teal-800 bg-teal-700 px-3 py-2 text-[10px] font-semibold text-white shadow-sm transition-colors hover:bg-teal-800"
                 >
                     <span className="material-symbols-outlined !text-sm">

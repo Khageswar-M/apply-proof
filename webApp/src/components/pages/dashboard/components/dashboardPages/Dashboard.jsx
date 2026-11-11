@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './chunks/Header'
 import ApplyCountCharts from './chunks/ApplyCountCharts'
 import Cards from './chunks/Cards'
-import RecentApplicationsTable from './chunks/RecentApplicationsTable'
+// import RecentApplicationsTable from './chunks/RecentApplicationsTable'
 import StreakCount from './chunks/StreakCount'
 const Dashboard = () => {
   return (
@@ -17,7 +17,7 @@ const Dashboard = () => {
         </div>
       </div>
       <Cards />
-      <RecentApplicationsTable />
+      {/* <RecentApplicationsTable /> */}
     </div>
   )
 }
