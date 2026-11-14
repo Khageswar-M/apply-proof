@@ -8,11 +8,15 @@ public record ApplicationResponse(
 
         String companyName,
 
-        String resource,
+        String jobBoard,
 
-        String status,
+        String jobRole,
 
-        String resumeName,
+        String appliedResumeName,
+
+        String currentStatus,
+
+        String note,
 
         String appliedDateTime
 ) {

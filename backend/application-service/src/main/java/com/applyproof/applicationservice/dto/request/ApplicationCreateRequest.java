@@ -17,20 +17,17 @@ public record ApplicationCreateRequest(
         @Size(max = 100, message = "Company name must not exceed 100 characters")
         String companyName,
 
-        @NotBlank(message = "Application resource is required!")
-        @Size(max = 50, message = "Application resource must not exceed 50 characters")
-        String resourceName,
+        String jobBoard,
 
-        @NotBlank(message = "Application status is required!")
-        @Pattern(
-                regexp = "APPLIED|ASSESSMENT|INTERVIEW|OFFER|REJECTED|WITHDRAWN",
-                message = "Status must be APPLIED, ASSESSMENT, INTERVIEW, OFFER, REJECTED, or WITHDRAWN"
-        )
-        String status,
+        String jobRole,
 
-        @NotBlank(message = "Resume name is required!")
-        @Size(max = 100, message = "Resume name must not exceed 100 characters")
-        String resumeName
+        String appliedResumeName,
+
+        String currentStatus,
+
+        String note,
+
+        String appliedDateTime
 
 ) {
 }

@@ -46,9 +46,11 @@ public class ApplicationServiceImpl implements ApplicationService{
                 .map(application -> ApplicationResponse.builder()
                         .id(application.getId().toString())
                         .companyName(application.getCompanyName())
-                        .resource(application.getApplicationResource())
-                        .status(application.getStatus().toString())
-                        .resumeName(application.getResumeName())
+                        .jobBoard(application.getJobBoard())
+                        .jobRole(application.getJobRole())
+                        .appliedResumeName(application.getAppliedResumeName())
+                        .currentStatus(application.getCurrentStatus())
+                        .note(application.getNote())
                         .appliedDateTime(application.getAppliedDateTime().toString())
                         .build()
                 )
@@ -67,9 +69,11 @@ public class ApplicationServiceImpl implements ApplicationService{
                 .map(application -> ApplicationResponse.builder()
                         .id(application.getId().toString())
                         .companyName(application.getCompanyName())
-                        .resource(application.getApplicationResource())
-                        .status(application.getStatus().toString())
-                        .resumeName(application.getResumeName())
+                        .jobBoard(application.getJobBoard())
+                        .jobRole(application.getJobRole())
+                        .appliedResumeName(application.getAppliedResumeName())
+                        .currentStatus(application.getCurrentStatus())
+                        .note(application.getNote())
                         .appliedDateTime(application.getAppliedDateTime().toString())
                         .build())
                 .toList();
@@ -86,9 +90,11 @@ public class ApplicationServiceImpl implements ApplicationService{
                                 new ApplicationNotFoundException("Job application not found!"));
 
         existingApplication.setCompanyName(request.companyName());
-        existingApplication.setApplicationResource(request.applicationResource());
-        existingApplication.setStatus(ApplicationStatus.valueOf(request.status()));
-        existingApplication.setResumeName(request.resumeName());
+        existingApplication.setJobBoard(request.jobBoard());
+        existingApplication.setJobRole(request.jobRole());
+        existingApplication.setAppliedResumeName(request.appliedResumeName());
+        existingApplication.setCurrentStatus(request.currentStatus());
+        existingApplication.setNote(request.note());
 
         JobApplications updatedApplication = repository.save(existingApplication);
 
@@ -103,10 +109,12 @@ public class ApplicationServiceImpl implements ApplicationService{
         JobApplications jobApplications = JobApplications.builder()
                 .userId(UUID.fromString(request.userId()))
                 .companyName(request.companyName())
-                .status(ApplicationStatus.valueOf(request.status()))
-                .applicationResource(request.resourceName())
-                .resumeName(request.resumeName())
-                .appliedDateTime(LocalDateTime.now())
+                .jobBoard(request.jobBoard())
+                .jobRole(request.jobRole())
+                .appliedResumeName(request.appliedResumeName())
+                .currentStatus(request.currentStatus())
+                .note(request.note())
+                .appliedDateTime(LocalDateTime.parse(request.appliedDateTime()))
                 .build();
 
         JobApplications newJobApplication = repository.save(jobApplications);

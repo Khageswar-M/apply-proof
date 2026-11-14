@@ -29,18 +29,23 @@ public class JobApplications {
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID userId;
 
-    @Column(name = "company_name", nullable = false)
+    @Column(name = "company_name", nullable = true)
     private String companyName;
 
-    @Column(name = "application_resource", nullable = false)
-    private String applicationResource;
+    @Column(name = "job_board", nullable = true)
+    private String jobBoard;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
-    private ApplicationStatus status;
+    @Column(name = "job_role", nullable = true)
+    private String jobRole;
 
-    @Column(name = "resume_name", nullable = false, length = 100)
-    private String resumeName;
+    @Column(name = "applied_resume_name", nullable = true)
+    private String appliedResumeName;
+
+    @Column(name = "current_status", nullable = true)
+    private String currentStatus;
+
+    @Column(name = "note", nullable = true)
+    private String note;
 
     @Column(name = "applied_date_time", nullable = false, updatable = false)
     private LocalDateTime appliedDateTime;
