@@ -1,8 +1,7 @@
-import React from 'react'
-import { CardData, POSITIONS } from '../../constants/ConstantDate'
+import { useNavigate } from 'react-router-dom'
 
 const Hero = () => {
-    const CARD_COUNT = 7;
+    const navigate = useNavigate()
     return (
         <div className='hero-container'>
 
@@ -15,8 +14,8 @@ const Hero = () => {
                 <div className='hero-title-description'>A quit, zero-cloud job tracker for engineers and designers. Your receipts, notes, and metrics remain strictly client-side.</div>
 
                 <div className='section-one-btn-container'>
-                    <button className='hero-sOne-btnOne'>Start your ledger</button>
-                    <button className='hero-sOne-btnTwo'>Sign in</button>
+                    <button className='hero-sOne-btnOne' onClick={() => navigate('/login?mode=signup')}>Start your ledger</button>
+                    <button className='hero-sOne-btnTwo' onClick={() => navigate('/login')}>Sign in</button>
                 </div>
 
                 <div className='bottom-line'>

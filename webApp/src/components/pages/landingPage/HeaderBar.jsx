@@ -1,6 +1,8 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderBar = () => {
+    const navigate = useNavigate()
+
     return (
         <div className='header-container'>
 
@@ -25,8 +27,8 @@ const HeaderBar = () => {
 
 
                 <div className='header-button-container'>
-                    <button className='header-login-btn'>Log In</button>
-                    <button className="header-signup-btn">
+                    <button className='header-login-btn' onClick={() => navigate('/login')}>Log In</button>
+                    <button className="header-signup-btn" onClick={() => navigate('/login?mode=signup')}>
                         Get started
                         <span className="material-symbols-outlined !text-sm">
                             arrow_forward

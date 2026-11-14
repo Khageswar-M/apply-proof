@@ -94,7 +94,9 @@ const AuthScreen = ({ onAuthSuccess }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [mode, setMode] = useState('login');
+    const [mode, setMode] = useState(
+        () => new URLSearchParams(location.search).get('mode') === 'signup' ? 'signup' : 'login'
+    );
     const [step, setStep] = useState('email');
 
     const [email, setEmail] = useState('');
@@ -116,6 +118,7 @@ const AuthScreen = ({ onAuthSuccess }) => {
         if (loading) return;
 
         setMode(nextMode);
+        navigate(nextMode === 'signup' ? '/login?mode=signup' : '/login', { replace: true });
         setStep('email');
         setEmailError('');
         setApiError('');
@@ -281,6 +284,7 @@ const AuthScreen = ({ onAuthSuccess }) => {
                 }
 
                 setMode('login');
+                navigate('/login', { replace: true });
                 setStep('email');
                 setOtp(emptyOtp());
                 setApiError('');
