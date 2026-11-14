@@ -16,7 +16,7 @@ public class CookieUtil {
     @Value("${app.cookie.secure}") private boolean secure;
     @Value("${app.cookie.same-site}") private String sameSite;
     @Value("${jwt.access.expiration-ms}") private long accessExpMs;
-    @Value("${jwt.access.expiration-ms}") private long refreshExpMs;
+    @Value("${jwt.refresh.expiration-ms}") private long refreshExpMs;
 
     public ResponseCookie accessCookie(String token){
         return build(ACCESS_COOKIE, token, "/", Duration.ofMillis(accessExpMs));

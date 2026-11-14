@@ -126,7 +126,6 @@ public class UserServiceImpl implements UserService {
         LoginResponse userInfo = LoginResponse.builder()
                 .userId(saved.getId().toString())
                 .email(saved.getEmail())
-                .refreshToken(tokens.refreshToken())
                 .build();
 
         return new AuthResult(userInfo, tokens);

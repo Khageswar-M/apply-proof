@@ -34,7 +34,8 @@ spring:
 
           routes:
             - id: auth-service
-              uri: ${AUTH_SERVICE_URL:http://localhost:4003}
+#              uri: ${AUTH_SERVICE_URL:http://localhost:4003}
+              uri: http://localhost:4003
               predicates:
                 - Path=/api/v1/auth/**
 
@@ -50,6 +51,7 @@ spring:
                 - Path=/api/v1/analytics/**
 
             - id: mail-service
-              uri: ${MAIL_SERVICE_URL:http://localhost:4002}
+#              uri: ${MAIL_SERVICE_URL:http://localhost:4002}
+              uri: http://localhost:4002
               predicates:
                 - Path=/api/v1/mail/**
