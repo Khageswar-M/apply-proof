@@ -1,9 +1,75 @@
-import { useRef, useState } from 'react';
-import { sendOtp, verifyOtp, signUp, login } from '../../services/authService';
 
-const OTP_LENGTH = 6; 
+import { useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginSucceeded } from '../redux/appSlice';
+import authService from '../../services/authService';
+
+const OTP_LENGTH = 6;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const emptyOtp = () => Array(OTP_LENGTH).fill('');
+
+/**
+ * Converts API errors into messages that ordinary users can understand.
+ * The message explains:
+ * 1. What happened.
+ * 2. Why it may have happened.
+ * 3. What the user should do next.
+ */
+const getFriendlyError = (result, action) => {
+    const status = result?.status;
+    const code = result?.error?.code;
+    const serverMessage = result?.message?.toLowerCase() || '';
+
+    if (code === 'TIMEOUT') {
+        return 'The server took too long to respond. Your internet connection may be slow, or the server may be busy. Please try again.';
+    }
+
+    if (code === 'NETWORK_ERROR') {
+        return 'We could not reach the server. Please check your internet connection and try again. If your connection is working, the application server may be temporarily unavailable.';
+    }
+
+    if (status === 400) {
+        if (serverMessage.includes('invalid otp')) {
+            return 'The verification code you entered is incorrect or has expired. Please check your email and enter the latest code.';
+        }
+
+        return result.message
+            ? `Your request could not be accepted: ${result.message}. Please check your information and try again.`
+            : 'Some of the information you submitted is incorrect or incomplete. Please check it and try again.';
+    }
+
+    if (status === 401) {
+        return 'Your authentication could not be verified. Your verification code or login session may have expired. Please start again.';
+    }
+
+    if (status === 403) {
+        return 'The server understood your request but did not allow it. You may not have permission to perform this action. Please contact support if this continues.';
+    }
+
+    if (status === 404) {
+        return 'The requested service could not be found. The application endpoint may be unavailable or incorrectly configured. Please try again later.';
+    }
+
+    if (status === 409) {
+        return action === 'signup'
+            ? 'An account with this email address may already exist. Please switch to Log In and try again.'
+            : 'This request conflicts with an existing account or verification request. Please try again.';
+    }
+
+    if (status === 429) {
+        return 'Too many requests have been made in a short time. Please wait a while before trying again.';
+    }
+
+    if (status >= 500) {
+        return 'Something went wrong on our server while processing your request. Your information has not been confirmed. Please try again later.';
+    }
+
+    return result?.message
+        ? `We could not complete your request: ${result.message}. Please try again.`
+        : 'An unexpected problem occurred. Please try again. If the problem continues, contact support.';
+};
 
 const FEATURES = [
     {
@@ -24,104 +90,274 @@ const FEATURES = [
 ];
 
 const AuthScreen = ({ onAuthSuccess }) => {
-    const [mode, setMode] = useState('login'); // 'login' | 'signup'
-    const [step, setStep] = useState('email'); // 'email' | 'verify'
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [mode, setMode] = useState('login');
+    const [step, setStep] = useState('email');
+
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [apiError, setApiError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [logoutWarning, setLogoutWarning] = useState(location.state?.logoutWarning ?? '');
+
     const [loading, setLoading] = useState(false);
     const [otp, setOtp] = useState(emptyOtp());
+
     const otpRefs = useRef([]);
 
     const isLogin = mode === 'login';
     const otpComplete = otp.every(Boolean);
 
+    // Reset the form whenever the user switches authentication mode.
     const switchMode = (nextMode) => {
+        if (loading) return;
+
         setMode(nextMode);
         setStep('email');
         setEmailError('');
         setApiError('');
+        setLogoutWarning('');
+        setSuccessMessage('');
         setOtp(emptyOtp());
     };
 
+    /**
+     * STEP 1:
+     * Validate email and request an OTP.
+     */
     const handleSendCode = async (e) => {
         e.preventDefault();
+
         if (loading) return;
+
         const value = email.trim();
 
         if (!EMAIL_REGEX.test(value)) {
-            setEmailError('Enter a valid email address.');
+            setEmailError(
+                'Please enter a valid email address, such as user@example.com.'
+            );
             return;
         }
 
         setEmailError('');
         setApiError('');
+        setSuccessMessage('');
         setEmail(value);
         setLoading(true);
 
-        const res = await sendOtp(value);
+        try {
+            const res = await authService.sendOtp(value);
 
-        setLoading(false);
-        if (!res.success) {
-            setEmailError(res.message);
-            return;
+            if (!res.success) {
+                setEmailError(
+                    getFriendlyError(res, 'send-otp')
+                );
+                return;
+            }
+
+            setStep('verify');
+            setOtp(emptyOtp());
+
+            setTimeout(() => {
+                otpRefs.current[0]?.focus();
+            }, 0);
+
+        } catch (error) {
+            setEmailError(
+                getFriendlyError(
+                    {
+                        message: error?.message,
+                        status: error?.status,
+                        error,
+                    },
+                    'send-otp'
+                )
+            );
+        } finally {
+            setLoading(false);
         }
-        setStep('verify');
-        setTimeout(() => otpRefs.current[0]?.focus(), 0);
     };
 
+    /**
+     * Handles individual OTP digit changes.
+     */
     const handleOtpChange = (i, raw) => {
         const digit = raw.replace(/\D/g, '').slice(-1);
-        setOtp((prev) => prev.map((d, idx) => (idx === i ? digit : d)));
-        if (digit && i < OTP_LENGTH - 1) otpRefs.current[i + 1]?.focus();
+
+        setApiError('');
+
+        setOtp((prev) =>
+            prev.map((d, idx) => idx === i ? digit : d)
+        );
+
+        if (digit && i < OTP_LENGTH - 1) {
+            otpRefs.current[i + 1]?.focus();
+        }
     };
 
+    /**
+     * Handles backspace navigation.
+     */
     const handleOtpKeyDown = (i, e) => {
-        if (e.key === 'Backspace' && !otp[i] && i > 0) {
+        if (
+            e.key === 'Backspace' &&
+            !otp[i] &&
+            i > 0
+        ) {
             otpRefs.current[i - 1]?.focus();
         }
     };
 
+    /**
+     * Handles pasting a complete OTP.
+     */
     const handleOtpPaste = (e) => {
-        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, OTP_LENGTH);
+        const pasted = e.clipboardData
+            .getData('text')
+            .replace(/\D/g, '')
+            .slice(0, OTP_LENGTH);
+
         if (!pasted) return;
+
         e.preventDefault();
-        setOtp(Array.from({ length: OTP_LENGTH }, (_, i) => pasted[i] ?? ''));
-        otpRefs.current[Math.min(pasted.length, OTP_LENGTH - 1)]?.focus();
+
+        setApiError('');
+
+        setOtp(
+            Array.from(
+                { length: OTP_LENGTH },
+                (_, i) => pasted[i] ?? ''
+            )
+        );
+
+        otpRefs.current[
+            Math.min(pasted.length, OTP_LENGTH - 1)
+        ]?.focus();
     };
 
+    /**
+     * STEP 2:
+     * Verify OTP.
+     *
+     * STEP 3:
+     * After registration, return to the login form.
+     * A separate login flow then receives authentication cookies.
+     */
     const handleVerify = async (e) => {
         e.preventDefault();
+
         if (!otpComplete || loading) return;
 
         setApiError('');
         setLoading(true);
-        console.log("Email: ", email," OTP: ", otp.join(''));
-        let res = await verifyOtp(email, otp.join(''));
-        console.log("res: ", res);
-        if (res.success && !isLogin) res = await signUp(email); // sign-up returns no tokens...
-        if (res.success) res = await login(email); // ...so log in right after; cookies get set here
 
-        setLoading(false);
-        if (!res.success) {
-            setApiError(res.message);
+        try {
+
+            // Step 1: Verify the OTP.
+            const verifyResult = await authService.verifyOtp(
+                email,
+                otp.join('')
+            );
+
+            if (!verifyResult.success) {
+                setApiError(
+                    getFriendlyError(verifyResult, 'verify-otp')
+                );
+                return;
+            }
+
+            // Create the account, then ask the user to log in separately.
+            if (!isLogin) {
+                const signupResult = await authService.signUp(email);
+
+                if (!signupResult.success) {
+                    setApiError(
+                        getFriendlyError(signupResult, 'signup')
+                    );
+                    return;
+                }
+
+                setMode('login');
+                setStep('email');
+                setOtp(emptyOtp());
+                setApiError('');
+                setEmailError('');
+                setSuccessMessage('Your account was created successfully. Please log in to continue.');
+                return;
+            }
+
+            // Log in after successful OTP verification.
+            const loginResult = await authService.login(email);
+
+            if (!loginResult.success) {
+                setApiError(
+                    getFriendlyError(loginResult, 'login')
+                );
+
+                return;
+            }
+
+            // Confirm the profile details needed by the client are present.
+            if (!loginResult.data?.userId || !loginResult.data?.email) {
+                setApiError(
+                    'You were authenticated, but the server did not return your user ID and email. Please contact support before continuing.'
+                );
+                return;
+            }
+
+            try {
+                localStorage.setItem('userId', loginResult.data.userId);
+                localStorage.setItem('email', loginResult.data.email);
+            } catch {
+                setApiError('Login succeeded, but this browser could not save your user details. Check your browser storage settings and try again.');
+                return;
+            }
+
             setOtp(emptyOtp());
-            setTimeout(() => otpRefs.current[0]?.focus(), 0);
-            return;
+            onAuthSuccess?.(loginResult.data);
+            dispatch(loginSucceeded({
+                userId: loginResult.data.userId,
+                email: loginResult.data.email,
+            }));
+            navigate('/dashboard', { replace: true });
+
+        } catch (error) {
+
+            setApiError(
+                getFriendlyError(
+                    {
+                        message: error?.message,
+                        status: error?.status,
+                        error,
+                    },
+                    'authentication'
+                )
+            );
+
+        } finally {
+            setLoading(false);
         }
-        onAuthSuccess?.(res.data);
     };
 
+    /**
+     * Allows the user to return to the email screen.
+     */
     const handleChangeEmail = () => {
+        if (loading) return;
+
         setStep('email');
         setApiError('');
+        setEmailError('');
+        setSuccessMessage('');
         setOtp(emptyOtp());
     };
 
     return (
         <div className="auth-screen-container">
             <div className="auth-screen-section-container">
-                {/* Left: branding */}
                 <section className="auth-screen-section auth-screen-section-container-left-section">
                     <div>
                         <div>
@@ -156,7 +392,6 @@ const AuthScreen = ({ onAuthSuccess }) => {
                     </div>
                 </section>
 
-                {/* Right: auth form */}
                 <section className="auth-screen-section auth-screen-section-container-right-section">
                     <div>
                         <div>
@@ -199,7 +434,10 @@ const AuthScreen = ({ onAuthSuccess }) => {
                                             type="email"
                                             autoComplete="email"
                                             value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            onChange={(e) => {
+                                                setEmail(e.target.value);
+                                                setSuccessMessage('');
+                                            }}
                                             aria-invalid={Boolean(emailError)}
                                             aria-describedby={emailError ? 'auth-email-error' : undefined}
                                             disabled={loading}
@@ -209,6 +447,12 @@ const AuthScreen = ({ onAuthSuccess }) => {
                                             <span id="auth-email-error" role="alert">
                                                 {emailError}
                                             </span>
+                                        )}
+                                        {successMessage && (
+                                            <span role="status">{successMessage}</span>
+                                        )}
+                                        {logoutWarning && (
+                                            <span role="status">{logoutWarning}</span>
                                         )}
                                     </div>
                                     <span>
