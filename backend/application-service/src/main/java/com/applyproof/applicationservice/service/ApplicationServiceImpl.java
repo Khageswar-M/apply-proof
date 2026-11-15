@@ -140,4 +140,26 @@ public class ApplicationServiceImpl implements ApplicationService{
 
         log.info("Application deleted successfully {}", applicationId);
     }
+
+    @Override
+    public List<ApplicationResponse> searchByCompany(String userId, String companyName) {
+        if(companyName == null || companyName.isBlank()){
+            throw new ApplicationNotFoundException("Application not found");
+        }
+
+        List<JobApplications> jobApplications = repository.findByUserIdAndCompanyNameStartingWith(UUID.fromString(userId), companyName);
+
+        return jobApplications.stream()
+                .map(response -> ApplicationResponse.builder()
+                        .id(response.getId().toString())
+                        .companyName(response.getCompanyName())
+                        .jobBoard(response.getJobBoard())
+                        .jobRole(response.getJobRole())
+                        .appliedResumeName(response.getAppliedResumeName())
+                        .currentStatus(response.getCurrentStatus())
+                        .note(response.getNote())
+                        .appliedDateTime(response.getAppliedDateTime().toString())
+                        .build()
+                ).toList();
+    }
 }

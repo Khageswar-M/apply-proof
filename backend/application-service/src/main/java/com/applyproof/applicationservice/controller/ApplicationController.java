@@ -2,6 +2,7 @@ package com.applyproof.applicationservice.controller;
 
 import com.applyproof.applicationservice.dto.request.ApplicationCreateRequest;
 import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
+import com.applyproof.applicationservice.dto.request.SearchCompanyByNameRequest;
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.service.ApplicationService;
@@ -93,5 +94,20 @@ public class ApplicationController {
                         null
                 )
         );
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> searchByCompanyName(
+            @RequestBody SearchCompanyByNameRequest searchCompanyByNameRequest
+            ){
+        List<ApplicationResponse> companies = service.searchByCompany(searchCompanyByNameRequest.userId(), searchCompanyByNameRequest.companyName());
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Applications by userId & Company name",
+                        companies
+                )
+        );
+
     }
 }

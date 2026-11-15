@@ -16,4 +16,6 @@ public interface ApplicationService {
     ApplicationResponse createApplication(ApplicationCreateRequest request);
 
     void deleteApplication(String applicationId);
+
+    List<ApplicationResponse> searchByCompany(String userId, String companyName);
 }
