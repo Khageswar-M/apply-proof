@@ -11,6 +11,8 @@ const API_ENDPOINTS = {
         DELETE: (applicationId) =>
             `/api/v1/applications/${applicationId}`,
 
+        SEARCH: `/api/v1/applications/search`
+
     },
 
     ANALYTICS: {

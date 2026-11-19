@@ -32,6 +32,14 @@ const applicationService = {
             API_ENDPOINTS.APPLICATIONS.DELETE(applicationId)
         );
     },
+
+
+    // SEARCH BY USER-ID & COMPANY-NAME
+    searchByCompanyName(userId, companyName) {
+        return responseGateway.get(
+            API_ENDPOINTS.APPLICATIONS.SEARCH,{userId, companyName}
+        );
+    }
     
 };
 

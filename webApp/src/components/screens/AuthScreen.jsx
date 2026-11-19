@@ -17,6 +17,7 @@ const emptyOtp = () => Array(OTP_LENGTH).fill('');
  * 2. Why it may have happened.
  * 3. What the user should do next.
  */
+
 const getFriendlyError = (result, action) => {
     const status = result?.status;
     const code = result?.error?.code;
