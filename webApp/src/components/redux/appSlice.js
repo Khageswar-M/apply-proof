@@ -29,6 +29,7 @@ const initialState = {
     updateObject: null,
     authStatus: "checking",
     currentUser: null,
+    appliedApplications: []
 };
 
 const appSlice = createSlice({
@@ -37,8 +38,11 @@ const appSlice = createSlice({
     initialState,
 
     reducers: {
-        setUpdateDrawerOpen: (state) => {
-            state.updateDrawerOpen = !state.updateDrawerOpen;
+        setUpdateDrawerOpen: (state, action) => {
+            state.updateDrawerOpen =
+                typeof action.payload === "boolean"
+                    ? action.payload
+                    : !state.updateDrawerOpen;
         },
 
         setUpdateObject: (state, action) => {
@@ -55,7 +59,14 @@ const appSlice = createSlice({
             state.currentUser = null;
             state.updateDrawerOpen = false;
             state.updateObject = null;
+            state.appliedApplications = [];
         },
+
+        setAppliedApplications: (state, action) => {
+            state.appliedApplications = Array.isArray(action.payload)
+                ? action.payload
+                : [];
+        }
     },
 
     extraReducers: (builder) => {
@@ -83,6 +94,7 @@ export const {
     setUpdateObject,
     loginSucceeded,
     logoutSucceeded,
+    setAppliedApplications,
 } = appSlice.actions;
 
 export default appSlice.reducer;

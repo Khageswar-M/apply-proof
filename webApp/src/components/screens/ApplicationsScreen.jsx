@@ -8,10 +8,10 @@ import {
 import AsidePage from '../pages/dashboard/AsidePage'
 import MainPage from '../pages/dashboard/MainPage'
 import ApplicationForm from '../pages/dashboard/components/addApplication/chunks/ApplicationForm'
-import { setUpdateDrawerOpen } from '../redux/appSlice';
+import { setUpdateDrawerOpen, setUpdateObject } from '../redux/appSlice';
 const ApplicationsScreen = () => {
   const dispatch = useDispatch();
-  const { updateDrawerOpen, setUpdateObject } = useSelector((state) => state.app);
+  const { updateDrawerOpen } = useSelector((state) => state.app);
 
   const handleOpenChange = (isOpen) => {
     dispatch(setUpdateDrawerOpen(isOpen));

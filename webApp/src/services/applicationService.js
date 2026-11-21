@@ -36,8 +36,9 @@ const applicationService = {
 
     // SEARCH BY USER-ID & COMPANY-NAME
     searchByCompanyName(userId, companyName) {
-        return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.SEARCH,{userId, companyName}
+        return responseGateway.post(
+            API_ENDPOINTS.APPLICATIONS.SEARCH,
+            { userId, companyName }
         );
     }
     

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { setUpdateDrawerOpen, setUpdateObject, setAppliedApplications } from '../../../../../redux/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import applicationService from '../../../../../../services/applicationService';
 
 const DEFAULT_USER_ID = 'a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d30';
@@ -81,32 +81,39 @@ const getInitial = (name = '') => name.trim().charAt(0).toUpperCase();
 
 const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeView }) => {
   const dispatch = useDispatch(); // hooks first
-  const [applications, setApplications] = useState([]);
+  // Read shared applications from Redux
+  const appliedApplications = useSelector(
+    (state) => state.app.appliedApplications
+  );
+  // const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [statusError, setStatusError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
 
     const load = async () => {
       setLoading(true);
-      setError('');
+      setStatusError('');
       try {
         const res = await applicationService.getApplicationsByUserId(userId);
-        // works whether responseGateway returns the axios response or the body
-        const body = res?.data;
-        const list = Array.isArray(body) ? body : body?.data;
+        if (!res?.success) {
+          throw new Error(res?.message || 'Failed to load applications.');
+        }
+
+        const list = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data?.data)
+            ? res.data.data
+            : [];
 
         if (!cancelled) {
-          setApplications(
-            (list || [])
-              .map(toCard)
-              .sort((a, b) => new Date(b.appliedDateTime) - new Date(a.appliedDateTime))
-          );
+          dispatch(setAppliedApplications(list));
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err?.response?.data?.message || 'Failed to load applications.');
+          setError(err?.message || 'Failed to load applications.');
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -117,19 +124,53 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
     return () => {
       cancelled = true;
     };
-  }, [userId]);
+  }, [userId, dispatch]);
+
+  const applications = (Array.isArray(appliedApplications) ? appliedApplications : []).map(toCard).sort(
+    (a, b) => new Date(b.appliedDateTime) - new Date(a.appliedDateTime)
+  )
 
   const handleUpdate = (application) => {
     dispatch(setUpdateObject(application));
     dispatch(setUpdateDrawerOpen(true));
   };
 
-  const handleStatusChange = (id, status) => {
-    // optimistic local update; hook up the update API here when ready
-    setApplications((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, status, currentStatus: status } : a))
+  const handleStatusChange = async (id, status) => {
+    const previousApplications = appliedApplications;
+    const updatedApplications = previousApplications.map((application) =>
+      application.id === id
+        ? {
+          ...application,
+          currentStatus: status,
+        }
+        : application
     );
-    onStatusChange?.(id, status);
+
+    dispatch(setAppliedApplications(updatedApplications));
+    setError('');
+
+    const application = previousApplications.find((item) => item.id === id);
+    if (!application) return;
+
+    try {
+      const result = await applicationService.updateApplication(id, {
+        companyName: application.companyName,
+        jobBoard: application.jobBoard,
+        jobRole: application.jobRole,
+        appliedResumeName: application.appliedResumeName,
+        currentStatus: status,
+        note: application.note ?? null,
+      });
+
+      if (!result?.success) {
+        throw new Error(result?.message || 'Failed to update status.');
+      }
+
+      onStatusChange?.(id, status);
+    } catch (updateError) {
+      dispatch(setAppliedApplications(previousApplications));
+      setStatusError(updateError?.message || 'Failed to update status.');
+    }
   };
 
   const messageBox = 'w-full rounded-xl border border-dashed border-stone-300 bg-white p-8 text-center text-sm';
@@ -139,7 +180,13 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
   if (!applications.length) return <div className={`${messageBox} text-slate-500`}>No applications yet.</div>;
 
   return (
-    <section className="grid w-full grid-cols-1 gap-4 pb-5 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="flex w-full flex-col gap-3 pb-5">
+      {statusError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+          {statusError}
+        </div>
+      )}
+      <section className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {applications.map((app) => (
         <article
           key={app.id}
@@ -176,9 +223,8 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
               </button>
 
               <span
-                className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${
-                  STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
-                }`}
+                className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide ring-1 ring-inset ${STATUS_STYLES[app.status] || 'bg-slate-100 text-slate-600 ring-slate-200'
+                  }`}
               >
                 {formatStatus(app.status)}
               </span>
@@ -253,7 +299,8 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
           </div>
         </article>
       ))}
-    </section>
+      </section>
+    </div>
   );
 };
 

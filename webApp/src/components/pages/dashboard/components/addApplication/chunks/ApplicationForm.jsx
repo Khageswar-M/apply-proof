@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setUpdateDrawerOpen, setUpdateObject } from '../../../../../redux/appSlice';
+import { setUpdateDrawerOpen, setUpdateObject, setAppliedApplications } from '../../../../../redux/appSlice';
 import applicationService from '../../../../../../services/applicationService';
 
 
@@ -160,6 +160,7 @@ const ApplicationFormInner = ({
   onSuccess, // optional: called with (savedApplication, isEdit) so the parent can refresh the list
 }) => {
   const dispatch = useDispatch();
+  const appliedApplications = useSelector((state) => state.app.appliedApplications);
   const isEdit = !!application;
 
   const baseForm = () => (isEdit ? formFromApplication(application) : initialForm());
@@ -221,6 +222,24 @@ const ApplicationFormInner = ({
       }
 
       onSuccess?.(result.data, isEdit);
+
+      if (isEdit) {
+        const updates = updateApplicationRequest(form);
+        const savedApplication = result.data && typeof result.data === 'object'
+          ? result.data
+          : { ...application, ...updates };
+
+        dispatch(setAppliedApplications(
+          (Array.isArray(appliedApplications) ? appliedApplications : []).map((item) =>
+            item.id === application.id ? savedApplication : item
+          )
+        ));
+      } else if (result.data && typeof result.data === 'object') {
+        dispatch(setAppliedApplications([
+          result.data,
+          ...(Array.isArray(appliedApplications) ? appliedApplications : [])
+        ]));
+      }
 
       if (isEdit) {
         closeDrawer();

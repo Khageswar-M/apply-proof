@@ -1,12 +1,54 @@
 
-import React, { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAppliedApplications } from '../../../../../redux/appSlice';
+import applicationService from '../../../../../../services/applicationService';
+
+const getApplications = (data) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.data)) return data.data;
+    throw new Error('The server returned an invalid applications list.');
+};
 
 const Search = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const requestId = useRef(0);
+    const dispatch = useDispatch();
+    const userId = 'a12f5e90-7b3c-4d81-9a62-1f8e0c5b7d30';
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
-        onSearch?.(searchTerm.trim());
+        const companyName = searchTerm.trim();
+        const currentRequestId = ++requestId.current;
+
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = companyName
+                ? await applicationService.searchByCompanyName(userId, companyName)
+                : await applicationService.getApplicationsByUserId(userId);
+
+            if (!response?.success) {
+                throw new Error(response?.message || 'Failed to search applications.');
+            }
+
+            const applications = getApplications(response.data);
+            if (requestId.current === currentRequestId) {
+                dispatch(setAppliedApplications(applications));
+                onSearch?.(companyName);
+            }
+        } catch (searchError) {
+            if (requestId.current === currentRequestId) {
+                setError(searchError?.message || 'Failed to search applications.');
+            }
+        } finally {
+            if (requestId.current === currentRequestId) {
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -26,6 +68,7 @@ const Search = ({ onSearch }) => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search applications..."
+                    aria-label="Search applications by company"
                     className="w-full bg-transparent text-xs text-slate-700 outline-none placeholder:text-slate-400"
                 />
 
@@ -34,15 +77,21 @@ const Search = ({ onSearch }) => {
             {/* Search Button */}
             <button
                 type="submit"
+                disabled={loading}
                 className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg bg-teal-700 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-teal-800 active:bg-teal-900"
             >
                 <span className="material-symbols-outlined text-base">
-                    search
+                    {loading ? 'progress_activity' : 'search'}
                 </span>
 
-                Search
+                {loading ? 'Searching...' : 'Search'}
             </button>
 
+            {error && (
+                <p className="sr-only" role="alert">
+                    {error}
+                </p>
+            )}
         </form>
     );
 };
