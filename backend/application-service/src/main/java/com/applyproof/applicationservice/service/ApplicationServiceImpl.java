@@ -7,7 +7,6 @@ import com.applyproof.applicationservice.exception.ApplicationNotFoundException;
 import com.applyproof.applicationservice.grpc.AnalyticsServiceGrpcClient;
 import com.applyproof.applicationservice.kafka.ApplicationEventProducer;
 import com.applyproof.applicationservice.mapper.ApplicationMapper;
-import com.applyproof.applicationservice.model.ApplicationStatus;
 import com.applyproof.applicationservice.model.JobApplications;
 import com.applyproof.applicationservice.repository.ApplicationRepository;
 import lombok.extern.slf4j.Slf4j;

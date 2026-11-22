@@ -5,7 +5,7 @@ services:
   # ---------------- MYSQL DATABASE ----------------
   mysql-service-db:
     image: mysql:8.4
-    container_name: mysql-service-db
+#    container_name: mysql-service-db
     ports:
       - "3000:3306"
     environment:
@@ -28,7 +28,7 @@ services:
   # ---------------- KAFKA ----------------
   kafka-applyproof:
     image: apache/kafka:latest
-    container_name: kafka-applyproof
+#    container_name: kafka-applyproof
     ports:
       - "9092:9092"
     environment:
@@ -52,7 +52,7 @@ services:
   # ---------------- REDIS ----------------
   redis-server:
     image: redis:7.4-alpine
-    container_name: redis-server
+#    container_name: redis-server
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     ports:
       - "6379:6379"
@@ -63,7 +63,7 @@ services:
   # ---------------- MAIL SERVICE ----------------
   mail-service:
     image: mail-service:latest
-    container_name: mail-service
+#    container_name: mail-service
     environment:
       MAIL_FROM: onboarding@resend.dev
       RESEND_API_KEY: ${RESEND_API_KEY}
@@ -80,7 +80,7 @@ services:
   # ---------------- AUTH SERVICE ----------------
   auth-service:
     image: auth-service:latest
-    container_name: auth-service
+#    container_name: auth-service
     environment:
       MYSQL_HOST: mysql-service-db
       MYSQL_PORT: 3306
@@ -116,7 +116,7 @@ services:
   # ---------------- ANALYTIC SERVICE ----------------
   analytic-service:
     image: analytic-service:latest
-    container_name: analytic-service
+#    container_name: analytic-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service-db:3306/db
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
@@ -137,7 +137,7 @@ services:
   # ---------------- APPLICATION SERVICE ----------------
   application-service:
     image: application-service:latest
-    container_name: application-service
+#    container_name: application-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service-db:3306/db
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
@@ -164,7 +164,7 @@ services:
   # ---------------- API GATEWAY ----------------
   api-gateway:
     image: api-gateway:latest
-    container_name: api-gateway
+#    container_name: api-gateway
     ports:
       - "4004:4004"
     environment:

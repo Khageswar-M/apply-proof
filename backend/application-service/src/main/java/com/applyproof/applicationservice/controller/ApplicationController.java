@@ -96,7 +96,7 @@ public class ApplicationController {
         );
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<ApiResponse<List<ApplicationResponse>>> searchByCompanyName(
             @RequestBody SearchCompanyByNameRequest searchCompanyByNameRequest
             ){

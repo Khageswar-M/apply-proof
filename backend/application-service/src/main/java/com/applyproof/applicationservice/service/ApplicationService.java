@@ -18,4 +18,6 @@ public interface ApplicationService {
     void deleteApplication(String applicationId);
 
     List<ApplicationResponse> searchByCompany(String userId, String companyName);
+
+
 }
