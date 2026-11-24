@@ -1,31 +1,36 @@
+
+const APPLICATIONS_API_END_POINT_V1 = '/api/v1/applications'
+const ANALYTICS_API_END_POINT_v1 = '/api/v1/analytics'
+const AUTH_API_END_POINT_V1 = '/api/v1/auth'
+
 const API_ENDPOINTS = {
     APPLICATIONS: {
         BY_USER_ID: (userId) =>
-            `/api/v1/applications/${userId}`,
+            `${APPLICATIONS_API_END_POINT_V1}/${userId}`,
 
-        CREATE: `/api/v1/applications`,
+        CREATE: `${APPLICATIONS_API_END_POINT_V1}`,
 
         UPDATE: (applicationId) =>
-            `/api/v1/applications/${applicationId}`,
+            `${APPLICATIONS_API_END_POINT_V1}/${applicationId}`,
 
         DELETE: (applicationId) =>
-            `/api/v1/applications/${applicationId}`,
+            `${APPLICATIONS_API_END_POINT_V1}/${applicationId}`,
 
-        SEARCH: `/api/v1/applications/search`
+        SEARCH: `${APPLICATIONS_API_END_POINT_V1}/search`
 
     },
 
     ANALYTICS: {
-        BY_USER_ID: (userId) => `/api/v1/analytics/${userId}`,
+        BY_USER_ID: (userId) => `${ANALYTICS_API_END_POINT_v1}/${userId}`,
     },
 
     AUTH: {
-        SEND_OTP: `/api/v1/auth/send-otp`,
-        VERIFY_OTP: `/api/v1/auth/verify-otp`,
-        SIGN_UP: `/api/v1/auth/sign-up`,
-        LOGIN: `/api/v1/auth/login`,
-        REFRESH: `/api/v1/auth/refresh`,
-        LOGOUT: `/api/v1/auth/logout`,
+        SEND_OTP: `${AUTH_API_END_POINT_V1}/send-otp`,
+        VERIFY_OTP: `${AUTH_API_END_POINT_V1}/verify-otp`,
+        SIGN_UP: `${AUTH_API_END_POINT_V1}/sign-up`,
+        LOGIN: `${AUTH_API_END_POINT_V1}/login`,
+        REFRESH: `${AUTH_API_END_POINT_V1}/refresh`,
+        LOGOUT: `${AUTH_API_END_POINT_V1}/logout`,
     }
 };
 
