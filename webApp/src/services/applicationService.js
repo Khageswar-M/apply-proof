@@ -73,6 +73,16 @@ const applicationService = {
         );
     },
 
+    // filter last six month applications
+    filterLastSixMonthApplications(userId) {
+        return responseGateway.get(
+            API_ENDPOINTS.APPLICATIONS.LAST_SIX_MONTH,
+            {
+                params: {userId}
+            }
+        )
+    },
+
 
     
 };
