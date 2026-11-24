@@ -51,6 +51,16 @@ const applicationService = {
                 params: {userId}
             }
         );
+    },
+
+    // filter last week applications
+    filterLastWeekApplications(userId) {
+        return responseGateway.get(
+            API_ENDPOINTS.APPLICATIONS.LAST_WEEK,
+            {
+                params: {userId}
+            }
+        );
     }
 
 
