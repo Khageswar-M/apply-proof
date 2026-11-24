@@ -16,7 +16,14 @@ const API_ENDPOINTS = {
         DELETE: (applicationId) =>
             `${APPLICATIONS_API_END_POINT_V1}/${applicationId}`,
 
-        SEARCH: `${APPLICATIONS_API_END_POINT_V1}/search`
+        SEARCH: `${APPLICATIONS_API_END_POINT_V1}/search`,
+
+        // FILTERS
+        LATEST: `${APPLICATIONS_API_END_POINT_V1}/filter/latest`,
+        LAST_WEEK: `${APPLICATIONS_API_END_POINT_V1}/filter/last-week`,
+        LAST_MONTH: `${APPLICATIONS_API_END_POINT_V1}/filter/last-month`,
+        LAST_SIX_MONTH: `${APPLICATIONS_API_END_POINT_V1}/filter/last-six-month`,
+        LAST_YEAR: `${APPLICATIONS_API_END_POINT_V1}/filter/last-year`
 
     },
 
