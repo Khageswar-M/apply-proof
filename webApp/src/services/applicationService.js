@@ -40,7 +40,20 @@ const applicationService = {
             API_ENDPOINTS.APPLICATIONS.SEARCH,
             { userId, companyName }
         );
+    },
+
+    //=========FILTER==========
+    // filter latest applications
+    filterLatestApplications(userId){
+        return responseGateway.get(
+            API_ENDPOINTS.APPLICATIONS.LATEST,
+            {
+                params: {userId}
+            }
+        );
     }
+
+
     
 };
 
