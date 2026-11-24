@@ -83,6 +83,16 @@ const applicationService = {
         )
     },
 
+    // filter last year applications
+    filterLastYearApplications(userId) {
+        return responseGateway.get(
+            API_ENDPOINTS.APPLICATIONS.LAST_YEAR,
+            {
+                params: {userId}
+            }
+        );
+    }
+
 
     
 };
