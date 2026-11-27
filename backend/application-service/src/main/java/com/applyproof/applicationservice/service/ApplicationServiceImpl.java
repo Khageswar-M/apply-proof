@@ -62,28 +62,6 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public List<ApplicationResponse> getAllApplicationsByUserId(String userId) {
-
-        List<JobApplications> jobApplicationsByUserId =
-                repository.findByUserId(UUID.fromString(userId));
-
-        log.info("All applications are fetched successfully by userId: {}", userId);
-
-        return jobApplicationsByUserId.stream()
-                .map(application -> ApplicationResponse.builder()
-                        .id(application.getId().toString())
-                        .companyName(application.getCompanyName())
-                        .jobBoard(application.getJobBoard())
-                        .jobRole(application.getJobRole())
-                        .appliedResumeName(application.getAppliedResumeName())
-                        .currentStatus(application.getCurrentStatus())
-                        .note(application.getNote())
-                        .appliedDateTime(application.getAppliedDateTime().toString())
-                        .build())
-                .toList();
-    }
-
-    @Override
     public PagedResponse<ApplicationResponse> getAllApplicationsByUserId(String userId, int page, int size) {
         UUID parsedUserId = UUID.fromString(userId);
 
@@ -93,7 +71,8 @@ public class ApplicationServiceImpl implements ApplicationService{
         Pageable pageable = PageRequest.of(
                 safePage,
                 safeSize,
-                Sort.by(Sort.Direction.DESC, "applicationDateTime")
+                Sort.by(Sort.Direction.DESC, "appliedDateTime")
+                        .and(Sort.by(Sort.Direction.DESC, "id"))
         );
 
         Page<JobApplications> applicationsPage = repository.findByUserId(parsedUserId, pageable);

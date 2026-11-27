@@ -38,22 +38,6 @@ public class ApplicationController {
         );
     }
 
-    @GetMapping("/{userID}")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> getApplicationsByUserId(
-            @PathVariable String userID
-    ){
-        List<ApplicationResponse> applications = service.getAllApplicationsByUserId(userID);
-
-        return ResponseEntity.ok(
-                ApiResponse.success(
-                        applications.isEmpty() ?
-                                "No application found for this user id" :
-                                "Applications retrieved successfully by user id",
-                        applications
-                )
-        );
-    }
-
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> getApplicationByUserId(
             @PathVariable String userId,

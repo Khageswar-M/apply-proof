@@ -4,15 +4,11 @@ import com.applyproof.applicationservice.dto.request.ApplicationCreateRequest;
 import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.dto.response.PagedResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ApplicationService {
     List<ApplicationResponse> getAllApplications();
-
-    List<ApplicationResponse> getAllApplicationsByUserId(String UUID);
 
     PagedResponse<ApplicationResponse> getAllApplicationsByUserId(String userId, int page, int size);
 
