@@ -5,6 +5,7 @@ import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.request.SearchCompanyByNameRequest;
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
+import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.service.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -37,17 +38,36 @@ public class ApplicationController {
         );
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userID}")
     public ResponseEntity<ApiResponse<List<ApplicationResponse>>> getApplicationsByUserId(
-            @PathVariable String userId
+            @PathVariable String userID
     ){
-        List<ApplicationResponse> applications = service.getAllApplicationsByUserId(userId);
+        List<ApplicationResponse> applications = service.getAllApplicationsByUserId(userID);
 
         return ResponseEntity.ok(
                 ApiResponse.success(
                         applications.isEmpty() ?
                                 "No application found for this user id" :
                                 "Applications retrieved successfully by user id",
+                        applications
+                )
+        );
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> getApplicationByUserId(
+            @PathVariable String userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        PagedResponse<ApplicationResponse> applications  =
+                service.getAllApplicationsByUserId(userId, page, size);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        applications.content().isEmpty()
+                        ? "No application found for this user id"
+                                : "Applications retrieved successfully by user id",
                         applications
                 )
         );
