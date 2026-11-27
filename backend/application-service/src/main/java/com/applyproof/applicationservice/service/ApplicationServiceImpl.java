@@ -3,6 +3,7 @@ package com.applyproof.applicationservice.service;
 import com.applyproof.applicationservice.dto.request.ApplicationCreateRequest;
 import com.applyproof.applicationservice.dto.request.ApplicationUpdateRequest;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
+import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.exception.ApplicationNotFoundException;
 import com.applyproof.applicationservice.grpc.AnalyticsServiceGrpcClient;
 import com.applyproof.applicationservice.kafka.ApplicationEventProducer;
@@ -10,6 +11,10 @@ import com.applyproof.applicationservice.mapper.ApplicationMapper;
 import com.applyproof.applicationservice.model.JobApplications;
 import com.applyproof.applicationservice.repository.ApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -76,6 +81,46 @@ public class ApplicationServiceImpl implements ApplicationService{
                         .appliedDateTime(application.getAppliedDateTime().toString())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public PagedResponse<ApplicationResponse> getAllApplicationsByUserId(String userId, int page, int size) {
+        UUID parsedUserId = UUID.fromString(userId);
+
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.clamp(size, 1, 100);
+
+        Pageable pageable = PageRequest.of(
+                safePage,
+                safeSize,
+                Sort.by(Sort.Direction.DESC, "applicationDateTime")
+        );
+
+        Page<JobApplications> applicationsPage = repository.findByUserId(parsedUserId, pageable);
+
+        Page<ApplicationResponse> responsePage = applicationsPage.map(application ->
+                    ApplicationResponse.builder()
+                            .id(application.getId().toString())
+                            .companyName(application.getCompanyName())
+                            .jobBoard(application.getJobBoard())
+                            .jobRole(application.getJobRole())
+                            .appliedResumeName(application.getAppliedResumeName())
+                            .currentStatus(application.getCurrentStatus())
+                            .note(application.getNote())
+                            .appliedDateTime(application.getAppliedDateTime().toString())
+                            .build()
+                );
+
+        log.info(
+                "Fetched page {} (size {}) of {} total applications for userId: {}",
+                responsePage.getNumber(),
+                responsePage.getSize(),
+                responsePage.getTotalElements(),
+                userId
+        );
+
+
+        return PagedResponse.fromPage(responsePage);
     }
 
     @Override

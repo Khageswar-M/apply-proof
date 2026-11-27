@@ -1,6 +1,7 @@
 package com.applyproof.applicationservice.repository;
 
 import com.applyproof.applicationservice.model.JobApplications;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,8 @@ import java.util.UUID;
 @Repository
 public interface ApplicationRepository extends JpaRepository<JobApplications, UUID> {
     List<JobApplications> findByUserId(UUID userId);
+
+    Page<JobApplications> findByUserId(UUID userId, Pageable pageable);
 
     List<JobApplications> findByUserIdAndCompanyNameStartingWith(UUID userId, String companyName);
 
