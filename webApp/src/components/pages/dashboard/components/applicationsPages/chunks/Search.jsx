@@ -5,8 +5,8 @@ import { setAppliedApplications } from '../../../../../redux/appSlice';
 import applicationService from '../../../../../../services/applicationService';
 
 const getApplications = (data) => {
-    if (Array.isArray(data)) return data;
-    if (Array.isArray(data?.data)) return data.data;
+    if (Array.isArray(data?.content)) return data.content;
+    
     throw new Error('The server returned an invalid applications list.');
 };
 
@@ -28,8 +28,8 @@ const Search = ({ onSearch }) => {
 
         try {
             const response = companyName
-                ? await applicationService.searchByCompanyName(userId, companyName)
-                : await applicationService.getApplicationsByUserId(userId);
+                ? await applicationService.searchByCompanyName(userId, companyName, 0, 10)
+                : await applicationService.getApplicationsByUserId(userId, 0, 10);
 
             if (!response?.success) {
                 throw new Error(response?.message || 'Failed to search applications.');

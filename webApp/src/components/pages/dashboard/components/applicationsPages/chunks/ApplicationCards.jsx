@@ -99,7 +99,7 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
       setLoading(true);
       setStatusError('');
       try {
-        const res = await applicationService.getApplicationsByUserId(userId, page, size);
+        const res = await applicationService.getApplicationsByUserId(userId, 0, 10);
         if (!res?.success) {
           throw new Error(res?.message || 'Failed to load applications.');
         }

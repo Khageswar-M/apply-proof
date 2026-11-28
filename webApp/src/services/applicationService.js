@@ -1,16 +1,17 @@
+
 import responseGateway from "../components/api/responseGateway";
 import API_ENDPOINTS from "../components/api/endpoints";
 
 const applicationService = {
 
     // GET applications by user ID
-    getApplicationsByUserId(userId, page, size) {
+    getApplicationsByUserId(userId, page = 0, size = 10) {
         return responseGateway.get(
             API_ENDPOINTS.APPLICATIONS.BY_USER_ID(userId, page, size)
         );
     },
 
-    // POST create application
+    // CREATE application
     createApplication(applicationData) {
         return responseGateway.post(
             API_ENDPOINTS.APPLICATIONS.CREATE,
@@ -18,7 +19,7 @@ const applicationService = {
         );
     },
 
-    // PUT update application
+    // UPDATE application
     updateApplication(applicationId, applicationData) {
         return responseGateway.put(
             API_ENDPOINTS.APPLICATIONS.UPDATE(applicationId),
@@ -33,68 +34,45 @@ const applicationService = {
         );
     },
 
-
-    // SEARCH BY USER-ID & COMPANY-NAME
-    searchByCompanyName(userId, companyName) {
+    // SEARCH BY USER ID & COMPANY NAME
+    searchByCompanyName(userId, companyName, page = 0, size = 10) {
         return responseGateway.post(
-            API_ENDPOINTS.APPLICATIONS.SEARCH,
+            API_ENDPOINTS.APPLICATIONS.SEARCH(page, size),
             { userId, companyName }
         );
     },
 
-    //=========FILTER==========
-    // filter latest applications
-    filterLatestApplications(userId){
+    // FILTER APPLICATIONS
+
+    filterLatestApplications(userId, page = 0, size = 10) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.LATEST,
-            {
-                params: {userId}
-            }
+            API_ENDPOINTS.APPLICATIONS.LATEST(userId, page, size)
         );
     },
 
-    // filter last week applications
-    filterLastWeekApplications(userId) {
+    filterLastWeekApplications(userId, page = 0, size = 10) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.LAST_WEEK,
-            {
-                params: {userId}
-            }
+            API_ENDPOINTS.APPLICATIONS.LAST_WEEK(userId, page, size)
         );
     },
 
-    // filter last month applications
-    filterLastMonthApplications(userId) {
+    filterLastMonthApplications(userId, page = 0, size = 10) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.LAST_MONTH,
-            {
-                params: {userId}
-            }
+            API_ENDPOINTS.APPLICATIONS.LAST_MONTH(userId, page, size)
         );
     },
 
-    // filter last six month applications
-    filterLastSixMonthApplications(userId) {
+    filterLastSixMonthApplications(userId, page = 0, size = 10) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.LAST_SIX_MONTH,
-            {
-                params: {userId}
-            }
-        )
+            API_ENDPOINTS.APPLICATIONS.LAST_SIX_MONTH(userId, page, size)
+        );
     },
 
-    // filter last year applications
-    filterLastYearApplications(userId) {
+    filterLastYearApplications(userId, page = 0, size = 10) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.LAST_YEAR,
-            {
-                params: {userId}
-            }
+            API_ENDPOINTS.APPLICATIONS.LAST_YEAR(userId, page, size)
         );
     }
-
-
-    
 };
 
 export default applicationService;

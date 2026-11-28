@@ -5,10 +5,11 @@ const AUTH_API_END_POINT_V1 = '/api/v1/auth'
 
 const API_ENDPOINTS = {
     APPLICATIONS: {
-        BY_USER_ID: (userId, page, size) =>
+
+        BY_USER_ID: (userId, page = 0, size = 10) =>
             `${APPLICATIONS_API_END_POINT_V1}/${userId}?page=${page}&size=${size}`,
 
-        CREATE: `${APPLICATIONS_API_END_POINT_V1}`,
+        CREATE: APPLICATIONS_API_END_POINT_V1,
 
         UPDATE: (applicationId) =>
             `${APPLICATIONS_API_END_POINT_V1}/${applicationId}`,
@@ -16,15 +17,25 @@ const API_ENDPOINTS = {
         DELETE: (applicationId) =>
             `${APPLICATIONS_API_END_POINT_V1}/${applicationId}`,
 
-        SEARCH: `${APPLICATIONS_API_END_POINT_V1}/search`,
+        SEARCH: (page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/search?page=${page}&size=${size}`,
 
         // FILTERS
-        LATEST: `${APPLICATIONS_API_END_POINT_V1}/filter/latest`,
-        LAST_WEEK: `${APPLICATIONS_API_END_POINT_V1}/filter/last-week`,
-        LAST_MONTH: `${APPLICATIONS_API_END_POINT_V1}/filter/last-month`,
-        LAST_SIX_MONTH: `${APPLICATIONS_API_END_POINT_V1}/filter/last-six-month`,
-        LAST_YEAR: `${APPLICATIONS_API_END_POINT_V1}/filter/last-year`
 
+        LATEST: (userId, page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/filter/latest/${userId}?page=${page}&size=${size}`,
+
+        LAST_WEEK: (userId, page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/filter/last-week/${userId}?page=${page}&size=${size}`,
+
+        LAST_MONTH: (userId, page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/filter/last-month/${userId}?page=${page}&size=${size}`,
+
+        LAST_SIX_MONTH: (userId, page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/filter/last-six-month/${userId}?page=${page}&size=${size}`,
+
+        LAST_YEAR: (userId, page = 0, size = 10) =>
+            `${APPLICATIONS_API_END_POINT_V1}/filter/last-year/${userId}?page=${page}&size=${size}`
     },
 
     ANALYTICS: {

@@ -37,61 +37,80 @@ const Filters = ({
     const [activeFilter, setActiveFilter] = useState('All');
     const [selectedStatus, setSelectedStatus] = useState('All');
 
-    const filterApplications = async (active) => {
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
+
+
+    const filterApplications = async (active, currentPage = page) => {
         try {
             let res;
 
             switch (active) {
                 case 'All':
-                    res = await applicationService.getApplicationsByUserId(DEFAULT_USER_ID, 0, 10);
+                    res = await applicationService.getApplicationsByUserId(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 case 'Latest':
-                    res = await applicationService.filterLatestApplications(DEFAULT_USER_ID);
+                    res = await applicationService.filterLatestApplications(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 case 'Last Week':
-                    res = await applicationService.filterLastWeekApplications(DEFAULT_USER_ID);
+                    res = await applicationService.filterLastWeekApplications(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 case 'Last Month':
-                    res = await applicationService.filterLastMonthApplications(DEFAULT_USER_ID);
+                    res = await applicationService.filterLastMonthApplications(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 case 'Last 6 Months':
-                    res = await applicationService.filterLastSixMonthApplications(DEFAULT_USER_ID);
+                    res = await applicationService.filterLastSixMonthApplications(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 case 'Last Year':
-                    res = await applicationService.filterLastYearApplications(DEFAULT_USER_ID);
+                    res = await applicationService.filterLastYearApplications(
+                        DEFAULT_USER_ID, currentPage, size
+                    );
                     break;
 
                 default:
                     return;
             }
 
-            console.log("RES: ", res);
-            const list = Array.isArray(res.data)
-                ? res.data
-                : Array.isArray(res.data?.content)
-                    ? res.data.content
-                    : [];
-            dispatch(setAppliedApplications(list))
+            if (!res?.success) {
+                throw new Error(res?.message || 'Failed to filter applications');
+            }
+
+            const list = res.data?.content ?? [];
+
+            dispatch(setAppliedApplications(list));
+
         } catch (error) {
-            console.log('Data filtering failed: ', error);
+            console.error('Data filtering failed:', error);
         }
-    }
+    };
 
     const handleDateFilter = (filter) => {
         setActiveFilter(filter);
+        setPage(0);
 
         onFilterChange?.({
             dateFilter: filter,
             status: selectedStatus,
         });
 
-        filterApplications(activeFilter);
+        filterApplications(filter, 0);
     };
+
 
     const handleStatusFilter = (status) => {
         setSelectedStatus(status);
