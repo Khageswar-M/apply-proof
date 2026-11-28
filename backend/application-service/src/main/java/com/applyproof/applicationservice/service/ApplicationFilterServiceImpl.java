@@ -32,13 +32,10 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
 
 
     @Override
-    public List<ApplicationResponse> latestApplications(String userId) {
+    public PagedResponse<ApplicationResponse> latestApplications(String userId, int page, int size) {
         log.info("Latest applications service called by {}", userId);
-        return repository
-                .findLatestByUserId(UUID.fromString(userId), PageRequest.of(0, LATEST_LIMIT))
-                .stream()
-                .map(ApplicationMapper::toDto)
-                .toList();
+        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
+        return since(userId, startOfDay, page, size);
     }
 
     @Override

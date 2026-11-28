@@ -1,17 +1,20 @@
-package com.applyproof.applicationservice.controller;
 
+package com.applyproof.applicationservice.controller;
 
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.service.ApplicationFilterService;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@Validated
 @RequestMapping("/api/v1/applications/filter")
 public class ApplicationFilterController {
 
@@ -19,18 +22,20 @@ public class ApplicationFilterController {
 
     public ApplicationFilterController(
             ApplicationFilterService applicationFilterService
-    ){
+    ) {
         this.applicationFilterService = applicationFilterService;
     }
 
-    @GetMapping("/latest")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> latest(
-            @RequestParam String userId
-    ){
+    @GetMapping("/latest/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> latest(
+            @PathVariable String userId,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
+    ) {
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Latest Applications",
-                        applicationFilterService.latestApplications(userId)
+                        "Latest applications",
+                        applicationFilterService.latestApplications(userId, page, size)
                 )
         );
     }
@@ -38,9 +43,9 @@ public class ApplicationFilterController {
     @GetMapping("/last-week/{userId}")
     public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastWeek(
             @PathVariable String userId,
-            @RequestParam int page,
-            @RequestParam int size
-    ){
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
+    ) {
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Last week applications",
@@ -52,12 +57,12 @@ public class ApplicationFilterController {
     @GetMapping("/last-month/{userId}")
     public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastMonth(
             @PathVariable String userId,
-            @RequestParam int page,
-            @RequestParam int size
-    ){
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
+    ) {
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Last month applied applications",
+                        "Last month applications",
                         applicationFilterService.lastMonthApplications(userId, page, size)
                 )
         );
@@ -66,12 +71,12 @@ public class ApplicationFilterController {
     @GetMapping("/last-six-month/{userId}")
     public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastSixMonth(
             @PathVariable String userId,
-            @RequestParam int page,
-            @RequestParam int size
-    ){
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
+    ) {
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Last six month applied applications",
+                        "Last six months applications",
                         applicationFilterService.lastSixMonthApplications(userId, page, size)
                 )
         );
@@ -80,12 +85,12 @@ public class ApplicationFilterController {
     @GetMapping("/last-year/{userId}")
     public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastYear(
             @PathVariable String userId,
-            @RequestParam int page,
-            @RequestParam int size
-    ){
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
+    ) {
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Last year applied applications",
+                        "Last year applications",
                         applicationFilterService.lastYearApplications(userId, page, size)
                 )
         );

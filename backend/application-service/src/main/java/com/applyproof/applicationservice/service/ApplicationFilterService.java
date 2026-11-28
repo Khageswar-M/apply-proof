@@ -8,7 +8,7 @@ import java.util.List;
 public interface ApplicationFilterService {
 
     // Filter services
-    List<ApplicationResponse> latestApplications(String userId);
+    PagedResponse<ApplicationResponse> latestApplications(String userId, int page, int size);
 
     PagedResponse<ApplicationResponse> lastWeekApplications(String userId, int page, int size);
 
