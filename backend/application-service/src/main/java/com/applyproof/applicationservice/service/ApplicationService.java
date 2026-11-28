@@ -18,7 +18,7 @@ public interface ApplicationService {
 
     void deleteApplication(String applicationId);
 
-    List<ApplicationResponse> searchByCompany(String userId, String companyName);
+    PagedResponse<ApplicationResponse> searchByCompany(String userId, String companyName, int page, int size);
 
 
 }

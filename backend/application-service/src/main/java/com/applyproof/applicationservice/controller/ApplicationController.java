@@ -8,6 +8,7 @@ import com.applyproof.applicationservice.dto.response.ApplicationResponse;
 import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.service.ApplicationService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,17 +102,26 @@ public class ApplicationController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> searchByCompanyName(
-            @RequestBody SearchCompanyByNameRequest searchCompanyByNameRequest
-            ){
-        List<ApplicationResponse> companies = service.searchByCompany(searchCompanyByNameRequest.userId(), searchCompanyByNameRequest.companyName());
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>>
+    searchByCompanyName(
+            @RequestBody SearchCompanyByNameRequest request,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+
+        PagedResponse<ApplicationResponse> companies =
+                service.searchByCompany(
+                        request.userId(),
+                        request.companyName(),
+                        page,
+                        size
+                );
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Applications by userId & Company name",
+                        "Applications retrieved successfully by userId and company name",
                         companies
                 )
         );
-
     }
 }

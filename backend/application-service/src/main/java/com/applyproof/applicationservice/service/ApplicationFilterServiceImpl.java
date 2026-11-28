@@ -65,25 +65,8 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
         return since(userId, LocalDateTime.now().minusYears(1), page, size);
     }
 
-    private boolean isUserExist(String userId) {
-        if(!repository.existsById(UUID.fromString(userId))){
-            throw new UserNotFoundException("Invalid user id");
-        }
-
-        return true;
-    }
-
-    private List<ApplicationResponse> since(String userId, LocalDateTime from) {
-        return repository
-                .findByUserIdSince(UUID.fromString(userId), from)
-                .stream()
-                .map(ApplicationMapper::toDto)
-                .toList();
-    }
-
-
     // supported for paged response
-    private PagedResponse<ApplicationResponse> since(String userId, LocalDateTime from, int page, int size) {
+    PagedResponse<ApplicationResponse> since(String userId, LocalDateTime from, int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -97,7 +80,7 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
         return toPagedResponse(applications);
     }
 
-    private PagedResponse<ApplicationResponse> toPagedResponse(
+    PagedResponse<ApplicationResponse> toPagedResponse(
             Page<JobApplications> applications
     ) {
         Page<ApplicationResponse> responsePage =

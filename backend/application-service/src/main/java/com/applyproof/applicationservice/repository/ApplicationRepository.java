@@ -14,11 +14,9 @@ import java.util.UUID;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<JobApplications, UUID> {
-    List<JobApplications> findByUserId(UUID userId);
 
     Page<JobApplications> findByUserId(UUID userId, Pageable pageable);
 
-    List<JobApplications> findByUserIdAndCompanyNameStartingWith(UUID userId, String companyName);
     Page<JobApplications> findByUserIdAndCompanyNameStartingWith(UUID userId, String companyName, Pageable pageable);
 
     // Latest first, limited by Pageable
@@ -29,13 +27,6 @@ public interface ApplicationRepository extends JpaRepository<JobApplications, UU
         """)
     Page<JobApplications> findLatestByUserId(@Param("userId") UUID userId, Pageable pageable);
 
-    @Query("""
-        SELECT a FROM JobApplications a
-        WHERE a.userId = :userId
-                AND a.appliedDateTime >= :from
-                        ORDER BY a.appliedDateTime DESC
-        """)
-    List<JobApplications> findByUserIdSince(@Param("userId") UUID userId, @Param("from")LocalDateTime from);
 
     @Query("""
         SELECT a FROM JobApplications a

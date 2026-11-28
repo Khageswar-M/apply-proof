@@ -165,24 +165,29 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public List<ApplicationResponse> searchByCompany(String userId, String companyName) {
+    public PagedResponse<ApplicationResponse> searchByCompany(String userId, String companyName, int page, int size) {
         if(companyName == null || companyName.isBlank()){
             throw new ApplicationNotFoundException("Application not found");
         }
 
-        List<JobApplications> jobApplications = repository.findByUserIdAndCompanyNameStartingWith(UUID.fromString(userId), companyName);
+        Pageable pageable = PageRequest.of(page, size);
 
-        return jobApplications.stream()
-                .map(response -> ApplicationResponse.builder()
-                        .id(response.getId().toString())
-                        .companyName(response.getCompanyName())
-                        .jobBoard(response.getJobBoard())
-                        .jobRole(response.getJobRole())
-                        .appliedResumeName(response.getAppliedResumeName())
-                        .currentStatus(response.getCurrentStatus())
-                        .note(response.getNote())
-                        .appliedDateTime(response.getAppliedDateTime().toString())
-                        .build()
-                ).toList();
+        Page<JobApplications> jobApplications = repository.findByUserIdAndCompanyNameStartingWith(UUID.fromString(userId), companyName, pageable);
+
+        Page<ApplicationResponse> responsePage =
+                jobApplications.map(response ->
+                        ApplicationResponse.builder()
+                                .id(response.getId().toString())
+                                .companyName(response.getCompanyName())
+                                .jobBoard(response.getJobBoard())
+                                .jobRole(response.getJobRole())
+                                .appliedResumeName(response.getAppliedResumeName())
+                                .currentStatus(response.getCurrentStatus())
+                                .note(response.getNote())
+                                .appliedDateTime(response.getAppliedDateTime().toString())
+                                .build()
+                        );
+
+        return PagedResponse.fromPage(responsePage);
     }
 }
