@@ -1,11 +1,15 @@
 package com.applyproof.applicationservice.service;
 
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
+import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.exception.UserNotFoundException;
 import com.applyproof.applicationservice.mapper.ApplicationMapper;
+import com.applyproof.applicationservice.model.JobApplications;
 import com.applyproof.applicationservice.repository.ApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -38,9 +42,9 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
     }
 
     @Override
-    public List<ApplicationResponse> lastWeekApplications(String userId) {
+    public PagedResponse<ApplicationResponse> lastWeekApplications(String userId, int page, int size) {
         log.info("Last week applications service called by {}", userId);
-        return since(userId, LocalDateTime.now().minusWeeks(1));
+        return since(userId, LocalDateTime.now().minusWeeks(1), page, size);
     }
 
     @Override
@@ -75,5 +79,30 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
                 .stream()
                 .map(ApplicationMapper::toDto)
                 .toList();
+    }
+
+
+    // supported for paged response
+    private PagedResponse<ApplicationResponse> since(String userId, LocalDateTime from, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<JobApplications> applications =
+                repository.findByUserIdSince(
+                        UUID.fromString(userId),
+                        from,
+                        pageable
+                );
+
+        return toPagedResponse(applications);
+    }
+
+    private PagedResponse<ApplicationResponse> toPagedResponse(
+            Page<JobApplications> applications
+    ) {
+        Page<ApplicationResponse> responsePage =
+                applications.map(ApplicationMapper::toDto);
+
+        return PagedResponse.fromPage(responsePage);
     }
 }

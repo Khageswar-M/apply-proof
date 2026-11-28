@@ -3,13 +3,11 @@ package com.applyproof.applicationservice.controller;
 
 import com.applyproof.applicationservice.dto.response.ApiResponse;
 import com.applyproof.applicationservice.dto.response.ApplicationResponse;
+import com.applyproof.applicationservice.dto.response.PagedResponse;
 import com.applyproof.applicationservice.service.ApplicationFilterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,14 +35,16 @@ public class ApplicationFilterController {
         );
     }
 
-    @GetMapping("/last-week")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> lastWeek(
-            @RequestParam String userId
+    @GetMapping("/last-week/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastWeek(
+            @PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size
     ){
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Last week applications",
-                        applicationFilterService.lastWeekApplications(userId)
+                        applicationFilterService.lastWeekApplications(userId, page, size)
                 )
         );
     }
