@@ -43,7 +43,7 @@ const Filters = ({
 
             switch (active) {
                 case 'All':
-                    res = await applicationService.getApplicationsByUserId(DEFAULT_USER_ID);
+                    res = await applicationService.getApplicationsByUserId(DEFAULT_USER_ID, 0, 10);
                     break;
 
                 case 'Latest':
@@ -73,8 +73,8 @@ const Filters = ({
             console.log("RES: ", res);
             const list = Array.isArray(res.data)
                 ? res.data
-                : Array.isArray(res.data?.data)
-                    ? res.data.data
+                : Array.isArray(res.data?.content)
+                    ? res.data.content
                     : [];
             dispatch(setAppliedApplications(list))
         } catch (error) {

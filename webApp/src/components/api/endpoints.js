@@ -5,8 +5,8 @@ const AUTH_API_END_POINT_V1 = '/api/v1/auth'
 
 const API_ENDPOINTS = {
     APPLICATIONS: {
-        BY_USER_ID: (userId) =>
-            `${APPLICATIONS_API_END_POINT_V1}/${userId}`,
+        BY_USER_ID: (userId, page, size) =>
+            `${APPLICATIONS_API_END_POINT_V1}/${userId}?page=${page}&size=${size}`,
 
         CREATE: `${APPLICATIONS_API_END_POINT_V1}`,
 

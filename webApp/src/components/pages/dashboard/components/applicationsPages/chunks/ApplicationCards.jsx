@@ -89,6 +89,8 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [statusError, setStatusError] = useState('');
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
 
   useEffect(() => {
     let cancelled = false;
@@ -97,15 +99,15 @@ const ApplicationCards = ({ userId = DEFAULT_USER_ID, onStatusChange, onResumeVi
       setLoading(true);
       setStatusError('');
       try {
-        const res = await applicationService.getApplicationsByUserId(userId);
+        const res = await applicationService.getApplicationsByUserId(userId, page, size);
         if (!res?.success) {
           throw new Error(res?.message || 'Failed to load applications.');
         }
 
         const list = Array.isArray(res.data)
           ? res.data
-          : Array.isArray(res.data?.data)
-            ? res.data.data
+          : Array.isArray(res.data?.content)
+            ? res.data.content
             : [];
 
         if (!cancelled) {

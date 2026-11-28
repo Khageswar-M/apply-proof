@@ -4,9 +4,9 @@ import API_ENDPOINTS from "../components/api/endpoints";
 const applicationService = {
 
     // GET applications by user ID
-    getApplicationsByUserId(userId) {
+    getApplicationsByUserId(userId, page, size) {
         return responseGateway.get(
-            API_ENDPOINTS.APPLICATIONS.BY_USER_ID(userId)
+            API_ENDPOINTS.APPLICATIONS.BY_USER_ID(userId, page, size)
         );
     },
 
