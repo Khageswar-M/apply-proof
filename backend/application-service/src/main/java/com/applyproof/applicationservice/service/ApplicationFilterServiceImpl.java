@@ -48,21 +48,21 @@ public class ApplicationFilterServiceImpl implements ApplicationFilterService{
     }
 
     @Override
-    public List<ApplicationResponse> lastMonthApplications(String userId) {
+    public PagedResponse<ApplicationResponse> lastMonthApplications(String userId, int page, int size) {
         log.info("Last month applications service called by {}", userId);
-        return since(userId, LocalDateTime.now().minusMonths(1));
+        return since(userId, LocalDateTime.now().minusMonths(1), page, size);
     }
 
     @Override
-    public List<ApplicationResponse> lastSixMonthApplications(String userId) {
+    public PagedResponse<ApplicationResponse> lastSixMonthApplications(String userId, int page, int size) {
         log.info("Last six month service called by {}", userId);
-        return since(userId, LocalDateTime.now().minusMonths(6));
+        return since(userId, LocalDateTime.now().minusMonths(6), page, size);
     }
 
     @Override
-    public List<ApplicationResponse> lastYearApplications(String userId) {
+    public PagedResponse<ApplicationResponse> lastYearApplications(String userId, int page, int size) {
         log.info("Last year applications service called by {}", userId);
-        return since(userId, LocalDateTime.now().minusYears(1));
+        return since(userId, LocalDateTime.now().minusYears(1), page, size);
     }
 
     private boolean isUserExist(String userId) {

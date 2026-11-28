@@ -12,9 +12,9 @@ public interface ApplicationFilterService {
 
     PagedResponse<ApplicationResponse> lastWeekApplications(String userId, int page, int size);
 
-    List<ApplicationResponse> lastMonthApplications(String userId);
+    PagedResponse<ApplicationResponse> lastMonthApplications(String userId, int page, int size);
 
-    List<ApplicationResponse> lastSixMonthApplications(String userId);
+    PagedResponse<ApplicationResponse> lastSixMonthApplications(String userId, int page, int size);
 
-    List<ApplicationResponse> lastYearApplications(String userId);
+    PagedResponse<ApplicationResponse> lastYearApplications(String userId, int page, int size);
 }

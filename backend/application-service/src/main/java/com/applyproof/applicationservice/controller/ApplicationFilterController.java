@@ -49,38 +49,44 @@ public class ApplicationFilterController {
         );
     }
 
-    @GetMapping("/last-month")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> lastMonth(
-            @RequestParam String userId
+    @GetMapping("/last-month/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastMonth(
+            @PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size
     ){
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Last month applied applications",
-                        applicationFilterService.lastMonthApplications(userId)
+                        applicationFilterService.lastMonthApplications(userId, page, size)
                 )
         );
     }
 
-    @GetMapping("/last-six-month")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> lastSixMonth(
-            @RequestParam String userId
+    @GetMapping("/last-six-month/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastSixMonth(
+            @PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size
     ){
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Last six month applied applications",
-                        applicationFilterService.lastSixMonthApplications(userId)
+                        applicationFilterService.lastSixMonthApplications(userId, page, size)
                 )
         );
     }
 
-    @GetMapping("/last-year")
-    public ResponseEntity<ApiResponse<List<ApplicationResponse>>> lastYear(
-            @RequestParam String userId
+    @GetMapping("/last-year/{userId}")
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicationResponse>>> lastYear(
+            @PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size
     ){
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Last year applied applications",
-                        applicationFilterService.lastYearApplications(userId)
+                        applicationFilterService.lastYearApplications(userId, page, size)
                 )
         );
     }
